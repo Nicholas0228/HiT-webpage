@@ -50,7 +50,7 @@ a:focus-visible { outline: 2px solid #000000; outline-offset: 5px; border-radius
   position: absolute;
   top: 40%;
   left: 50%;
-  width: clamp(150px, 18vw, 230px);
+  width: clamp(190px, 23vw, 300px);
   aspect-ratio: 680 / 565;
   transform: translate(-50%, -50%);
   transform-origin: center;
@@ -78,18 +78,19 @@ a:focus-visible { outline: 2px solid #000000; outline-offset: 5px; border-radius
   visibility: hidden;
   flex: 0 0 auto;
   display: block;
-  width: clamp(48px, 5vw, 72px);
+  width: clamp(100px, 12vw, 190px);
   aspect-ratio: 680 / 565;
 }
 .wordmark img, .wordmark-slot img { display: block; width: 100%; height: 100%; }
 .paper-title {
   margin: 0;
-  font-size: clamp(17px, 1.6vw, 27px);
-  line-height: 1.25;
-  letter-spacing: -0.035em;
+  font-size: clamp(35.7px, 5.61vw, 88.4px);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
   font-weight: 500;
-  white-space: nowrap;
+  white-space: normal;
   text-align: left;
+  text-wrap: balance;
   opacity: 0;
   will-change: opacity, transform;
 }
@@ -138,17 +139,17 @@ sup { font-size: 0.65em; vertical-align: super; line-height: 0; margin-left: 2px
 }
 @media (max-width: 1099px) {
   .identity { width: 88%; max-width: 860px; }
-  .paper-title { white-space: normal; font-size: clamp(20px, 2.6vw, 27px); }
+  .paper-title { white-space: normal; }
   .paper-title span { display: block; }
   .authors { max-width: 720px; font-size: 15px; }
 }
 @media (max-width: 600px) {
   .keywords { font-size: clamp(28px, 7.8vw, 46px); gap: 24px; }
-  .wordmark { width: 160px; }
+  .wordmark { width: 190px; }
   .identity { width: calc(100% - 40px); top: 47%; }
   .title-row { gap: 16px; }
-  .wordmark-slot { width: 44px; }
-  .paper-title { font-size: clamp(17px, 4.7vw, 23px); letter-spacing: -0.025em; }
+  .wordmark-slot { width: 70px; }
+  .paper-title { font-size: clamp(23.8px, 6.63vw, 39.1px); letter-spacing: -0.035em; }
   .paper-title span { display: inline; }
   .authors { margin-top: 32px; gap: 10px 17px; font-size: 14px; }
   .affiliations { margin-top: 30px; flex-direction: column; align-items: center; gap: 20px; }
