@@ -13,7 +13,7 @@ a { color: #000000; text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 4px; }
 a:focus-visible { outline: 2px solid #000000; outline-offset: 5px; border-radius: 2px; }
 ::selection { color: #000000; background: #dceefb; }
-.intro { height: 410svh; }
+.intro { height: 540svh; }
 .stage {
   height: 100svh;
   position: sticky;
@@ -83,6 +83,8 @@ a:focus-visible { outline: 2px solid #000000; outline-offset: 5px; border-radius
 }
 .wordmark img, .wordmark-slot img { display: block; width: 100%; height: 100%; }
 .paper-title {
+  flex: 0 1 auto;
+  min-width: 0;
   margin: 0;
   font-size: clamp(35.7px, 5.61vw, 88.4px);
   line-height: 1.08;
@@ -140,7 +142,7 @@ sup { font-size: 0.65em; vertical-align: super; line-height: 0; margin-left: 2px
 @media (max-width: 1099px) {
   .identity { width: 88%; max-width: 860px; }
   .paper-title { white-space: normal; }
-  .paper-title span { display: block; }
+  .paper-title > span { display: block; }
   .authors { max-width: 720px; font-size: 15px; }
 }
 @media (max-width: 600px) {
@@ -150,7 +152,7 @@ sup { font-size: 0.65em; vertical-align: super; line-height: 0; margin-left: 2px
   .title-row { gap: 16px; }
   .wordmark-slot { width: 70px; }
   .paper-title { font-size: clamp(23.8px, 6.63vw, 39.1px); letter-spacing: -0.035em; }
-  .paper-title span { display: inline; }
+  .paper-title > span { display: inline; }
   .authors { margin-top: 32px; gap: 10px 17px; font-size: 14px; }
   .affiliations { margin-top: 30px; flex-direction: column; align-items: center; gap: 20px; }
   .university { font-size: 12px; gap: 8px; }
@@ -159,5 +161,9 @@ sup { font-size: 0.65em; vertical-align: super; line-height: 0; margin-left: 2px
 }
 @media (prefers-reduced-motion: reduce) {
   .intro { height: 200svh; }
-  .particles { display: none; }
+
 }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+.paper-title .unbroken { white-space: nowrap; }
