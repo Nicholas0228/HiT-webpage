@@ -315,11 +315,12 @@
     }
     return {input, image};
   }
-  async function chooseExample(index, time = state.time, reset = false) {
+  async function chooseExample(index, time, reset = false) {
     if (loading) return;
     setBusy(true);
     const entry = gallery[index], sourceIndex = entry.sourceIndex, source = data.sources[sourceIndex];
-    const selectedTime = source.times.includes(time) ? time : .7;
+    const requestedTime = time ?? entry.defaultTime ?? (reset ? .7 : state.time);
+    const selectedTime = source.times.includes(requestedTime) ? requestedTime : .7;
     let family = exampleCache.get(entry.data);
     if (!family) {
       const response = await fetch(assetURL(entry.data)); if (!response.ok) throw new Error('The saved example could not be loaded.');
@@ -372,9 +373,9 @@
     data.sources.push(study);
     // Keep source metadata for decoding. The page has one gallery and no source menu.
     gallery = [
-      {id: 'xiaoyu', name: 'Xiaoyu', caption: 'A man holds a camera.', image: 'local/xiaoyu-clean.png', data: 'local/xiaoyu.json', xProfile: 'https://x.com/XiaoyuW9401147', sourceIndex: 2},
-      {id: 'yifei', name: 'Yifei', caption: 'A person sits on a rock near a bridge.', image: 'local/yifei-clean.png', data: 'local/yifei.json', xProfile: 'https://x.com/WangYw251', sourceIndex: 2},
-      {id: 'weihang', name: 'Weihang', caption: 'A man wearing glasses in front of mountains.', image: 'local/weihang-clean.png', data: 'local/weihang.json', xProfile: 'https://x.com/Weihang404', sourceIndex: 2},
+      {id: 'xiaoyu', name: 'Xiaoyu', caption: 'A man holds a camera.', image: 'local/xiaoyu-clean.png', data: 'local/xiaoyu.json', defaultTime: 1, xProfile: 'https://x.com/XiaoyuW9401147', sourceIndex: 2},
+      {id: 'yifei', name: 'Yifei', caption: 'A person sits on a rock near a bridge.', image: 'local/yifei-clean.png', data: 'local/yifei.json', defaultTime: 1, xProfile: 'https://x.com/WangYw251', sourceIndex: 2},
+      {id: 'weihang', name: 'Weihang', caption: 'A man wearing glasses in front of mountains.', image: 'local/weihang-clean.png', data: 'local/weihang.json', defaultTime: 1, xProfile: 'https://x.com/Weihang404', sourceIndex: 2},
       {id: 'hand-caption-study', name: 'Hand', caption: 'A man holds up his hand with gems.', image: 'gpu/thanos-gauntlet.png', data: 'caption-study.json', sourceIndex: 2},
       ...data.sources[1].examples.filter(entry => !['thanos-gauntlet', 'thanos-portrait'].includes(entry.id)).map(entry => ({...entry, sourceIndex: 1}))
     ];
@@ -382,7 +383,7 @@
     buildGallery();
     query('#joint-time').addEventListener('change', () => chooseTime(Number(query('#joint-time').value)).catch(showError));
     all('[data-joint-level]').forEach(b => b.addEventListener('click', () => {state.level = Number(b.dataset.jointLevel); state.hoverPatch = null; render(); announce();}));
-    query('#joint-reset').addEventListener('click', () => chooseExample(state.example, .7, true).catch(showError));
+    query('#joint-reset').addEventListener('click', () => chooseExample(state.example, undefined, true).catch(showError));
     all('canvas').forEach(canvas => {
       const patchAt = event => {const r = canvas.getBoundingClientRect(); return clamp(Math.floor((event.clientY - r.top) / r.height * 16), 0, 15) * 16 + clamp(Math.floor((event.clientX - r.left) / r.width * 16), 0, 15);};
       canvas.addEventListener('pointermove', event => {if (loading || !activeFamily || event.pointerType === 'touch') return; hoverPatch(patchAt(event));});
@@ -396,7 +397,7 @@
       });
     });
     mount.addEventListener('keydown', event => {if (event.key === 'Escape' && activeFamily && !loading) {event.preventDefault(); clearSelection();}});
-    await chooseExample(0, .7);
+    await chooseExample(0);
     window.HiTJointViewer = Object.freeze({getState: () => ({...state, sourceId: data.sources[state.source].id, exampleId: example().id, tokenPosition: example().tokens[state.token].position})});
   }
   load().catch(showError);
