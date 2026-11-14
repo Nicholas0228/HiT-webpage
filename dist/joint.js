@@ -44,8 +44,15 @@
         </div>
       </div>
       <div id="joint-caption-panel">
-        <div class="joint-caption" role="group" aria-label="Caption tokens"></div>
-        <p class="joint-hint">Move over an image region or a caption word.</p>
+        <div class="joint-caption-header">
+          <div class="joint-caption-copy">
+            <div class="joint-caption" role="group" aria-label="Caption tokens"></div>
+            <p class="joint-hint">Move over an image region or a caption word.</p>
+          </div>
+          <a class="joint-follow" target="_blank" rel="noopener noreferrer" hidden>
+            <span class="joint-follow-label"></span><img src="${new URL('assets/x-logo.svg', scriptURL).href}" alt="" aria-hidden="true" width="18" height="18">
+          </a>
+        </div>
         <div class="joint-views">
           <figure class="joint-figure"><figcaption id="joint-image-title">Noisy input · t = 0.7</figcaption><canvas id="joint-canvas" width="1024" height="1024" tabindex="0" role="img" aria-describedby="joint-patch-help"></canvas></figure>
           <figure class="joint-figure"><figcaption id="joint-map-title"></figcaption><canvas id="joint-map" width="1024" height="1024" tabindex="0" role="img" aria-describedby="joint-patch-help"></canvas></figure>
@@ -251,11 +258,11 @@
     });
     return {variants: [e], selectedTokens: [e.defaultToken]};
   }
-  function prepareStudy(study) {
-    if (study.schema !== 1 || study.model.checkpointSha256 !== data.checkpointSha256 || study.model.update !== 40000 || study.captions.length !== 3 || study.times.join(',') !== '1,0.7') throw new Error('The saved caption study is incomplete.');
-    const selected = study.captions.find(c => c.caption === 'A man holds up his hand with gems.');
+  function prepareStudy(study, entry) {
+    if (study.schema !== 1 || study.model.checkpointSha256 !== data.checkpointSha256 || study.model.update !== 40000 || !Array.isArray(study.captions) || study.captions.length < 1 || study.times.join(',') !== '1,0.7') throw new Error('The saved caption study is incomplete.');
+    const selected = study.captions.find(c => c.caption === entry.caption);
     if (!selected) throw new Error('The saved caption is missing.');
-    const variants = [{...selected, source: 'caption-study', defaultPatch: 136, frames: selected.frames.map(f => ({...f, time: f.t}))}];
+    const variants = [{...selected, id: entry.id, source: 'caption-study', defaultPatch: entry.defaultPatch ?? 136, frames: selected.frames.map(f => ({...f, time: f.t}))}];
     variants.forEach(e => {
       if (e.tokens.at(-1).raw !== '</s>' || e.frames.length !== 2) throw new Error('Caption tokens or times are missing.');
       e.frames.forEach((f, i) => {
@@ -268,6 +275,18 @@
   function buildTimeControl() {
     const source = data.sources[state.source], times = query('#joint-time'); times.replaceChildren();
     source.times.forEach(time => {const option = document.createElement('option'); option.value = String(time); option.textContent = time === 1 ? 't = 1 · clean' : `t = ${time}`; times.appendChild(option);});
+  }
+  function updateFollow(entry) {
+    const follow = query('.joint-follow');
+    follow.hidden = !entry.xProfile;
+    if (entry.xProfile) {
+      follow.href = entry.xProfile;
+      follow.setAttribute('aria-label', `Follow ${entry.name} on X (opens in a new tab)`);
+      query('.joint-follow-label').textContent = `Follow ${entry.name} on`;
+    } else {
+      follow.removeAttribute('href');
+      follow.removeAttribute('aria-label');
+    }
   }
   function buildGallery() {
     const thumbs = query('.joint-thumbnails'); thumbs.replaceChildren();
@@ -304,7 +323,7 @@
     let family = exampleCache.get(entry.data);
     if (!family) {
       const response = await fetch(assetURL(entry.data)); if (!response.ok) throw new Error('The saved example could not be loaded.');
-      const saved = await response.json(); family = source.id === 'caption-study' ? prepareStudy(saved) : prepareLegacy(saved, source); exampleCache.set(entry.data, family);
+      const saved = await response.json(); family = source.id === 'caption-study' ? prepareStudy(saved, entry) : prepareLegacy(saved, source); exampleCache.set(entry.data, family);
     }
     const {image, input} = await loadInput(entry, selectedTime);
     // Change the image and its routing frame together after the image loads.
@@ -312,7 +331,7 @@
     state.source = sourceIndex; state.example = index; state.caption = 0; state.time = selectedTime;
     if (reset) {state.level = 1; family.selectedTokens = family.variants.map(e => e.defaultToken);}
     state.token = family.selectedTokens[0]; state.patch = example().defaultPatch; state.hoverPatch = null; state.pinnedPatch = null; state.direction = 'groups';
-    buildTimeControl(); renderDetails();
+    buildTimeControl(); updateFollow(entry); renderDetails();
     query('.joint-content').hidden = false; render(); setBusy(false); mount.dataset.jointReady = 'true'; announce();
   }
   async function chooseTime(time) {
@@ -353,10 +372,13 @@
     data.sources.push(study);
     // Keep source metadata for decoding. The page has one gallery and no source menu.
     gallery = [
+      {id: 'xiaoyu', name: 'Xiaoyu', caption: 'A man holds a camera.', image: 'local/xiaoyu-clean.png', data: 'local/xiaoyu.json', xProfile: 'https://x.com/XiaoyuW9401147', sourceIndex: 2},
+      {id: 'yifei', name: 'Yifei', caption: 'A person sits on a rock near a bridge.', image: 'local/yifei-clean.png', data: 'local/yifei.json', xProfile: 'https://x.com/WangYw251', sourceIndex: 2},
+      {id: 'weihang', name: 'Weihang', caption: 'A man wearing glasses in front of mountains.', image: 'local/weihang-clean.png', data: 'local/weihang.json', xProfile: 'https://x.com/Weihang404', sourceIndex: 2},
       {id: 'hand-caption-study', name: 'Hand', caption: 'A man holds up his hand with gems.', image: 'gpu/thanos-gauntlet.png', data: 'caption-study.json', sourceIndex: 2},
       ...data.sources[1].examples.filter(entry => !['thanos-gauntlet', 'thanos-portrait'].includes(entry.id)).map(entry => ({...entry, sourceIndex: 1}))
     ];
-    if (gallery.length !== 19) throw new Error('The image gallery is incomplete.');
+    if (gallery.length !== 22) throw new Error('The image gallery is incomplete.');
     buildGallery();
     query('#joint-time').addEventListener('change', () => chooseTime(Number(query('#joint-time').value)).catch(showError));
     all('[data-joint-level]').forEach(b => b.addEventListener('click', () => {state.level = Number(b.dataset.jointLevel); state.hoverPatch = null; render(); announce();}));

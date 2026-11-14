@@ -110,7 +110,7 @@
 }
 
 :is(.groups-reset, .groups-details > summary, .flow-details > summary, .flow-paper > summary),
-#joint-viewer :is(.joint-reset, .joint-details > summary) {
+#joint-viewer :is(.joint-reset, .joint-follow, .joint-details > summary) {
   box-sizing: border-box;
   width: fit-content;
   min-height: 44px;
@@ -238,13 +238,13 @@
   :is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs) > button:hover,
   #joint-viewer .joint-segment > button:hover { background-color: rgba(255,255,255,.36); }
   :is(.groups-reset, .groups-epoch, .groups-group-select, .flow-details select, .groups-details > summary, .flow-details > summary, .flow-paper > summary):hover,
-  #joint-viewer :is(select, .joint-reset, .joint-details > summary):hover { border-color: rgba(0,0,0,.28); }
+  #joint-viewer :is(select, .joint-reset, .joint-follow, .joint-details > summary):hover { border-color: rgba(0,0,0,.28); }
   .groups-example:hover, .groups-example[aria-pressed="true"]:hover,
   #joint-viewer .joint-example:hover { border-color: rgba(0,0,0,.16); background-color: rgba(255,255,255,.65); }
 }
 
 :is(.groups-time, .efficiency-tab, .flow-level-controls button, .flow-tabs button, .groups-epoch, .groups-group-select, .flow-details select, .groups-reset, .groups-example, .groups-details > summary, .flow-details > summary, .flow-paper > summary):focus-visible,
-#joint-viewer :is(select, .joint-segment > button, .joint-reset, .joint-example, .joint-details > summary):focus-visible {
+#joint-viewer :is(select, .joint-segment > button, .joint-reset, .joint-follow, .joint-example, .joint-details > summary):focus-visible {
   outline: 2px solid #000000;
   outline-offset: 3px;
 }
@@ -282,3 +282,11 @@
   .glass-segment::before { display: none; }
   .glass-segment > button:is([aria-pressed="true"], [aria-selected="true"]) { outline: 2px solid Highlight; outline-offset: -3px; }
 }
+
+/* A dark profile action, as requested. Figure text stays black. */
+#joint-viewer a.joint-follow{background:linear-gradient(160deg,#292929,#000000);border-color:#000000;color:#ffffff;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 3px 10px rgba(0,0,0,.12)}
+#joint-viewer .joint-follow-label{color:#ffffff}
+#joint-viewer .joint-follow img{filter:invert(1)}
+@media(hover:hover){#joint-viewer a.joint-follow:hover{background:linear-gradient(160deg,#3a3a3a,#111111);border-color:#000000}}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){#joint-viewer a.joint-follow{background:#000000}}
+@media(forced-colors:active){#joint-viewer .joint-follow-label{color:LinkText}#joint-viewer .joint-follow img{filter:none}}

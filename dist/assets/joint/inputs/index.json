@@ -1097,6 +1097,60 @@
           "sourceBitwiseMatch": true
         }
       }
+    },
+    "xiaoyu": {
+      "frames": {
+        "1": {
+          "image": "local/xiaoyu-clean.png",
+          "status": "clean",
+          "inputSha256": "59c48c2a1acacda87fce041a465d5178616a49d9636e827709f7d53a80967a56",
+          "pngSha256": "cb0dfc5e0ca64d19f4113830bec969196081ce08ef165c830ffa34b206c72ff6",
+          "sourceBitwiseMatch": true
+        },
+        "0.7": {
+          "image": "inputs/xiaoyu-t0.7.png",
+          "status": "verified-input",
+          "inputSha256": "e93389629650308771ba5a601113bacb78af6917bc24fb0c8ead6cced149a722",
+          "pngSha256": "3ba7752c42d045e3bab55f83c3d3634d4a70f72494dcffb3f6157750b8ed67c4",
+          "sourceBitwiseMatch": true
+        }
+      }
+    },
+    "yifei": {
+      "frames": {
+        "1": {
+          "image": "local/yifei-clean.png",
+          "status": "clean",
+          "inputSha256": "596e7d5f80dbe083b72be40dab42e3daab3833e1007807b5b6e9273ee193bf1e",
+          "pngSha256": "7fee9e437c8feea75c73c4cdeb5abba7fa04197b363a7f91b12cb032ed03715b",
+          "sourceBitwiseMatch": true
+        },
+        "0.7": {
+          "image": "inputs/yifei-t0.7.png",
+          "status": "verified-input",
+          "inputSha256": "20e03c2ae0a162ac0b8d7d10f32e7454f14a134e649f8e20108fa7d9e5ee5add",
+          "pngSha256": "c17f34d2128841f3fa1597305db8509ff8f9af7b68a4e6cf01697c13730043cb",
+          "sourceBitwiseMatch": true
+        }
+      }
+    },
+    "weihang": {
+      "frames": {
+        "1": {
+          "image": "local/weihang-clean.png",
+          "status": "clean",
+          "inputSha256": "54520fa30f403e1eaa753e1dfe3986c9d958d2ef5f99c7568c83ec4f96b39a0f",
+          "pngSha256": "1b9beb3466f81390e7a4f19cf17d930e5abd2a368faa830f82ae50ce4eae6b72",
+          "sourceBitwiseMatch": true
+        },
+        "0.7": {
+          "image": "inputs/weihang-t0.7.png",
+          "status": "verified-input",
+          "inputSha256": "d976eff3569640c1c528418b341c4a28fae3e2efb07286c024910d0d56413da0",
+          "pngSha256": "30047805fbd050f6b33fff78080032a4880825d759e48120cf693c951853bf28",
+          "sourceBitwiseMatch": true
+        }
+      }
     }
   }
 }

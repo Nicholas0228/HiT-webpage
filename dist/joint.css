@@ -58,3 +58,11 @@
 @media(max-width:720px){#joint-viewer .joint-gallery-heading{margin-bottom:10px}#joint-viewer .joint-thumbnails{gap:11px;margin-bottom:18px}#joint-viewer .joint-example{flex-basis:82px}#joint-viewer .joint-toolbar{gap:12px 18px;margin-bottom:18px}#joint-viewer .joint-tools{gap:18px}#joint-viewer .joint-segment button{padding:6px 10px}#joint-viewer .joint-caption-tabs{gap:22px;margin-bottom:14px}#joint-viewer .joint-caption{gap:6px}#joint-viewer .joint-hint{margin-bottom:16px}#joint-viewer .joint-views{grid-template-columns:1fr;gap:18px}#joint-viewer .joint-statusbar{align-items:flex-start;gap:10px;margin-top:12px}#joint-viewer .joint-statusbar>.joint-legend{width:100%}#joint-viewer .joint-detail-grid{grid-template-columns:1fr;gap:10px}#joint-viewer .joint-detail-grid>*{grid-column:1/-1}}
 @media(max-width:440px){#joint-viewer .joint-gallery-heading{display:block}#joint-viewer .joint-gallery-help{margin-top:5px}#joint-viewer .joint-time-control{width:100%}#joint-viewer .joint-time-control select{flex:1}#joint-viewer .joint-tools{justify-content:space-between;width:100%}#joint-viewer .joint-caption-tabs{gap:18px}#joint-viewer .joint-token{padding:4px 6px}#joint-viewer .joint-legend{column-gap:13px}#joint-viewer .joint-legend-ramp{width:70px}}
 @media(prefers-reduced-motion:no-preference){#joint-viewer .joint-token,#joint-viewer .joint-segment button,#joint-viewer .joint-caption-tabs button,#joint-viewer .joint-example{transition:background-color .14s,border-color .14s}}
+
+/* Keep the caption and profile action aligned above the two maps. */
+#joint-viewer .joint-caption-header{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:16px 24px;margin-bottom:20px}
+#joint-viewer .joint-caption-copy{min-width:0}
+#joint-viewer .joint-caption-header .joint-hint{margin-bottom:0}
+#joint-viewer .joint-follow{display:inline-flex;align-items:center;justify-content:center;gap:9px;flex:none;white-space:nowrap;font-family:inherit}
+#joint-viewer .joint-follow img{display:block;width:18px;height:18px;object-fit:contain;flex:none}
+@media(max-width:720px){#joint-viewer .joint-caption-header{grid-template-columns:minmax(0,1fr);gap:12px;margin-bottom:18px}#joint-viewer .joint-follow{justify-self:end}}

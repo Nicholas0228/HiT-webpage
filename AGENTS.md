@@ -26,6 +26,7 @@ Less is more. Keep the webpage clean.
 - Keep glass effects in the control layer. Keep images, plots, and data maps clear.
 - Keep the AF3 data colors and caption weight colors. Do not apply a grey filter to data visuals.
 - Keep text black and use the shared regular text size.
+- Profile Follow buttons are the UI exception: use a black background, white text, and a white X logo.
 - Keep keyboard focus clear. Support reduced motion and reduced transparency.
 - Reference: [Apple materials](https://developer.apple.com/design/human-interface-guidelines/materials).
 
