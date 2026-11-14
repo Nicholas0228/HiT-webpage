@@ -21,7 +21,7 @@
   const sourceReady=window.HiTSnap.load().then(source=>{snapSource=source;});
   let width = 0, height = 0, points = [], progress = 0, targetProgress = 0;
   let frame = 0, lastTime = 0, resizeTimer = 0, elapsed = 0;
-  let wordmarkShift = 0, wordmarkScale = 1;
+  let wordmarkShift = 0, wordmarkScale = 1, stageLabel, ribbonLabel;
   const HAND_START=.395,HAND_END=.555,FLOW_END=.625,HAND_TRIGGER=.29,HAND_RESET=.285;
   const HAND_HOLD=100,HAND_PLAY=500,HAND_SETTLE=100,FLOW_PLAY=450;
   let gestureState='armed',gestureElapsed=0,scrollProgress=0,prepared=false;
@@ -78,6 +78,59 @@
       }
     }
     return pixels;
+  }
+
+  function sampleParticleLabel(text, fontSize, maxWidth, budget) {
+    const buffer = document.createElement('canvas');
+    buffer.width = Math.ceil(width);
+    buffer.height = Math.ceil(height);
+    const paint = buffer.getContext('2d', {willReadFrequently:true});
+    const fontFamily = getComputedStyle(keywords).fontFamily;
+    paint.font = `750 ${fontSize}px ${fontFamily}`;
+    fontSize *= Math.min(1, maxWidth / paint.measureText(text).width);
+    paint.font = `750 ${fontSize}px ${fontFamily}`;
+    const metrics = paint.measureText(text);
+    const ascent = metrics.actualBoundingBoxAscent;
+    const descent = metrics.actualBoundingBoxDescent;
+    const x = width / 2, y = height * .46;
+    paint.fillStyle = '#000000';
+    paint.textAlign = 'center';
+    paint.fillText(text, x, y + (ascent - descent) / 2);
+    // Seeded random targets keep the cloud irregular and restore the same
+    // letters on rewind. A small distance limit prevents clumps and holes.
+    const {data} = paint.getImageData(0, 0, buffer.width, buffer.height);
+    const ink = [];
+    for (let py = Math.floor(y-(ascent+descent)/2)-2; py <= y+(ascent+descent)/2+2; py++) {
+      for (let px = Math.floor(x-metrics.width/2)-2; px <= x+metrics.width/2+2; px++) {
+        if (data[(py * buffer.width + px) * 4 + 3] > 210) ink.push(py * buffer.width + px);
+      }
+    }
+    const step = Math.max(1.35, fontSize / 66, Math.sqrt(ink.length / budget));
+    const targetCount = Math.min(budget, Math.floor(ink.length / (step * step)));
+    const spacing = step * .64, cells = new Map(), samples = [];
+    for (let attempt = 0; samples.length < targetCount && attempt < targetCount * 40; attempt++) {
+      const pixel = ink[Math.floor(random(attempt * 3 + 701) * ink.length)];
+      const px = pixel % buffer.width + random(attempt * 3 + 702);
+      const py = Math.floor(pixel / buffer.width) + random(attempt * 3 + 703);
+      const cx = Math.floor(px / spacing), cy = Math.floor(py / spacing);
+      let clear = true;
+      for (let dy=-1; dy<=1 && clear; dy++) {
+        for (let dx=-1; dx<=1 && clear; dx++) {
+          for (const other of cells.get(`${cx+dx},${cy+dy}`) || []) {
+            if ((other.x-px)**2 + (other.y-py)**2 < spacing*spacing) {clear=false;break;}
+          }
+        }
+      }
+      if (clear) {
+        const point = {x:px,y:py};
+        samples.push(point);
+        const key = `${cx},${cy}`;
+        if (!cells.has(key)) cells.set(key,[]);
+        cells.get(key).push(point);
+      }
+    }
+    samples.sort((a,b) => a.x-b.x || a.y-b.y);
+    return {points:samples, radius:step * .43};
   }
 
   function measureProgress() {
@@ -138,6 +191,13 @@
     to.sort((a,b) => a.x-b.x || a.y-b.y);
     const sideCount=1200;
     const count=snapSource.count+2*sideCount;
+    const scene = sceneLayout(), ribbon = ribbonLayout();
+    stageLabel = sampleParticleLabel('2 Stage',
+      Math.min(scene.innerHeight * .65, scene.centerWidth * .24),
+      scene.centerWidth * .84, Math.floor(snapSource.count * .60));
+    ribbonLabel = sampleParticleLabel('End-to-End',
+      Math.min(ribbon.span * .115, ribbon.thickness * 1.08),
+      ribbon.span * .72, Math.floor(snapSource.count * .55));
     points = [];
     if (from.length && to.length) {
       for (let i = 0; i < count; i++) {
@@ -145,7 +205,13 @@
         const end = to[Math.min(to.length-1, Math.floor(i/count*to.length))];
         const group=i<sideCount?0:i<sideCount+snapSource.count?1:2;
         const localIndex=group===0?i:group===1?i-sideCount:i-sideCount-snapSource.count;
-        points.push({sx:start.x, sy:start.y, tx:end.x, ty:end.y,
+        const label = group===1 ? stageLabel.points[localIndex] : undefined;
+        const ribbonPoint = group===1 ? ribbonLabel.points[localIndex] : undefined;
+        const flowLabel = ribbonPoint ? {
+          u:.5 + (ribbonPoint.x-width/2)/ribbon.span,
+          v:(ribbonPoint.y-height*.46)/ribbon.thickness,
+        } : undefined;
+        points.push({sx:start.x, sy:start.y, tx:end.x, ty:end.y, label, flowLabel,
           group, localIndex, u:random(i+13), v:random(i+527), phase:random(i+901)*Math.PI*2,
           edge:random(i+275)<(group===1?.18:.46), boundary:boundaryPoint(group,random(i+407)),
           size:Math.max(.58,Math.min(1,width/900))*(.70+random(i+87)*.42), shade:Math.floor(random(i+142)*4), delay:random(i+113)*.035});
@@ -167,6 +233,12 @@
     const span=Math.min(width*.92,height*1.05,1200);
     const outerHeight=Math.min(span*.72,height*.66);
     return {span,sideWidth:span*.12,centerWidth:span*.70,outerHeight,innerHeight:outerHeight*.67};
+  }
+
+  function ribbonLayout() {
+    return {span:Math.min(width * .90, 1240),
+      amplitude:Math.min(height * .105, width * .10, 100),
+      thickness:Math.min(height * .13, width * .16, 130)};
   }
 
   function snapProgress() {
@@ -236,13 +308,15 @@
       snapSource.fillFrame(sourceFrame, cache.sourceXY, cache.tones, cache.details);
     }
 
-    const waveSpan = Math.min(width * .90, 1240);
-    const waveAmplitude = Math.min(height * .105, width * .10, 100);
-    const waveThickness = Math.min(height * .13, width * .16, 130);
+    const ribbon = ribbonLayout();
+    const waveSpan = ribbon.span;
+    const waveAmplitude = ribbon.amplitude;
+    const waveThickness = ribbon.thickness;
     const wavePhase = clock * .7 + p * 5;
     const driftSize = Math.min(width * .045, 50);
     const gathering = !reduce && p < .28;
     const collecting = !reduce && p > .745;
+    const flowLabelWeight = connect * (1-smooth(.745, .84, p));
 
     // Compute each point once, then put its index in exactly one alpha bucket.
     for (let i = 0; i < count; i++) {
@@ -258,9 +332,8 @@
       } else if (connect < 1) {
         let localX, localY;
         if (dot.edge) {
-          const pull = .97 + .02 * Math.sin(clock * .5 + dot.phase);
-          localX = dot.boundary.x * pull;
-          localY = dot.boundary.y * pull;
+          localX = dot.boundary.x;
+          localY = dot.boundary.y;
         } else {
           const u = clamp(dot.u * .90 + .05 + Math.sin(clock * .45 + dot.phase) * .035);
           const half = dot.group === 0 ? mix(.5, .335, u)
@@ -273,6 +346,11 @@
         x = centerX + side * moduleDistance
           + localX * (middle ? scene.centerWidth : scene.sideWidth) + shake * side;
         y = centerY + localY * (middle ? scene.innerHeight : scene.outerHeight);
+        // Background particles fill the whole module, including the text area.
+        if (middle && dot.label) {
+          x = dot.label.x;
+          y = dot.label.y;
+        }
         if (middle && handForm > 0) {
           const sourceIndex = dot.localIndex * 2;
           x = mix(x, centerX + cache.sourceXY[sourceIndex] * sourceScale, handForm);
@@ -281,13 +359,15 @@
       }
 
       if (connect > 0) {
-        const u = dot.group === 0 ? dot.u * .15
+        // Letters follow the ribbon centerline. Keep their height stable as
+        // the surface ripples, so the words remain readable through each wave.
+        const u = dot.flowLabel ? dot.flowLabel.u : dot.group === 0 ? dot.u * .15
           : middle ? .15 + dot.u * .70 : .85 + dot.u * .15;
-        const v = dot.v - .5;
+        const v = dot.flowLabel ? dot.flowLabel.v : dot.v - .5;
         const waveX = centerX + (u - .5) * waveSpan;
         const waveY = centerY
           + Math.sin(u * 7.5 - wavePhase) * waveAmplitude * .9
-          + Math.sin(u * 15 + v * 3 + wavePhase) * waveAmplitude * .24
+          + Math.sin(u * 15 + (dot.flowLabel ? 0 : v * 3) + wavePhase) * waveAmplitude * .24
           + v * waveThickness * Math.sin(Math.PI * (.08 + .84 * u));
         if (connect === 1) {
           x = waveX;
@@ -300,7 +380,7 @@
 
       // Avoid the inactive sine/cosine terms once words have dispersed.
       if (gathering) {
-        const gather = smooth(.085 + dot.delay, .245 + dot.delay, p);
+        const gather = smooth(.085 + dot.delay, dot.label ? .210 + dot.delay * .4 : .245 + dot.delay, p);
         if (gather < 1) {
           const drift = Math.sin(gather * Math.PI) * driftSize;
           x = mix(dot.sx, x, gather) + Math.cos(dot.phase) * drift;
@@ -321,12 +401,18 @@
       }
 
       const base = .29 + dot.shade * .20;
-      let shade = base;
-      let radius = dot.size;
+      const moduleShade = dot.label ? 1 : dot.edge ? .86 : base;
+      const labelWeight = dot.label ? (1-handForm) * (1-connect) : 0;
+      let shade = mix(moduleShade, base, connect);
+      let radius = mix(dot.size, stageLabel.radius * (.82 + dot.u * .36), labelWeight);
+      if (dot.flowLabel) {
+        shade = mix(shade, 1, flowLabelWeight);
+        radius = mix(radius, ribbonLabel.radius * (.82 + dot.u * .36), flowLabelWeight);
+      }
       if (middle && form > 0) {
         const detail = cache.details[dot.localIndex];
         const surface = .32 + .50 * cache.tones[dot.localIndex];
-        shade = mix(base, mix(surface, .98, detail), form);
+        shade = mix(shade, mix(surface, .98, detail), form);
         radius *= mix(1, mix(1, 1.10, detail), form);
       }
       const band = Math.round(clamp((shade - .14) / .86) * 7);
@@ -421,6 +507,8 @@
     cue.style.opacity=1-smooth(.01,.055,p);
     intro.dataset.phase=p<.13?'keywords':p<.30?'isolated-modules':p<snapProgress()?'source-hand':p<.555?'snap':p<.625?'merging':p<.745?'connected-flow':p<.865?'logo-forming':p<.935?'logo':'identity';
     intro.dataset.particleCount=points.length;
+    intro.dataset.stageLabelCount=stageLabel.points.length;
+    intro.dataset.ribbonLabelCount=ribbonLabel.points.length;
     intro.dataset.gesture=gestureState;
     intro.dataset.sourceTime=Math.round(sourceTime(p));
     const waveIsVisible=p>.08&&p<.85&&!reduce&&!document.hidden;
