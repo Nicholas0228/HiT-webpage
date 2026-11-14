@@ -1,0 +1,503 @@
+{
+  "name": "hit-routing",
+  "page_title": "HiT affinity, pooling, and readback",
+  "show_title": false,
+  "allow_text_color": false,
+  "width": 1160,
+  "height": 440,
+  "nodes": [
+    {
+      "id": "features",
+      "x": 24,
+      "y": 52,
+      "w": 100,
+      "h": 62,
+      "label": [
+        "Features",
+        "H: [N, d]"
+      ],
+      "size": 18,
+      "kind": "tensor",
+      "shape": "[N, d]",
+      "info": "Contextual token features enter the router.",
+      "params": "H comes from the encoder.",
+      "tags": [
+        "affinity"
+      ]
+    },
+    {
+      "id": "projections",
+      "x": 154,
+      "y": 52,
+      "w": 140,
+      "h": 62,
+      "label": [
+        "Normalize",
+        "qᵢ and kᵢ"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[N, d] → two [N, dᵣ] arrays",
+      "info": "Learned projections are normalized to unit length.",
+      "params": "qᵢ = Wq hᵢ / ‖Wq hᵢ‖₂; kᵢ = Wk hᵢ / ‖Wk hᵢ‖₂",
+      "tags": [
+        "affinity"
+      ]
+    },
+    {
+      "id": "affinity",
+      "x": 324,
+      "y": 52,
+      "w": 140,
+      "h": 62,
+      "label": [
+        "Symmetric",
+        "affinity S"
+      ],
+      "size": 18,
+      "kind": "side",
+      "shape": "[N, N]",
+      "info": "Compare each pair of tokens in both directions and average the results.",
+      "params": "Sᵢⱼ = (qᵢᵀ kⱼ + qⱼᵀ kᵢ) / 2",
+      "tags": [
+        "affinity"
+      ]
+    },
+    {
+      "id": "linkage",
+      "x": 494,
+      "y": 52,
+      "w": 150,
+      "h": 62,
+      "label": [
+        "Average",
+        "linkage"
+      ],
+      "size": 18,
+      "kind": "plain",
+      "shape": "[N, N] → K hard groups",
+      "info": "Merge the pair of groups with the largest average cross-group affinity. Cut the hierarchy at τ.",
+      "params": "s(U,V) = Σᵢ∈U Σⱼ∈V Sᵢⱼ / (|U| |V|)",
+      "tags": [
+        "affinity"
+      ]
+    },
+    {
+      "id": "scores",
+      "x": 674,
+      "y": 52,
+      "w": 180,
+      "h": 62,
+      "label": [
+        "Group mean",
+        "eᵢg"
+      ],
+      "size": 18,
+      "kind": "side",
+      "shape": "[N, K]",
+      "info": "Average each token’s affinities to all members of a hard group.",
+      "params": "eᵢg = Σⱼ∈Gg Sᵢⱼ / |Gg|",
+      "tags": [
+        "affinity",
+        "pooling"
+      ]
+    },
+    {
+      "id": "weights",
+      "x": 884,
+      "y": 52,
+      "w": 248,
+      "h": 62,
+      "label": [
+        "Soft weights",
+        "A: [N, K]"
+      ],
+      "size": 18,
+      "kind": "side",
+      "shape": "[N, K]",
+      "info": "Apply a softmax over groups for each token. Each row sums to one.",
+      "params": "Aᵢg = softmax_g(eᵢg / Tᵣ)",
+      "tags": [
+        "pooling",
+        "readback"
+      ]
+    },
+    {
+      "id": "affinity-equation",
+      "type": "text",
+      "x": 394,
+      "y": 150,
+      "label": [
+        "Sᵢⱼ = ½(qᵢᵀkⱼ + qⱼᵀkᵢ)"
+      ],
+      "size": 18,
+      "anchor": "middle"
+    },
+    {
+      "id": "threshold",
+      "type": "text",
+      "x": 569,
+      "y": 180,
+      "label": [
+        "Cut at τ"
+      ],
+      "size": 18,
+      "anchor": "middle"
+    },
+    {
+      "id": "weights-equation",
+      "type": "text",
+      "x": 903,
+      "y": 150,
+      "label": [
+        "Aᵢg = exp(eᵢg / Tᵣ) / Σₕ exp(eᵢh / Tᵣ)"
+      ],
+      "size": 18,
+      "anchor": "middle"
+    },
+    {
+      "id": "pool",
+      "x": 54,
+      "y": 248,
+      "w": 190,
+      "h": 64,
+      "label": [
+        "Soft pooling",
+        "N → K"
+      ],
+      "size": 18,
+      "kind": "side",
+      "shape": "H [N, d] and A [N, K] → Z [K, d]",
+      "info": "Normalize each column of A. Use the resulting weights to take a feature average over all input tokens.",
+      "params": "Zg = Σᵢ Aᵢg hᵢ / Σᵢ Aᵢg",
+      "tags": [
+        "pooling"
+      ]
+    },
+    {
+      "id": "pooled",
+      "x": 280,
+      "y": 248,
+      "w": 140,
+      "h": 64,
+      "label": [
+        "Group features",
+        "Z: [K, d]"
+      ],
+      "size": 18,
+      "kind": "tensor",
+      "shape": "[K, d]",
+      "info": "Each group feature is a weighted mean. Tokens outside its hard group can also contribute.",
+      "params": "The hard group defines the affinity prototype.",
+      "tags": [
+        "pooling"
+      ]
+    },
+    {
+      "id": "process",
+      "x": 458,
+      "y": 248,
+      "w": 174,
+      "h": 64,
+      "label": [
+        "Compact network",
+        "M"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[K, d] → [K, d]",
+      "info": "Process the compact group features. The network can contain another grouping stage.",
+      "params": "Z′ = M(Z)",
+      "tags": [
+        "compact"
+      ]
+    },
+    {
+      "id": "readback",
+      "x": 670,
+      "y": 248,
+      "w": 184,
+      "h": 64,
+      "label": [
+        "Soft readback",
+        "K → N"
+      ],
+      "size": 18,
+      "kind": "side",
+      "shape": "A [N, K] × Z′ [K, d] → R [N, d]",
+      "info": "Use the same A to distribute processed group features to each input position.",
+      "params": "Rᵢ = Σg Aᵢg Z′g",
+      "tags": [
+        "readback"
+      ]
+    },
+    {
+      "id": "restored",
+      "x": 892,
+      "y": 248,
+      "w": 240,
+      "h": 64,
+      "label": [
+        "Restored features",
+        "R: [N, d]"
+      ],
+      "size": 18,
+      "kind": "tensor",
+      "shape": "[N, d]",
+      "info": "Add the learned skip, then pass the result to the decoder.",
+      "params": "D(R + Skip(H))",
+      "tags": [
+        "readback"
+      ]
+    },
+    {
+      "id": "pool-formula",
+      "type": "text",
+      "x": 238,
+      "y": 352,
+      "label": [
+        "Zg = Σᵢ Aᵢg hᵢ / Σᵢ Aᵢg"
+      ],
+      "size": 18,
+      "anchor": "middle"
+    },
+    {
+      "id": "pool-normalization",
+      "type": "text",
+      "x": 238,
+      "y": 380,
+      "label": [
+        "Columns are normalized for pooling."
+      ],
+      "size": 18,
+      "anchor": "middle"
+    },
+    {
+      "id": "readback-formula",
+      "type": "text",
+      "x": 890,
+      "y": 352,
+      "label": [
+        "Rᵢ = Σg Aᵢg Z′g"
+      ],
+      "size": 18,
+      "anchor": "middle"
+    },
+    {
+      "id": "readback-normalization",
+      "type": "text",
+      "x": 890,
+      "y": 380,
+      "label": [
+        "Each row of A sums to one."
+      ],
+      "size": 18,
+      "anchor": "middle"
+    },
+    {
+      "id": "legend-train-key",
+      "type": "tensor",
+      "kind": "train",
+      "x": 310,
+      "y": 410,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "id": "legend-train",
+      "type": "text",
+      "x": 334,
+      "y": 423,
+      "label": [
+        "Learned module"
+      ],
+      "size": 18
+    },
+    {
+      "id": "legend-data-key",
+      "type": "tensor",
+      "kind": "tensor",
+      "x": 500,
+      "y": 410,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "id": "legend-data",
+      "type": "text",
+      "x": 524,
+      "y": 423,
+      "label": [
+        "Feature tensor"
+      ],
+      "size": 18
+    },
+    {
+      "id": "legend-route-key",
+      "type": "tensor",
+      "kind": "side",
+      "x": 680,
+      "y": 410,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "id": "legend-route",
+      "type": "text",
+      "x": 704,
+      "y": 423,
+      "label": [
+        "Feature transfer"
+      ],
+      "size": 18
+    }
+  ],
+  "edges": [
+    {
+      "from": "features.r",
+      "to": "projections.l"
+    },
+    {
+      "from": "projections.r",
+      "to": "affinity.l"
+    },
+    {
+      "from": "affinity.r",
+      "to": "linkage.l"
+    },
+    {
+      "from": "linkage.r",
+      "to": "scores.l"
+    },
+    {
+      "from": "scores.r",
+      "to": "weights.l"
+    },
+    {
+      "from": "weights.r",
+      "to": "pool.t",
+      "via": [
+        [
+          1145,
+          83
+        ],
+        [
+          1145,
+          210
+        ],
+        [
+          149,
+          210
+        ]
+      ],
+      "kind": "side",
+      "label": "A"
+    },
+    {
+      "from": "pool.r",
+      "to": "pooled.l"
+    },
+    {
+      "from": "pooled.r",
+      "to": "process.l"
+    },
+    {
+      "from": "process.r",
+      "to": "readback.l",
+      "label": "Z′"
+    },
+    {
+      "from": "readback.r",
+      "to": "restored.l"
+    },
+    {
+      "from": "weights.r",
+      "to": "readback.t",
+      "via": [
+        [
+          1145,
+          83
+        ],
+        [
+          1145,
+          210
+        ],
+        [
+          762,
+          210
+        ]
+      ],
+      "kind": "side"
+    },
+    {
+      "from": "features.b",
+      "to": "pool.l",
+      "via": [
+        [
+          74,
+          210
+        ],
+        [
+          24,
+          210
+        ],
+        [
+          24,
+          280
+        ]
+      ],
+      "kind": "tensor",
+      "label": "H"
+    }
+  ],
+  "tags": [
+    {
+      "tag": "affinity",
+      "label": "Affinity",
+      "info": "Build hard groups from symmetric pair affinities."
+    },
+    {
+      "tag": "pooling",
+      "label": "Pooling",
+      "info": "Columns of A give weighted feature averages."
+    },
+    {
+      "tag": "readback",
+      "label": "Readback",
+      "info": "Rows of A restore processed features to input positions."
+    }
+  ],
+  "steps": [
+    {
+      "nodes": [
+        "features",
+        "projections",
+        "affinity"
+      ],
+      "text": "Project token features and compute symmetric cosine affinities."
+    },
+    {
+      "nodes": [
+        "linkage",
+        "scores",
+        "weights"
+      ],
+      "text": "Cut average linkage at τ. Average affinities within each hard group, then apply a row softmax."
+    },
+    {
+      "nodes": [
+        "pool",
+        "pooled"
+      ],
+      "text": "Normalize each column of A and compute the weighted group feature."
+    },
+    {
+      "nodes": [
+        "process",
+        "readback",
+        "restored"
+      ],
+      "text": "Process group features. Read them back with the same A, then add the skip and decode."
+    }
+  ]
+}

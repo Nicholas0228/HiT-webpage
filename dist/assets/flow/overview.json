@@ -1,0 +1,639 @@
+{
+  "name": "hit-hierarchy",
+  "page_title": "HiT two-stage hierarchy",
+  "show_title": false,
+  "allow_text_color": false,
+  "width": 1160,
+  "height": 420,
+  "nodes": [
+    {
+      "id": "input",
+      "type": "tensor",
+      "x": 18,
+      "y": 90,
+      "w": 36,
+      "h": 42,
+      "label": "xₜ",
+      "dim": "image",
+      "size": 18,
+      "shape": "[H, W, 3]",
+      "info": "The noisy image enters the patch projection.",
+      "params": "xₜ = t x + (1 − t) ε",
+      "tags": [
+        "input"
+      ]
+    },
+    {
+      "id": "embed",
+      "x": 82,
+      "y": 86,
+      "w": 86,
+      "h": 50,
+      "label": [
+        "Patch",
+        "embed"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[H, W, 3] → [N, d]",
+      "info": "A learned linear projection converts image patches into tokens.",
+      "params": "N is the patch count.",
+      "tags": [
+        "input"
+      ]
+    },
+    {
+      "id": "encoder1",
+      "x": 192,
+      "y": 86,
+      "w": 104,
+      "h": 50,
+      "label": [
+        "Encoder 1",
+        "[N, d]"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[N, d] → [N, d]",
+      "info": "Contextual features enter the first grouping stage. A learned skip keeps these features for the decoder.",
+      "params": "E₁",
+      "tags": [
+        "level1"
+      ]
+    },
+    {
+      "id": "group1",
+      "x": 192,
+      "y": 174,
+      "w": 104,
+      "h": 50,
+      "label": [
+        "Group 1",
+        "N → K₁"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[N, d] → [K₁, d]; A₁: [N, K₁]",
+      "info": "Average linkage defines the hard groups. Soft column-normalized weights pool the features.",
+      "params": "Router threshold τ₁; routing temperature Tᵣ.",
+      "tags": [
+        "level1",
+        "pooling"
+      ]
+    },
+    {
+      "id": "encoder2",
+      "x": 322,
+      "y": 174,
+      "w": 104,
+      "h": 50,
+      "label": [
+        "Encoder 2",
+        "[K₁, d]"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[K₁, d] → [K₁, d]",
+      "info": "The second encoder transforms the first-level group features.",
+      "params": "E₂",
+      "tags": [
+        "level2"
+      ]
+    },
+    {
+      "id": "group2",
+      "x": 322,
+      "y": 262,
+      "w": 104,
+      "h": 50,
+      "label": [
+        "Group 2",
+        "K₁ → K₂"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[K₁, d] → [K₂, d]; A₂: [K₁, K₂]",
+      "info": "The second router forms a hierarchy over the first-level groups. Soft weights pool their features.",
+      "params": "Router threshold τ₂; routing temperature Tᵣ.",
+      "tags": [
+        "level2",
+        "pooling"
+      ]
+    },
+    {
+      "id": "compact",
+      "x": 518,
+      "y": 262,
+      "w": 128,
+      "h": 50,
+      "label": [
+        "Compact",
+        "transformer"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[K₂, d] → [K₂, d]",
+      "info": "The central transformer processes the smallest token population.",
+      "params": "M; token count K₂ adapts to this input.",
+      "tags": [
+        "compact"
+      ],
+      "stack": true
+    },
+    {
+      "id": "readback2",
+      "x": 714,
+      "y": 262,
+      "w": 104,
+      "h": 50,
+      "label": [
+        "Readback 2",
+        "K₂ → K₁"
+      ],
+      "size": 18,
+      "kind": "side",
+      "shape": "A₂ [K₁, K₂] × Z′₂ [K₂, d] → [K₁, d]",
+      "info": "The same row-normalized weights distribute processed group features to the first-level groups.",
+      "params": "R₂ = A₂ Z′₂",
+      "tags": [
+        "level2",
+        "readback"
+      ]
+    },
+    {
+      "id": "sum2",
+      "type": "op",
+      "x": 662,
+      "y": 186,
+      "w": 28,
+      "h": 28,
+      "label": [
+        "+"
+      ],
+      "size": 16,
+      "shape": "[K₁, d] + [K₁, d]",
+      "info": "Add the learned skip projection to readback.",
+      "params": "Skip₂(H₂) + A₂ Z′₂",
+      "tags": [
+        "level2"
+      ]
+    },
+    {
+      "id": "decoder2",
+      "x": 714,
+      "y": 174,
+      "w": 104,
+      "h": 50,
+      "label": [
+        "Decoder 2",
+        "[K₁, d]"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[K₁, d] → [K₁, d]",
+      "info": "The decoder transforms the sum of readback and the second skip.",
+      "params": "D₂",
+      "tags": [
+        "level2",
+        "readback"
+      ]
+    },
+    {
+      "id": "readback1",
+      "x": 844,
+      "y": 174,
+      "w": 104,
+      "h": 50,
+      "label": [
+        "Readback 1",
+        "K₁ → N"
+      ],
+      "size": 18,
+      "kind": "side",
+      "shape": "A₁ [N, K₁] × Z′₁ [K₁, d] → [N, d]",
+      "info": "The first routing matrix restores features to the original patch positions.",
+      "params": "R₁ = A₁ Z′₁",
+      "tags": [
+        "level1",
+        "readback"
+      ]
+    },
+    {
+      "id": "sum1",
+      "type": "op",
+      "x": 802,
+      "y": 98,
+      "w": 28,
+      "h": 28,
+      "label": [
+        "+"
+      ],
+      "size": 16,
+      "shape": "[N, d] + [N, d]",
+      "info": "Add the learned skip projection to readback.",
+      "params": "Skip₁(H₁) + A₁ Z′₁",
+      "tags": [
+        "level1"
+      ]
+    },
+    {
+      "id": "decoder1",
+      "x": 844,
+      "y": 86,
+      "w": 104,
+      "h": 50,
+      "label": [
+        "Decoder 1",
+        "[N, d]"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[N, d] → [N, d]",
+      "info": "The final decoder retains the original image resolution.",
+      "params": "D₁",
+      "tags": [
+        "level1",
+        "readback"
+      ]
+    },
+    {
+      "id": "head",
+      "x": 974,
+      "y": 86,
+      "w": 86,
+      "h": 50,
+      "label": [
+        "Linear",
+        "head"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[N, d] → [H, W, 3]",
+      "info": "A learned linear head predicts clean image patches.",
+      "params": "Patch outputs are placed back on the image grid.",
+      "tags": [
+        "output"
+      ]
+    },
+    {
+      "id": "output",
+      "type": "tensor",
+      "x": 1090,
+      "y": 90,
+      "w": 36,
+      "h": 42,
+      "label": "x̂",
+      "dim": "image",
+      "size": 18,
+      "shape": "[H, W, 3]",
+      "info": "Predicted clean image.",
+      "params": "Output of the denoiser.",
+      "tags": [
+        "output"
+      ]
+    },
+    {
+      "id": "skip1",
+      "x": 550,
+      "y": 32,
+      "w": 140,
+      "h": 40,
+      "label": [
+        "Learned skip 1"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[N, d] → [N, d]",
+      "info": "A learned linear projection preserves fine-resolution features for the first decoder.",
+      "params": "Initialized to the identity.",
+      "tags": [
+        "level1"
+      ]
+    },
+    {
+      "id": "skip2",
+      "x": 470,
+      "y": 128,
+      "w": 140,
+      "h": 40,
+      "label": [
+        "Learned skip 2"
+      ],
+      "size": 18,
+      "kind": "train",
+      "shape": "[K₁, d] → [K₁, d]",
+      "info": "A learned linear projection preserves first-level group features for the second decoder.",
+      "params": "Initialized to the identity.",
+      "tags": [
+        "level2"
+      ]
+    },
+    {
+      "id": "population",
+      "type": "text",
+      "x": 580,
+      "y": 348,
+      "label": [
+        "N → K₁ → K₂ → K₁ → N"
+      ],
+      "size": 18,
+      "anchor": "middle"
+    },
+    {
+      "id": "conditioning",
+      "type": "text",
+      "x": 580,
+      "y": 374,
+      "label": [
+        "Conditioning is omitted from this image hierarchy."
+      ],
+      "size": 18,
+      "anchor": "middle"
+    },
+    {
+      "id": "legend-train-key",
+      "type": "tensor",
+      "kind": "train",
+      "x": 310,
+      "y": 392,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "id": "legend-train",
+      "type": "text",
+      "x": 334,
+      "y": 405,
+      "label": [
+        "Learned module"
+      ],
+      "size": 18
+    },
+    {
+      "id": "legend-data-key",
+      "type": "tensor",
+      "kind": "tensor",
+      "x": 500,
+      "y": 392,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "id": "legend-data",
+      "type": "text",
+      "x": 524,
+      "y": 405,
+      "label": [
+        "Feature tensor"
+      ],
+      "size": 18
+    },
+    {
+      "id": "legend-route-key",
+      "type": "tensor",
+      "kind": "side",
+      "x": 680,
+      "y": 392,
+      "w": 16,
+      "h": 16
+    },
+    {
+      "id": "legend-route",
+      "type": "text",
+      "x": 704,
+      "y": 405,
+      "label": [
+        "Feature transfer"
+      ],
+      "size": 18
+    }
+  ],
+  "edges": [
+    {
+      "from": "input.r",
+      "to": "embed.l"
+    },
+    {
+      "from": "embed.r",
+      "to": "encoder1.l"
+    },
+    {
+      "from": "encoder1.b",
+      "to": "group1.t",
+      "tags": [
+        "level1"
+      ]
+    },
+    {
+      "from": "group1.r",
+      "to": "encoder2.l",
+      "tags": [
+        "level1"
+      ]
+    },
+    {
+      "from": "encoder2.b",
+      "to": "group2.t",
+      "tags": [
+        "level2"
+      ]
+    },
+    {
+      "from": "group2.r",
+      "to": "compact.l",
+      "label": "Z₂",
+      "tags": [
+        "level2"
+      ]
+    },
+    {
+      "from": "compact.r",
+      "to": "readback2.l",
+      "label": "Z′₂",
+      "tags": [
+        "level2"
+      ]
+    },
+    {
+      "from": "readback2.t",
+      "to": "sum2.b",
+      "via": [
+        [
+          766,
+          244
+        ],
+        [
+          676,
+          244
+        ]
+      ],
+      "tags": [
+        "level2"
+      ]
+    },
+    {
+      "from": "sum2.r",
+      "to": "decoder2.l",
+      "tags": [
+        "level2"
+      ]
+    },
+    {
+      "from": "decoder2.r",
+      "to": "readback1.l",
+      "tags": [
+        "level1"
+      ]
+    },
+    {
+      "from": "readback1.t",
+      "to": "sum1.b",
+      "via": [
+        [
+          896,
+          154
+        ],
+        [
+          816,
+          154
+        ]
+      ],
+      "tags": [
+        "level1"
+      ]
+    },
+    {
+      "from": "sum1.r",
+      "to": "decoder1.l",
+      "tags": [
+        "level1"
+      ]
+    },
+    {
+      "from": "decoder1.r",
+      "to": "head.l"
+    },
+    {
+      "from": "head.r",
+      "to": "output.l"
+    },
+    {
+      "from": "encoder1.t",
+      "to": "skip1.l",
+      "via": [
+        [
+          244,
+          52
+        ]
+      ],
+      "tags": [
+        "level1"
+      ]
+    },
+    {
+      "from": "skip1.r",
+      "to": "sum1.t",
+      "via": [
+        [
+          816,
+          52
+        ]
+      ],
+      "tags": [
+        "level1"
+      ]
+    },
+    {
+      "from": "encoder2.t",
+      "to": "skip2.l",
+      "via": [
+        [
+          374,
+          148
+        ]
+      ],
+      "tags": [
+        "level2"
+      ]
+    },
+    {
+      "from": "skip2.r",
+      "to": "sum2.t",
+      "via": [
+        [
+          676,
+          148
+        ]
+      ],
+      "tags": [
+        "level2"
+      ]
+    }
+  ],
+  "tags": [
+    {
+      "tag": "level1",
+      "label": "Level 1",
+      "info": "N image patches become K₁ groups."
+    },
+    {
+      "tag": "level2",
+      "label": "Level 2",
+      "info": "K₁ groups become K₂ groups."
+    },
+    {
+      "tag": "pooling",
+      "label": "Pooling",
+      "info": "Column-normalized A gathers features."
+    },
+    {
+      "tag": "readback",
+      "label": "Readback",
+      "info": "Rows of A distribute processed group features."
+    }
+  ],
+  "steps": [
+    {
+      "nodes": [
+        "input",
+        "embed",
+        "encoder1"
+      ],
+      "text": "Embed image patches and encode their context."
+    },
+    {
+      "nodes": [
+        "group1",
+        "encoder2"
+      ],
+      "text": "Form the first groups and transform their pooled features."
+    },
+    {
+      "nodes": [
+        "group2",
+        "compact"
+      ],
+      "text": "Form the second groups and run the compact transformer."
+    },
+    {
+      "nodes": [
+        "readback2",
+        "sum2",
+        "skip2",
+        "decoder2"
+      ],
+      "text": "Read back to K₁ positions, add the learned skip, and decode."
+    },
+    {
+      "nodes": [
+        "readback1",
+        "sum1",
+        "skip1",
+        "decoder1",
+        "head",
+        "output"
+      ],
+      "text": "Read back to N patches, add the learned skip, and predict the clean image."
+    }
+  ]
+}

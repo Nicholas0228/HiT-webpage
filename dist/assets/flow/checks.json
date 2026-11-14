@@ -1,0 +1,20 @@
+{
+  "stage1NormalizedFormError": 0.0001373291015625,
+  "stage1AffinitySymmetryError": 0.0,
+  "stage1PoolColumnSumError": 2.980232238769531e-07,
+  "stage1RowSumError": 4.172325134277344e-07,
+  "stage1AssignmentError": 0.0,
+  "stage1PoolingError": 0.0,
+  "stage1MeanAffinityError": 4.172325134277344e-07,
+  "stage1TreeLabelsMatch": true,
+  "stage2NormalizedFormError": 0.0001068115234375,
+  "stage2AffinitySymmetryError": 0.0,
+  "stage2PoolColumnSumError": 2.384185791015625e-07,
+  "stage2RowSumError": 2.384185791015625e-07,
+  "stage2AssignmentError": 0.0,
+  "stage2PoolingError": 0.0,
+  "stage2MeanAffinityError": 2.384185791015625e-07,
+  "stage2TreeLabelsMatch": true,
+  "stage1ReadbackError": 0.0,
+  "stage2ReadbackError": 0.0
+}

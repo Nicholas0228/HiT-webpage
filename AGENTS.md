@@ -17,6 +17,28 @@ Less is more. Keep the webpage clean.
 - Keep the black-text and AF3 palette rules below. The reference does not override them.
 - Build only the content the user requests. Do not add later sections without a request.
 
+### Shared glass UI
+
+- Use one shared control system in `dist/ui-glass.css`.
+- Use black, white, and grey for interface surfaces and animation effects.
+- Use the macOS Liquid Glass style for controls: light translucent fills, a thin rim, and a soft shadow.
+- Use the same shape and selected state for buttons, tabs, menus, and image selectors.
+- Keep glass effects in the control layer. Keep images, plots, and data maps clear.
+- Keep the AF3 data colors and caption weight colors. Do not apply a grey filter to data visuals.
+- Keep text black and use the shared regular text size.
+- Keep keyboard focus clear. Support reduced motion and reduced transparency.
+- Reference: [Apple materials](https://developer.apple.com/design/human-interface-guidelines/materials).
+
+### Shared text size
+
+- Apply this rule to every page, section, figure, and interactive viewer.
+- Use one shared font size for all regular text. This includes paragraphs, captions, annotations, notes, footnotes, legends, axis labels, tooltips, and control labels.
+- Do not make captions, notes, instructions, or other secondary text smaller than paragraphs.
+- Only titles, headings, subtitles, and highlights can use different font sizes.
+- The large `256 → 110` values are a highlight. The labels `image patches` and `image groups` must use the shared regular text size.
+- Define the regular text size once with a shared CSS variable. Use it in all components.
+- If the size changes for a smaller screen, change the shared value for all regular text together. Do not add separate sizes for individual components.
+
 ## Figure text
 
 - All figure text must be black (`#000000`). This includes labels, dimensions, equations, badges, legends, and captions.

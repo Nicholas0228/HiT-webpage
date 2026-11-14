@@ -8,9 +8,23 @@
   <title>HiT</title>
   <link rel="icon" href="assets/favicon.ico?v=7bdb7f8a915b" sizes="any">
   <link rel="icon" href="assets/favicon.svg?v=7bdb7f8a915b" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=cf5aeee6c923">
+  <link rel="stylesheet" href="styles.css?v=1582dd8e56db">
   <script src="snap-source.js?v=200f3692f0ef" defer></script>
   <script src="intro.js?v=852df6ee35f1" defer></script>
+  <link rel="stylesheet" href="sections.css?v=09f040581ea9">
+  <link rel="stylesheet" href="groups.css?v=9b75fb3513f8">
+  <link rel="stylesheet" href="efficiency.css?v=d56d72ae18ba">
+  <link rel="stylesheet" href="joint.css?v=dd4277767d1f">
+  <script src="sections.js?v=9259e2716db1" defer></script>
+  <script src="groups.js?v=05239ac489dc" defer></script>
+  <script src="efficiency.js?v=0ee745418746" defer></script>
+  <script src="joint.js?v=3eee1a46c34f" defer></script>
+  <link rel="stylesheet" href="nested-hit.css?v=9dc6f14b3d03">
+  <script src="nested-hit.js?v=f0a87818b897" defer></script>
+  <link rel="stylesheet" href="flow.css?v=b791805ea812">
+  <script src="flow.js?v=a0151601edbb" defer></script>
+  <link rel="stylesheet" href="ui-glass.css?v=49e40fcaf913">
+  <script src="ui-glass.js?v=e05d9682d0d7" defer></script>
 </head>
 <body>
   <main>
@@ -54,6 +68,56 @@
           <svg width="18" height="26" viewBox="0 0 18 26" fill="none"><path d="M9 1v22m-6-6 6 6 6-6" stroke="#000000" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
       </div>
+    </section>
+
+    <section class="story-section efficiency-section" id="efficiency" aria-labelledby="efficiency-title">
+      <header class="story-heading" data-reveal>
+        <h2 id="efficiency-title">Better image quality.<br>Less FLOPs.</h2>
+        <p class="story-lead">HiT reaches the same image quality with fewer training FLOPs.</p>
+      </header>
+      <div id="efficiency-chart" class="component-mount" aria-label="Compare HiT and JiT training efficiency"></div>
+      <div id="flow-viewer" class="component-mount" aria-label="Explore the HiT hierarchy"></div>
+    </section>
+
+    <section class="story-section" id="discover" aria-labelledby="discover-title">
+      <header class="story-heading" data-reveal>
+        <h2 id="discover-title">HiT learns its own<br>visual hierarchy.</h2>
+        <p class="story-lead">HiT organizes patches at test time and generates images directly in pixel space.</p>
+      </header>
+      <div class="story-intro" data-reveal>
+        <h3>Test-time image grouping</h3>
+        <p>HiT forms compact groups for each image and diffusion timestep. Both group membership and group counts adapt to the input.</p>
+      </div>
+      <div id="grouping-viewer" class="component-mount" data-reveal aria-label="Explore learned image groups"></div>
+      <div class="story-caption">
+        <p>Groups can follow object parts, combine background regions, and connect distant patches.</p>
+        <p>The router learns during training. It forms the groups during both training and generation.</p>
+        <p class="story-note">No segmentation labels. No pretrained visual encoder.</p>
+      </div>
+    </section>
+
+    <section class="more-reveal" id="one-more-thing" aria-label="One more thing">
+      <div class="more-stage">
+        <div class="more-atmosphere" aria-hidden="true">
+          <div class="more-glow"></div>
+          <div class="more-lens more-lens-back"></div>
+          <div class="more-lens more-lens-front"></div>
+          <div class="more-light"></div>
+        </div>
+        <h2 class="more-headline" aria-label="One more thing.">
+          <span class="more-line" aria-hidden="true"><span class="more-mask"><span class="more-word">One</span></span> <span class="more-mask"><span class="more-word">more</span></span></span>
+          <span class="more-line" aria-hidden="true"><span class="more-mask"><span class="more-word">thing.</span></span></span>
+        </h2>
+      </div>
+    </section>
+
+    <section class="story-section joint-section" id="connections" aria-labelledby="connections-title">
+      <header class="story-heading" data-reveal>
+        <h2 id="connections-title">Images and words.<br>One hierarchy.</h2>
+        <p class="story-lead">HiT connects image regions and caption words through a shared hierarchy.</p>
+        <p class="story-note">These connections emerge without word–region annotations.</p>
+      </header>
+      <div id="joint-viewer" class="component-mount" data-reveal aria-label="Explore image and word connections"></div>
     </section>
   </main>
   <noscript><style>.intro{height:100svh}.keywords,.scroll-cue,.wordmark{display:none}.wordmark-slot{visibility:visible}.paper-title,.authors,.affiliations{opacity:1;transform:none}</style></noscript>

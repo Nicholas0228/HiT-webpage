@@ -1,0 +1,60 @@
+/* Keep the images central. Use one size for all regular text. */
+#joint-viewer{--joint-line:rgba(0,0,0,.14);color:#000000;background:#ffffff;max-width:1180px;min-width:0;margin-inline:auto;font-family:inherit;font-size:var(--body-text-size,18px);line-height:1.5}
+#joint-viewer *,#joint-viewer *::before,#joint-viewer *::after{box-sizing:border-box;color:#000000}
+#joint-viewer [hidden]{display:none!important}
+#joint-viewer p,#joint-viewer figcaption,#joint-viewer label,#joint-viewer summary,#joint-viewer button,#joint-viewer select{font-size:var(--body-text-size,18px);line-height:1.5}
+#joint-viewer p{margin:0}
+#joint-viewer button,#joint-viewer select{font-family:inherit;color:#000000;background:#ffffff}
+#joint-viewer button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+#joint-viewer button:focus-visible,#joint-viewer select:focus-visible,#joint-viewer canvas:focus-visible,#joint-viewer summary:focus-visible{outline:2px solid #000000;outline-offset:4px}
+#joint-viewer button:disabled,#joint-viewer select:disabled{cursor:wait}
+#joint-viewer .joint-loading{padding:14px 0}
+#joint-viewer .joint-content{min-width:0}
+#joint-viewer .joint-gallery-heading{display:flex;align-items:baseline;justify-content:space-between;gap:12px 24px;flex-wrap:wrap;margin-bottom:12px}
+#joint-viewer .joint-example-title{font-size:clamp(25px,2.2vw,30px);font-weight:600;line-height:1.2;letter-spacing:-.025em;margin:0}
+#joint-viewer .joint-gallery-help{margin:0}
+#joint-viewer .joint-thumbnails{display:flex;align-items:stretch;gap:14px;max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x proximity;scroll-padding:4px;padding:4px 3px 10px;margin:0 0 22px}
+#joint-viewer .joint-example{display:flex;flex:0 0 90px;flex-direction:column;align-items:center;gap:6px;min-width:0;padding:0 1px 7px;border:0;border-bottom:2px solid transparent;background:#ffffff;line-height:1.2;scroll-snap-align:start}
+#joint-viewer .joint-example img{display:block;width:60px;height:60px;object-fit:cover;border-radius:7px}
+#joint-viewer .joint-example span{max-width:100%;text-align:center;overflow-wrap:anywhere}
+#joint-viewer .joint-example[aria-pressed="true"]{border-bottom-color:#000000}
+#joint-viewer .joint-example:hover{border-bottom-color:#000000}
+#joint-viewer .joint-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px 24px;margin:0 0 20px}
+#joint-viewer .joint-time-control{display:flex;align-items:center;gap:10px;min-width:0;max-width:100%}
+#joint-viewer select{font:inherit;font-size:var(--body-text-size,18px);padding:7px 11px;border:1px solid var(--joint-line);border-radius:7px;max-width:100%;min-width:0}
+#joint-viewer .joint-tools{display:flex;align-items:center;gap:22px;max-width:100%;min-width:0}
+#joint-viewer .joint-segment{display:inline-flex;align-items:center;gap:3px;padding:3px;border:1px solid var(--joint-line);border-radius:24px;max-width:100%}
+#joint-viewer .joint-segment button{border:1px solid transparent;border-radius:21px;padding:6px 13px;line-height:1.3;white-space:nowrap}
+#joint-viewer .joint-segment button[aria-pressed="true"]{background:rgba(194,194,194,.15);border-color:#000000}
+#joint-viewer .joint-segment button:hover{background:rgba(194,194,194,.12)}
+#joint-viewer .joint-reset{border:0;border-bottom:1px solid #000000;padding:3px 0;line-height:1.3;white-space:nowrap}
+#joint-viewer .joint-caption-tabs{display:flex;align-items:center;gap:26px;flex-wrap:wrap;border-bottom:1px solid var(--joint-line);margin:0 0 16px}
+#joint-viewer .joint-caption-tabs button{padding:5px 0 9px;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;line-height:1.3}
+#joint-viewer .joint-caption-tabs button[aria-selected="true"]{border-bottom-color:#000000;font-weight:600}
+#joint-viewer .joint-caption{display:flex;align-items:baseline;flex-wrap:wrap;gap:6px 8px;min-width:0;margin:0 0 10px}
+#joint-viewer .joint-token-run{display:inline-flex;align-items:baseline;gap:3px;white-space:nowrap;max-width:100%}
+#joint-viewer .joint-token{border:1px solid var(--joint-line);border-radius:5px;padding:4px 7px;line-height:1.3;letter-spacing:inherit}
+#joint-viewer .joint-token[aria-pressed="true"]{border-color:#489750;box-shadow:0 0 0 1px #489750}
+#joint-viewer .joint-token:hover{box-shadow:inset 0 -1px 0 #000000}
+#joint-viewer .joint-hint{margin:0 0 18px}
+#joint-viewer .joint-views{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
+#joint-viewer .joint-figure{margin:0;min-width:0}
+#joint-viewer .joint-figure figcaption{margin:0 0 8px;font-weight:500}
+#joint-viewer canvas{display:block;width:100%;height:auto;aspect-ratio:1;background:#ffffff;border-radius:5px;cursor:crosshair;touch-action:pan-y}
+#joint-viewer .joint-statusbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px 24px;min-width:0;margin-top:14px;padding-bottom:14px;border-bottom:1px solid var(--joint-line);font-variant-numeric:tabular-nums}
+#joint-viewer .joint-selection{font-weight:500;min-width:0}
+#joint-viewer .joint-legend,#joint-viewer .joint-weight-legend,#joint-viewer .joint-group-legend,#joint-viewer .joint-target-legend{display:flex;align-items:center;flex-wrap:wrap;gap:7px 9px;min-width:0;margin:0;font-size:var(--body-text-size,18px);line-height:1.4}
+#joint-viewer .joint-legend{column-gap:18px}
+#joint-viewer .joint-legend-ramp{display:inline-block;width:86px;height:11px;border:1px solid var(--joint-line);background:linear-gradient(90deg,#ffffff,#6289ad);flex:none}
+#joint-viewer .joint-target-key,#joint-viewer .joint-hard-key{display:inline-block;width:15px;height:15px;border:2px solid #489750;background:rgba(72,151,80,.15);flex:none}
+#joint-viewer .joint-hard-key{border-color:#e8a446;background:rgba(232,164,70,.35)}
+#joint-viewer .joint-details{margin-top:10px}
+#joint-viewer .joint-details summary{cursor:pointer;width:fit-content;padding:3px 0}
+#joint-viewer .joint-detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 32px;padding-top:12px;max-width:100ch;overflow-wrap:anywhere}
+#joint-viewer .joint-detail-grid .joint-scale-note,#joint-viewer .joint-detail-grid .joint-science-note,#joint-viewer .joint-detail-grid .joint-patch-help,#joint-viewer .joint-detail-grid .joint-token-note,#joint-viewer .joint-detail-grid .joint-run-data{grid-column:1/-1}
+#joint-viewer .joint-run-data{display:grid;gap:10px;min-width:0;overflow-wrap:anywhere}
+#joint-viewer .joint-inspection,#joint-viewer .joint-mass{font-variant-numeric:tabular-nums}
+#joint-viewer .joint-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;font-size:var(--body-text-size,18px)}
+@media(max-width:720px){#joint-viewer .joint-gallery-heading{margin-bottom:10px}#joint-viewer .joint-thumbnails{gap:11px;margin-bottom:18px}#joint-viewer .joint-example{flex-basis:82px}#joint-viewer .joint-toolbar{gap:12px 18px;margin-bottom:18px}#joint-viewer .joint-tools{gap:18px}#joint-viewer .joint-segment button{padding:6px 10px}#joint-viewer .joint-caption-tabs{gap:22px;margin-bottom:14px}#joint-viewer .joint-caption{gap:6px}#joint-viewer .joint-hint{margin-bottom:16px}#joint-viewer .joint-views{grid-template-columns:1fr;gap:18px}#joint-viewer .joint-statusbar{align-items:flex-start;gap:10px;margin-top:12px}#joint-viewer .joint-statusbar>.joint-legend{width:100%}#joint-viewer .joint-detail-grid{grid-template-columns:1fr;gap:10px}#joint-viewer .joint-detail-grid>*{grid-column:1/-1}}
+@media(max-width:440px){#joint-viewer .joint-gallery-heading{display:block}#joint-viewer .joint-gallery-help{margin-top:5px}#joint-viewer .joint-time-control{width:100%}#joint-viewer .joint-time-control select{flex:1}#joint-viewer .joint-tools{justify-content:space-between;width:100%}#joint-viewer .joint-caption-tabs{gap:18px}#joint-viewer .joint-token{padding:4px 6px}#joint-viewer .joint-legend{column-gap:13px}#joint-viewer .joint-legend-ramp{width:70px}}
+@media(prefers-reduced-motion:no-preference){#joint-viewer .joint-token,#joint-viewer .joint-segment button,#joint-viewer .joint-caption-tabs button,#joint-viewer .joint-example{transition:background-color .14s,border-color .14s}}

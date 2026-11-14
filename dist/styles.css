@@ -1,4 +1,6 @@
 :root {
+  --body-text-size: 18px;
+  font-size: var(--body-text-size);
   color-scheme: light;
   font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   color: #000000;
@@ -103,13 +105,13 @@ a:focus-visible { outline: 2px solid #000000; outline-offset: 5px; border-radius
   justify-content: center;
   flex-wrap: wrap;
   gap: 12px 22px;
-  font-size: 16px;
+  font-size: var(--body-text-size);
   line-height: 1.5;
   opacity: 0;
   will-change: opacity, transform;
 }
 .authors > span { white-space: nowrap; }
-sup { font-size: 0.65em; vertical-align: super; line-height: 0; margin-left: 2px; }
+sup { font-size: 1em; vertical-align: super; line-height: 0; margin-left: 2px; }
 .affiliations {
   margin-top: 28px;
   display: flex;
@@ -120,7 +122,7 @@ sup { font-size: 0.65em; vertical-align: super; line-height: 0; margin-left: 2px
   opacity: 0;
   will-change: opacity, transform;
 }
-.university { display: flex; align-items: center; gap: 9px; font-size: 13px; }
+.university { display: flex; align-items: center; gap: 9px; font-size: var(--body-text-size); }
 .university img { object-fit: contain; flex: 0 0 auto; }
 .cmu-logo { width: 30px; height: 30px; }
 .rice-logo { width: 24px; height: 30px; }
@@ -134,7 +136,7 @@ sup { font-size: 0.65em; vertical-align: super; line-height: 0; margin-left: 2px
   align-items: center;
   gap: 15px;
   color: #000000;
-  font-size: 12px;
+  font-size: var(--body-text-size);
   font-weight: 500;
   letter-spacing: 0.025em;
   white-space: nowrap;
@@ -143,9 +145,10 @@ sup { font-size: 0.65em; vertical-align: super; line-height: 0; margin-left: 2px
   .identity { width: 88%; max-width: 860px; }
   .paper-title { white-space: normal; }
   .paper-title > span { display: block; }
-  .authors { max-width: 720px; font-size: 15px; }
+  .authors { max-width: 720px; font-size: var(--body-text-size); }
 }
 @media (max-width: 600px) {
+  :root { --body-text-size: 16px; }
   .keywords { font-size: clamp(28px, 7.8vw, 46px); gap: 24px; }
   .wordmark { width: 190px; }
   .identity { width: calc(100% - 40px); top: 47%; }
@@ -153,9 +156,9 @@ sup { font-size: 0.65em; vertical-align: super; line-height: 0; margin-left: 2px
   .wordmark-slot { width: 70px; }
   .paper-title { font-size: clamp(23.8px, 6.63vw, 39.1px); letter-spacing: -0.035em; }
   .paper-title > span { display: inline; }
-  .authors { margin-top: 32px; gap: 10px 17px; font-size: 14px; }
+  .authors { margin-top: 32px; gap: 10px 17px; font-size: var(--body-text-size); }
   .affiliations { margin-top: 30px; flex-direction: column; align-items: center; gap: 20px; }
-  .university { font-size: 12px; gap: 8px; }
+  .university { font-size: var(--body-text-size); gap: 8px; }
   .cmu-logo { width: 26px; height: 26px; }
   .rice-logo { width: 21px; height: 26px; }
 }

@@ -1,0 +1,284 @@
+/* Shared control surfaces. Data colors stay in the component styles. */
+:root {
+  --ui-ink: #000000;
+  --ui-line: rgba(0, 0, 0, .13);
+  --ui-rim: rgba(255, 255, 255, .94);
+  --ui-glass: linear-gradient(155deg, rgba(255,255,255,.95), rgba(248,248,248,.8) 48%, rgba(235,235,235,.72));
+  --ui-rail: linear-gradient(180deg, rgba(239,239,239,.86), rgba(248,248,248,.7));
+  --ui-shadow: inset 0 1px 0 var(--ui-rim), inset 0 -1px 0 rgba(255,255,255,.5), 0 2px 4px rgba(0,0,0,.035), 0 8px 22px rgba(0,0,0,.045);
+  --ui-selected-shadow: inset 0 1px 1px #fff, inset 0 -1px 1px rgba(255,255,255,.65), 0 1px 3px rgba(0,0,0,.12), 0 3px 9px rgba(0,0,0,.08);
+  --ui-ease: cubic-bezier(.22, .8, .25, 1);
+  --ui-blur: blur(18px) grayscale(1);
+  --ui-control-radius: 16px;
+  color-scheme: light;
+}
+
+::selection { color: #000000; background: #d8d8d8; }
+
+/* One rail and one moving glass capsule for every segmented control. */
+:is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs),
+#joint-viewer .joint-segment {
+  position: relative;
+  isolation: isolate;
+  width: fit-content;
+  max-width: 100%;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid var(--ui-line);
+  border-radius: 999px;
+  background: var(--ui-rail);
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.04), 0 1px 0 #fff;
+  -webkit-backdrop-filter: var(--ui-blur);
+  backdrop-filter: var(--ui-blur);
+}
+
+:is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs) > button,
+#joint-viewer .joint-segment > button {
+  position: relative;
+  z-index: 1;
+  min-height: 42px;
+  min-width: 0;
+  padding: 9px 18px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ui-ink);
+  font-size: var(--body-text-size);
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: center;
+  white-space: nowrap;
+  box-shadow: none;
+  transition: background-color 180ms ease, box-shadow 180ms ease;
+}
+
+:is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs) > button:is([aria-pressed="true"], [aria-selected="true"]),
+#joint-viewer .joint-segment > button[aria-pressed="true"] {
+  background: var(--ui-glass);
+  border-color: rgba(0,0,0,.09);
+  box-shadow: var(--ui-selected-shadow);
+  font-weight: 600;
+}
+
+.glass-segment::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: var(--glass-width, 0px);
+  border: 1px solid rgba(0,0,0,.09);
+  border-radius: 999px;
+  background: var(--ui-glass);
+  box-shadow: var(--ui-selected-shadow);
+  transform: translateX(var(--glass-x, 4px));
+  pointer-events: none;
+}
+.glass-segment.glass-ready::before {
+  transition: transform 360ms var(--ui-ease), width 360ms var(--ui-ease);
+}
+:is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs).glass-segment > button:is([aria-pressed="true"], [aria-selected="true"]),
+#joint-viewer .joint-segment.glass-segment > button[aria-pressed="true"] {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+/* Native menus keep their normal keyboard behavior. */
+:is(.groups-epoch, .groups-group-select, .flow-details select),
+#joint-viewer select {
+  appearance: none;
+  min-height: 46px;
+  max-width: 100%;
+  padding: 10px 42px 10px 16px;
+  border: 1px solid var(--ui-line);
+  border-radius: var(--ui-control-radius);
+  color: var(--ui-ink);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m4 6 4 4 4-4' fill='none' stroke='%23000' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"), var(--ui-glass);
+  background-position: right 15px center, center;
+  background-size: 14px 14px, auto;
+  background-repeat: no-repeat;
+  background-color: #f8f8f8;
+  box-shadow: var(--ui-shadow);
+  -webkit-backdrop-filter: var(--ui-blur);
+  backdrop-filter: var(--ui-blur);
+  font-size: var(--body-text-size);
+  line-height: 1.35;
+  cursor: pointer;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+:is(.groups-reset, .groups-details > summary, .flow-details > summary, .flow-paper > summary),
+#joint-viewer :is(.joint-reset, .joint-details > summary) {
+  box-sizing: border-box;
+  width: fit-content;
+  min-height: 44px;
+  padding: 10px 17px;
+  border: 1px solid var(--ui-line);
+  border-radius: 999px;
+  background: var(--ui-glass);
+  color: var(--ui-ink);
+  box-shadow: var(--ui-shadow);
+  -webkit-backdrop-filter: var(--ui-blur);
+  backdrop-filter: var(--ui-blur);
+  font-size: var(--body-text-size);
+  font-weight: 400;
+  line-height: 1.3;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+:is(.groups-details, .flow-details, .flow-paper) > summary,
+#joint-viewer .joint-details > summary {
+  list-style: none;
+}
+:is(.groups-details, .flow-details, .flow-paper) > summary::-webkit-details-marker,
+#joint-viewer .joint-details > summary::-webkit-details-marker { display: none; }
+:is(.groups-details, .flow-details, .flow-paper) > summary::after,
+#joint-viewer .joint-details > summary::after {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin: 0 2px 3px 14px;
+  border-right: 1.5px solid #000;
+  border-bottom: 1.5px solid #000;
+  transform: rotate(45deg);
+  transition: transform 200ms var(--ui-ease);
+}
+:is(.groups-details, .flow-details, .flow-paper)[open] > summary::after,
+#joint-viewer .joint-details[open] > summary::after { transform: translateY(3px) rotate(225deg); }
+
+/* Image selection is a control layer. The images keep their data colors. */
+.groups-examples,
+#joint-viewer .joint-thumbnails {
+  gap: 8px;
+  padding: 8px;
+  margin-bottom: 28px;
+  border: 1px solid var(--ui-line);
+  border-radius: 24px;
+  background: linear-gradient(160deg, rgba(248,248,248,.86), rgba(242,242,242,.65));
+  box-shadow: inset 0 1px 0 #fff, 0 4px 18px rgba(0,0,0,.035);
+  -webkit-backdrop-filter: var(--ui-blur);
+  backdrop-filter: var(--ui-blur);
+  scroll-padding: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #c2c2c2 transparent;
+}
+.groups-example,
+#joint-viewer .joint-example {
+  flex: 0 0 114px;
+  gap: 9px;
+  padding: 10px 8px;
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background: transparent;
+  box-shadow: none;
+  color: var(--ui-ink);
+  font-size: var(--body-text-size);
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+.groups-example img,
+#joint-viewer .joint-example img {
+  width: 62px;
+  height: 62px;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.06);
+}
+.groups-example[aria-pressed="true"],
+#joint-viewer .joint-example[aria-pressed="true"] {
+  border-color: rgba(0,0,0,.17);
+  background: var(--ui-glass);
+  box-shadow: var(--ui-selected-shadow);
+}
+
+/* Small neutral frames. No blur or filter is applied to data visuals. */
+.groups-image-wrap,
+.flow-image canvas,
+#joint-viewer canvas {
+  border-radius: 16px;
+  box-shadow: 0 0 0 1px rgba(0,0,0,.09);
+}
+.nh-scene {
+  border-color: var(--ui-line);
+  border-radius: 28px;
+  background: #fdfdfd;
+  box-shadow: 0 8px 30px rgba(0,0,0,.035);
+}
+.nh-core {
+  border-color: var(--ui-line);
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 4px 18px rgba(0,0,0,.05);
+}
+.efficiency-tooltip {
+  border: 1px solid var(--ui-line);
+  border-radius: 18px;
+  background: var(--ui-glass);
+  box-shadow: var(--ui-shadow);
+  -webkit-backdrop-filter: var(--ui-blur);
+  backdrop-filter: var(--ui-blur);
+  color: #000;
+}
+.flow-result {
+  padding: 16px 20px;
+  border-color: var(--ui-line);
+  border-radius: 18px;
+  background: #f7f7f7;
+}
+.flow-equation { border-color: #c2c2c2; }
+.groups-details,
+#joint-viewer .joint-details { margin-top: 16px; }
+.groups-detail-content,
+#joint-viewer .joint-detail-grid { padding-top: 18px; }
+.groups-show { border-color: rgba(0,0,0,.4); border-radius: 6px; box-shadow: inset 0 1px 2px rgba(0,0,0,.08); }
+
+@media (hover: hover) {
+  :is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs) > button:hover,
+  #joint-viewer .joint-segment > button:hover { background-color: rgba(255,255,255,.36); }
+  :is(.groups-reset, .groups-epoch, .groups-group-select, .flow-details select, .groups-details > summary, .flow-details > summary, .flow-paper > summary):hover,
+  #joint-viewer :is(select, .joint-reset, .joint-details > summary):hover { border-color: rgba(0,0,0,.28); }
+  .groups-example:hover, .groups-example[aria-pressed="true"]:hover,
+  #joint-viewer .joint-example:hover { border-color: rgba(0,0,0,.16); background-color: rgba(255,255,255,.65); }
+}
+
+:is(.groups-time, .efficiency-tab, .flow-level-controls button, .flow-tabs button, .groups-epoch, .groups-group-select, .flow-details select, .groups-reset, .groups-example, .groups-details > summary, .flow-details > summary, .flow-paper > summary):focus-visible,
+#joint-viewer :is(select, .joint-segment > button, .joint-reset, .joint-example, .joint-details > summary):focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 3px;
+}
+
+@media (max-width: 620px) {
+  :is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs) > button,
+  #joint-viewer .joint-segment > button { padding-inline: 13px; }
+  .groups-examples,
+  #joint-viewer .joint-thumbnails { margin-bottom: 24px; border-radius: 22px; }
+  .groups-example,
+  #joint-viewer .joint-example { flex-basis: 100px; }
+}
+@media (max-width: 420px) {
+  .groups-times, .efficiency-tabs, .flow-tabs { width: 100%; }
+  .efficiency-tabs > button, .flow-tabs > button { flex: 1; white-space: normal; }
+  .groups-times > button { padding-inline: 8px; }
+  #joint-viewer .joint-tools { gap: 10px; }
+  #joint-viewer .joint-reset { padding-inline: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-segment.glass-ready::before,
+  :is(.groups-details, .flow-details, .flow-paper) > summary::after,
+  #joint-viewer .joint-details > summary::after { transition: none; }
+}
+@media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
+  :root {
+    --ui-glass: linear-gradient(#fff, #fff);
+    --ui-rail: linear-gradient(#ededed, #ededed);
+    --ui-line: rgba(0,0,0,.45);
+    --ui-blur: none;
+  }
+  .groups-examples, #joint-viewer .joint-thumbnails { background: #f5f5f5; }
+}
+@media (forced-colors: active) {
+  .glass-segment::before { display: none; }
+  .glass-segment > button:is([aria-pressed="true"], [aria-selected="true"]) { outline: 2px solid Highlight; outline-offset: -3px; }
+}

@@ -1,0 +1,76 @@
+/* Use the page's shared regular text size. Keep all figure text black. */
+.groups-viewer { --groups-line: rgba(0,0,0,.14); width: 100%; min-width: 0; color: #000000; font-size: var(--body-text-size, 18px); line-height: 1.5; }
+.groups-viewer *, .groups-viewer button, .groups-viewer input, .groups-viewer select { box-sizing: border-box; color: #000000; }
+.groups-viewer p, .groups-viewer label, .groups-viewer button, .groups-viewer input, .groups-viewer select, .groups-viewer option, .groups-viewer span, .groups-viewer strong, .groups-viewer summary { font-size: var(--body-text-size, 18px); }
+.groups-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(315px, .65fr); gap: clamp(32px, 5vw, 76px); align-items: center; }
+.groups-image-wrap { position: relative; width: 100%; aspect-ratio: 1; overflow: hidden; border-radius: 4px; background: #ffffff; }
+.groups-image { display: block; width: 100%; height: 100%; object-fit: cover; }
+.groups-canvas { position: absolute; inset: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: pan-y; }
+.groups-canvas:focus-visible { outline: 3px solid #000000; outline-offset: -4px; }
+.groups-side { min-width: 0; }
+.groups-epoch-label { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.groups-epoch, .groups-group-select { padding: 9px 34px 9px 12px; font: inherit; border: 1px solid #00000026; border-radius: 8px; background: #ffffff; cursor: pointer; }
+.groups-group-label { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 28px; }
+.groups-group-select { max-width: 100%; }
+.groups-epoch:focus-visible, .groups-group-select:focus-visible { outline: 2px solid #000000; outline-offset: 4px; }
+.groups-time-label { display: block; margin-bottom: 10px; }
+.groups-times { display: flex; width: fit-content; padding: 4px; gap: 4px; border: 1px solid #0000001f; border-radius: 12px; background: #f5f5f5; }
+.groups-time { appearance: none; flex: 1; min-width: 58px; border: 1px solid transparent; border-radius: 8px; background: transparent; padding: 8px 10px; font: inherit; font-variant-numeric: tabular-nums; cursor: pointer; transition: background-color 160ms ease, border-color 160ms ease; }
+.groups-time[aria-pressed="true"] { background: #ffffff; border-color: #00000026; }
+.groups-time:hover { background: #ffffff; }
+.groups-time:focus-visible, .groups-example:focus-visible, .groups-reset:focus-visible { outline: 2px solid #000000; outline-offset: 4px; }
+.groups-metrics { display: flex; align-items: center; gap: clamp(16px, 2vw, 28px); margin-top: 34px; font-variant-numeric: tabular-nums; }
+.groups-metric { display: flex; flex-direction: column; gap: 10px; }
+.groups-viewer .groups-value { font-size: clamp(48px, 4.5vw, 70px); line-height: 1; font-weight: 500; letter-spacing: -.055em; }
+.groups-metric-label { line-height: 1.4; white-space: nowrap; }
+.groups-arrow { width: 27px; height: 19px; flex: 0 0 auto; margin-bottom: 33px; }
+.groups-viewer .groups-selection { min-width: 0; margin: 0; font-weight: 500; font-variant-numeric: tabular-nums; }
+.groups-selection strong { font-weight: 600; }
+.groups-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 26px; margin-top: 20px; }
+.groups-show-label { display: inline-flex; align-items: center; gap: 10px; cursor: pointer; }
+.groups-show { appearance: none; width: 20px; height: 20px; flex: 0 0 20px; margin: 0; border: 1px solid #000000; border-radius: 4px; background: #ffffff; cursor: pointer; }
+.groups-show:checked { background: #ffffff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='m3 8 3 3 7-7' fill='none' stroke='%23000000' stroke-width='1.6'/%3E%3C/svg%3E") center/16px 16px no-repeat; }
+.groups-show:focus-visible { outline: 2px solid #000000; outline-offset: 4px; }
+.groups-reset { border: 0; padding: 4px 0; background: transparent; font: inherit; cursor: pointer; text-decoration: underline; text-underline-offset: 5px; }
+.groups-examples { display: flex; align-items: stretch; gap: 18px; max-width: 100%; min-width: 0; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scroll-snap-type: x proximity; scroll-padding: 4px; padding: 4px 3px 10px; margin: 0 0 18px; }
+.groups-example { appearance: none; display: flex; flex: 0 0 104px; min-width: 0; scroll-snap-align: start; flex-direction: column; align-items: center; gap: 6px; padding: 0 1px 7px; border: 0; border-bottom: 2px solid transparent; background: none; font: inherit; line-height: 1.3; cursor: pointer; transition: border-color 160ms ease; }
+.groups-example[aria-pressed="true"] { border-bottom-color: #000000; }
+.groups-example img { display: block; width: 60px; height: 60px; object-fit: cover; border-radius: 4px; }
+.groups-example span { max-width: 100%; text-align: center; overflow-wrap: anywhere; }
+.groups-example:hover { border-bottom-color: #000000; }
+.groups-example[aria-pressed="true"]:hover { border-bottom-color: #000000; }
+.groups-viewer .groups-subject { margin: 0; }
+.groups-legend { display: flex; align-items: center; flex-wrap: wrap; gap: 8px 20px; margin: 0; min-width: 0; }
+.groups-legend-item { display: inline-flex; align-items: center; gap: 9px; }
+.groups-swatch { width: 15px; height: 15px; flex: none; border: 2px solid #e8a446; background: #fbedd9; }
+.groups-boundary { width: 20px; height: 0; flex: none; border-top: 2px solid #000000; }
+.groups-viewer .groups-hint { margin: 0 0 18px; line-height: 1.5; }
+.groups-statusbar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px 24px; min-width: 0; margin-top: 14px; padding-bottom: 14px; border-bottom: 1px solid var(--groups-line); }
+.groups-details { margin-top: 10px; }
+.groups-details summary { width: fit-content; padding: 3px 0; cursor: pointer; line-height: 1.5; }
+.groups-details summary:focus-visible { outline: 2px solid #000000; outline-offset: 4px; }
+.groups-detail-content { display: grid; gap: 10px; padding-top: 12px; max-width: 100ch; overflow-wrap: anywhere; }
+.groups-viewer .groups-note, .groups-viewer .groups-help, .groups-viewer .groups-detail-content p { margin: 0; line-height: 1.5; }
+.groups-explanation { display: grid; gap: 10px; }
+.groups-loading, .groups-error { min-height: 240px; display: grid; place-items: center; text-align: center; }
+@media (max-width: 900px) {
+  .groups-layout { grid-template-columns: 1fr; gap: 30px; }
+  .groups-image-wrap { max-width: 620px; margin-inline: auto; }
+  .groups-side { width: 100%; max-width: 620px; margin-inline: auto; }
+  .groups-examples { gap: 14px; margin-bottom: 16px; }
+  .groups-example { flex-basis: 96px; }
+  .groups-statusbar { align-items: flex-start; }
+}
+@media (max-width: 420px) {
+  .groups-times { width: 100%; }
+  .groups-time { min-width: 0; padding: 8px 6px; }
+  .groups-metrics { gap: 14px; }
+  .groups-viewer .groups-value { font-size: 48px; }
+  .groups-examples { gap: 12px; }
+  .groups-example { flex-basis: 88px; }
+  .groups-statusbar { gap: 9px; }
+  .groups-statusbar .groups-legend { width: 100%; gap: 8px 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .groups-viewer *, .groups-viewer *::before, .groups-viewer *::after { transition: none; animation: none; scroll-behavior: auto; }
+}
