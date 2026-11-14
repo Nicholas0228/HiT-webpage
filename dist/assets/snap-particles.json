@@ -1,0 +1,210 @@
+{
+  "source": "source.gif",
+  "sourceUrl": "https://makeagif.com/gif/snap-fingers-EqD-Ei",
+  "binary": "points.bin",
+  "tonesBinary": "tones.bin",
+  "detailsBinary": "details.bin",
+  "count": 7200,
+  "frameCount": 9,
+  "width": 128,
+  "height": 168,
+  "coordinateScale": 16,
+  "format": "uint16-le",
+  "layout": "frame-major, point-major, x then y",
+  "toneFormat": "uint8",
+  "detailFormat": "uint8",
+  "toneLayout": "frame-major, point-major; 0=light,255=dark",
+  "detailLayout": "frame-major, point-major; 0=surface,255=source contour or crease",
+  "byteLength": 259200,
+  "toneByteLength": 64800,
+  "detailByteLength": 64800,
+  "bytesPerFrame": 28800,
+  "durationMs": 610,
+  "snapStartMs": 200,
+  "snapMs": 270,
+  "snapStartSourceFrame": 8,
+  "snapSourceFrame": 9,
+  "firstTimeMs": 0,
+  "lastTimeMs": 540,
+  "startSourceFrame": 5,
+  "endSourceFrame": 13,
+  "sourceDimensions": [
+    180,
+    240
+  ],
+  "sourceCrop": {
+    "x": 0,
+    "y": 72,
+    "width": 128,
+    "height": 168
+  },
+  "samplingScale": 2,
+  "frames": [
+    {
+      "index": 0,
+      "sourceFrame": 5,
+      "sourceTimeMs": 330,
+      "clipTimeMs": 0,
+      "durationMs": 70,
+      "byteOffset": 0,
+      "toneByteOffset": 0,
+      "detailByteOffset": 0,
+      "poseIndex": 1
+    },
+    {
+      "index": 1,
+      "sourceFrame": 6,
+      "sourceTimeMs": 400,
+      "clipTimeMs": 70,
+      "durationMs": 70,
+      "byteOffset": 28800,
+      "toneByteOffset": 7200,
+      "detailByteOffset": 7200,
+      "poseIndex": 1
+    },
+    {
+      "index": 2,
+      "sourceFrame": 7,
+      "sourceTimeMs": 470,
+      "clipTimeMs": 140,
+      "durationMs": 60,
+      "byteOffset": 57600,
+      "toneByteOffset": 14400,
+      "detailByteOffset": 14400,
+      "poseIndex": 1
+    },
+    {
+      "index": 3,
+      "sourceFrame": 8,
+      "sourceTimeMs": 530,
+      "clipTimeMs": 200,
+      "durationMs": 70,
+      "byteOffset": 86400,
+      "toneByteOffset": 21600,
+      "detailByteOffset": 21600,
+      "poseIndex": 1
+    },
+    {
+      "index": 4,
+      "sourceFrame": 9,
+      "sourceTimeMs": 600,
+      "clipTimeMs": 270,
+      "durationMs": 70,
+      "byteOffset": 115200,
+      "toneByteOffset": 28800,
+      "detailByteOffset": 28800,
+      "poseIndex": 2
+    },
+    {
+      "index": 5,
+      "sourceFrame": 10,
+      "sourceTimeMs": 670,
+      "clipTimeMs": 340,
+      "durationMs": 60,
+      "byteOffset": 144000,
+      "toneByteOffset": 36000,
+      "detailByteOffset": 36000,
+      "poseIndex": 2
+    },
+    {
+      "index": 6,
+      "sourceFrame": 11,
+      "sourceTimeMs": 730,
+      "clipTimeMs": 400,
+      "durationMs": 70,
+      "byteOffset": 172800,
+      "toneByteOffset": 43200,
+      "detailByteOffset": 43200,
+      "poseIndex": 2
+    },
+    {
+      "index": 7,
+      "sourceFrame": 12,
+      "sourceTimeMs": 800,
+      "clipTimeMs": 470,
+      "durationMs": 70,
+      "byteOffset": 201600,
+      "toneByteOffset": 50400,
+      "detailByteOffset": 50400,
+      "poseIndex": 2
+    },
+    {
+      "index": 8,
+      "sourceFrame": 13,
+      "sourceTimeMs": 870,
+      "clipTimeMs": 540,
+      "durationMs": 70,
+      "byteOffset": 230400,
+      "toneByteOffset": 57600,
+      "detailByteOffset": 57600,
+      "poseIndex": 2
+    }
+  ],
+  "regionCounts": {
+    "face": 0,
+    "hand": 7200,
+    "body": 0
+  },
+  "regions": [
+    {
+      "name": "hand",
+      "start": 0,
+      "count": 7200,
+      "endExclusive": 7200,
+      "suggestedRadiusScale": 1.0
+    }
+  ],
+  "matchingPartitions": [
+    {
+      "start": 0,
+      "count": 2400
+    },
+    {
+      "start": 2400,
+      "count": 2400
+    },
+    {
+      "start": 4800,
+      "count": 2400
+    }
+  ],
+  "matchingCost": "XY squared distance +400*rendered detail strength difference squared +36*tone difference squared",
+  "sourcePoseGroups": [
+    [
+      5,
+      6,
+      7,
+      8
+    ],
+    [
+      9,
+      10,
+      11,
+      12,
+      13
+    ]
+  ],
+  "sampling": "7200 unique half-pixel source samples per frame. Original RGB is bilinearly sampled at 2x. Hand masks follow the source contours. No anatomy model or additional poses. Duplicate source frames use identical point, tone, and detail buffers.",
+  "toneConsistency": {
+    "maxError": 0,
+    "allTonePermutationsMatchXY": true
+  },
+  "detailConsistency": {
+    "maxError": 0,
+    "allDetailPermutationsMatchXY": true
+  },
+  "sourceChecks": [
+    {
+      "poseFrame": 5,
+      "uniqueCount": 7200,
+      "minAlpha": 0.3176470588235294
+    },
+    {
+      "poseFrame": 9,
+      "uniqueCount": 7200,
+      "minAlpha": 0.3764705882352941
+    }
+  ],
+  "sourceDurationMs": 940,
+  "trim": "Removed source frames 0\u20134. The clip starts with finger contact at source frame 5."
+}
