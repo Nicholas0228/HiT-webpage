@@ -32,7 +32,7 @@
           </div>
           <div class="flow-pair-status"><p class="flow-selection"></p><p class="flow-summary"></p></div>
           <div class="flow-legend"><span><i class="flow-key"></i>Group</span><span><i class="flow-key patch"></i>Patch</span></div>
-          <p id="flow-help">Move over an image to inspect a group.</p>
+          <p id="flow-help">Move over an image to inspect a group. Colors can repeat for distant groups.</p>
         </div>
         <div class="flow-architecture-column">
           <div class="flow-level-controls" role="group" aria-label="Choose the displayed hierarchy level">
@@ -40,7 +40,8 @@
             <button type="button" data-flow-level="1" aria-pressed="false">Level 2</button>
           </div>
           <div class="flow-nested"></div>
-          <div class="flow-legend flow-path-key"><span><i class="flow-key"></i>Learned blocks</span><span><i class="flow-line-key"></i>Feature transfer</span></div>
+          <div class="flow-legend flow-path-key"><span><i class="flow-key"></i>Transformer and skip</span><span><i class="flow-key routing"></i>TTG / TTuG</span></div>
+          <p class="flow-architecture-note">TTG groups tokens. TTuG restores token positions.<br>Counts include image and caption tokens.</p>
           <p class="flow-level-state" role="status" aria-live="polite">Level 1 selected</p>
         </div>
       </div>
@@ -51,7 +52,7 @@
         <div class="flow-tabs" role="tablist" aria-label="Inspect a routing operation">
           <button role="tab" type="button" data-flow-mode="affinity" aria-selected="true">Affinity</button>
           <button role="tab" type="button" data-flow-mode="pooling" aria-selected="false">Pooling</button>
-          <button role="tab" type="button" data-flow-mode="readback" aria-selected="false">Readback</button>
+          <button role="tab" type="button" data-flow-mode="readback" aria-selected="false">TTuG</button>
         </div>
         <div class="flow-calculations" role="tabpanel" aria-label="Routing calculation">
           <div class="flow-stat"><div><div class="flow-counts"></div><p class="flow-count-label"></p><p class="flow-count-note"></p></div></div>
@@ -79,19 +80,23 @@
   }
   function draw() {
     const s=stage(),g=group(),i=queryToken(), labels=s.imageLabels;
+    const colors=window.HiTFigureStyle.groupColors(labels);
     [$('#flow-image'),$('#flow-map')].forEach((canvas,index)=>{
       const ctx=canvas.getContext('2d');ctx.setTransform(canvas.width/512,0,0,canvas.height/512,0,0);ctx.clearRect(0,0,512,512);ctx.globalAlpha=1;
       if(index===0)ctx.drawImage(pictures[state.image],0,0,512,512);
 
       labels.forEach((label,p)=>{
         const selected=label===g,x=p%16*32,y=Math.floor(p/16)*32;
-        if(index===0){ctx.fillStyle=selected?'#e8a446':'#ffffff';ctx.globalAlpha=selected?.22:.55;}
-        else {ctx.globalAlpha=1;ctx.fillStyle=selected?'#e8a446':`rgb(${[232,164,70].map(c=>Math.round(255+(c-255)*(.15+(label%6)*.075))).join(',')})`;}
+        if(index===0){ctx.fillStyle=selected?'#e8a446':'#ffffff';ctx.globalAlpha=selected?.08:.32;}
+        else {ctx.globalAlpha=1;ctx.fillStyle=selected?'#e8a446':colors.get(label);}
         ctx.fillRect(x,y,32,32);
       });
-      ctx.globalAlpha=1;borders(ctx,labels);ctx.strokeStyle='#fff';ctx.lineWidth=index===0?1.3:1.8;ctx.stroke();
-      borders(ctx,labels,g);ctx.strokeStyle='#fff';ctx.lineWidth=4.5;ctx.stroke();ctx.strokeStyle='#e8a446';ctx.lineWidth=2.2;ctx.stroke();
-      const x=state.patch%16*32,y=Math.floor(state.patch/16)*32;ctx.strokeStyle='#fff';ctx.lineWidth=5;ctx.strokeRect(x+2,y+2,28,28);ctx.strokeStyle='#489750';ctx.lineWidth=2.6;ctx.strokeRect(x+2,y+2,28,28);
+      borders(ctx,labels);ctx.globalAlpha=index===0?.45:.12;ctx.strokeStyle='#000';ctx.lineWidth=index===0?5:3.8;ctx.stroke();
+      ctx.globalAlpha=1;ctx.strokeStyle='#fff';ctx.lineWidth=index===0?2.8:2;ctx.stroke();
+      borders(ctx,labels,g);ctx.strokeStyle='#fff';ctx.lineWidth=6.2;ctx.stroke();ctx.strokeStyle='#e8a446';ctx.lineWidth=3.2;ctx.stroke();
+      const x=state.patch%16*32,y=Math.floor(state.patch/16)*32;
+      ctx.fillStyle='#489750';ctx.globalAlpha=.30;ctx.fillRect(x+2,y+2,28,28);ctx.globalAlpha=1;
+      ctx.strokeStyle='#fff';ctx.lineWidth=5.5;ctx.strokeRect(x+2,y+2,28,28);ctx.strokeStyle='#489750';ctx.lineWidth=3;ctx.strokeRect(x+2,y+2,28,28);
       canvas.setAttribute('aria-label',`${index===0?'Racer input':'Image group map'}. Level ${state.level+1}. Patch ${state.patch}, group ${g}.`);
     });
   }

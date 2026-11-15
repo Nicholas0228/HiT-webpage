@@ -75,4 +75,7 @@
   .flow-controls { align-items: start; }
 }
 .flow-path-key { margin: 18px 0 10px; }
+.flow-key.routing { background: #eff7fd; border-color: #a5d3f2; }
+.flow-path-key .flow-key:not(.routing) { background: #fbefde; }
+.flow-architecture-note { max-width: 540px; margin: 0 auto 10px !important; text-align: center; }
 .flow-line-key { width: 22px; height: 0; border-top: 2px solid #6289ad; display: inline-block; }

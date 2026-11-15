@@ -135,15 +135,15 @@
       const selected = labels[activePatch()], grid = example.grid, size = canvas.width / grid;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let index = 0; index < labels.length; index++) {
-        ctx.fillStyle = labels[index] === selected ? 'rgba(232,164,70,.12)' : 'rgba(255,255,255,.74)';
+        ctx.fillStyle = labels[index] === selected ? 'rgba(232,164,70,.10)' : 'rgba(255,255,255,.48)';
         ctx.fillRect(index % grid * size, Math.floor(index / grid) * size, size, size);
       }
       if (state.boundaries) {
-        // Draw only the saved group edges. The white underlay keeps them visible on dark pixels.
-        boundary(labels, grid, null, '#ffffff', 4.5);
-        boundary(labels, grid, null, '#000000', 2);
+        boundary(labels, grid, null, 'rgba(0,0,0,.45)', 10);
+        boundary(labels, grid, null, '#ffffff', 5.6);
       }
-      boundary(labels, grid, selected, '#e8a446', 5);
+      boundary(labels, grid, selected, '#ffffff', 12.4);
+      boundary(labels, grid, selected, '#e8a446', 6.4);
       if (state.keyboardFocus && state.hoverPatch === null) {
         ctx.strokeStyle = '#000000';
         ctx.lineWidth = 3;

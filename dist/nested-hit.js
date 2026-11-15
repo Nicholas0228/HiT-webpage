@@ -1,152 +1,154 @@
-/* Two nested HiT stages. DOM nodes remain stable while patch data changes. */
+/* Paper geometry with the two levels from the saved website trace. */
 (() => {
   'use strict';
   const NS = 'http://www.w3.org/2000/svg';
   let nextId = 0;
-  const svgNode = (tag, attrs) => {
-    const element = document.createElementNS(NS, tag);
-    for (const [key, value] of Object.entries(attrs)) element.setAttribute(key, value);
-    return element;
+  const set = (el, attrs) => Object.entries(attrs).forEach(([k,v]) => el.setAttribute(k,v));
+  const node = (tag, attrs = {}, text = '') => {
+    const el = document.createElementNS(NS, tag); set(el,attrs);
+    if (text) el.textContent = text;
+    return el;
   };
+  const route = points => points.map((p,i) => `${i?'L':'M'}${p[0]},${p[1]}`).join(' ');
   function mount(element, options = {}) {
-    const counts = options.counts || [261, 74, 57];
-    const prefix = `nested-hit-${++nextId}`;
-    const scene = document.createElement('div');
-    scene.className = 'nh-scene';
-    scene.dataset.level = '0';
-    scene.innerHTML = `
-      <svg class="nh-lines" aria-hidden="true"></svg>
-      <button class="nh-home" type="button" aria-label="Select the outer HiT, Level 1"><span class="nh-name">HiT</span><span class="nh-home-level">Level 1</span></button>
-      <span class="nh-block nh-decoder" data-nh-node="decoder">Decoder</span>
-      <span class="nh-block nh-transfer nh-return" data-nh-node="return">Return to patches</span>
-      <button class="nh-core" type="button" aria-label="Explore and select the inner HiT, Level 2" aria-expanded="false" aria-pressed="false">
-        <span class="nh-core-heading"><span class="nh-name">HiT</span><span class="nh-core-caption">Explore inside</span></span>
-        <span class="nh-core-count">${counts[1]} tokens</span>
-        <span class="nh-inner" aria-hidden="true">
-          <svg class="nh-inner-lines" aria-hidden="true"></svg>
-          <span class="nh-inner-block nh-inner-decoder" data-nh-node="inner-decoder">Decoder</span>
-          <span class="nh-inner-block nh-transfer nh-inner-return" data-nh-node="inner-return">Return to groups</span>
-          <span class="nh-inner-block nh-transformer" data-nh-node="transformer">Transformer · ${counts[2]} tokens</span>
-          <span class="nh-inner-block nh-form nh-inner-form" data-nh-node="inner-form">Group · ${counts[1]} → ${counts[2]}</span>
-          <span class="nh-inner-block nh-inner-encoder" data-nh-node="inner-encoder">Encoder</span>
-        </span>
-      </button>
-      <span class="nh-block nh-form nh-groups" data-nh-node="groups">Group · ${counts[0]} → ${counts[1]}</span>
-      <span class="nh-block nh-encoder" data-nh-node="encoder">Encoder · ${counts[0]} tokens</span>
-      <svg class="nh-pulses" aria-hidden="true"></svg>
-      <span class="nh-sr-only">The moving dots show feature paths. Their speed does not show model execution time.</span>`;
+    const counts=options.counts, id=`hit-paper-${++nextId}`;
+    const reduce=matchMedia('(prefers-reduced-motion: reduce)');
+    const scene=document.createElement('div'); scene.className='nh-scene';
+    scene.innerHTML=`<svg class="nh-diagram" role="img" aria-label="HiT hierarchy. TTG reduces the token count. TTuG restores it. Learned skips connect each encoder to its decoder."></svg>
+      <button class="nh-core" type="button" aria-label="Explore Level 2. Click to keep this level." aria-expanded="false" aria-pressed="false"></button>
+      <span class="nh-sr-only">Moving dots show feature paths. Their speed does not show model execution time.</span>`;
     element.appendChild(scene);
-    const home = scene.querySelector('.nh-home');
-    const core = scene.querySelector('.nh-core');
-    const inner = scene.querySelector('.nh-inner');
-    const lines = scene.querySelector('.nh-lines');
-    const innerLines = scene.querySelector('.nh-inner-lines');
-    const pulses = scene.querySelector('.nh-pulses');
-    const nodes = Object.fromEntries([...scene.querySelectorAll('[data-nh-node]')].map(node => [node.dataset.nhNode, node]));
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    let expanded = false, geometry = null, pulseFrame = 0, lastTrace = '', activeState = {};
-    const path = (id, d, target = lines, kind = '') => {
-      const result = svgNode('path', {id:`${prefix}-${id}`, d, class:`nh-edge ${kind}`, fill:'none'});
-      target.appendChild(result); return result;
-    };
-    function arrowDefs(target, suffix) {
-      const defs = svgNode('defs', {});
-      const marker = svgNode('marker', {id:`${prefix}-${suffix}`,viewBox:'0 0 10 10',refX:'8',refY:'5',markerWidth:'5',markerHeight:'5',orient:'auto'});
-      marker.appendChild(svgNode('path',{d:'M 1 1 L 9 5 L 1 9',fill:'none',stroke:'#000000','stroke-width':'1.5'}));
-      defs.appendChild(marker);target.appendChild(defs);
+    const svg=scene.querySelector('svg'), core=scene.querySelector('button');
+    const defs=node('defs'), marker=node('marker',{id:`${id}-arrow`,viewBox:'0 0 8 8',refX:7,refY:4,markerWidth:5,markerHeight:5,orient:'auto'});
+    marker.append(node('path',{d:'M1 1 L7 4 L1 7Z',fill:'#222222'}));
+    const clip=node('clipPath',{id:`${id}-clip`}), clipRect=node('rect'); clip.append(clipRect);
+    defs.append(marker,clip);svg.append(defs);
+    const edges=node('g',{'aria-hidden':'true'}), shapes=node('g'), inside=node('g',{'clip-path':`url(#${id}-clip)`}), particles=node('g',{'aria-hidden':'true'});
+    svg.append(edges,shapes,inside,particles);
+    const blocks={}, paths={}, labels={};
+    function block(key,label,kind,title,parent=shapes) {
+      const group=node('g',{'data-nh-node':key,class:`nh-node nh-${kind}`});
+      const shape=node('path',{class:'nh-shape'}), text=node('text',{class:'nh-label','text-anchor':'middle','dominant-baseline':'central'},label);
+      group.append(node('title',{},title),shape,text);parent.append(group);blocks[key]={group,shape,text};
     }
-    function addArrow(d, target, suffix) {
-      const p = path(`edge-${target.children.length}`,d,target);
-      p.setAttribute('marker-end',`url(#${prefix}-${suffix})`);return p;
+    function edge(key,skip=false,parent=edges) {
+      const el=node('path',{class:`nh-edge${skip?' nh-skip':''}`,fill:'none','marker-end':`url(#${id}-arrow)`});
+      parent.append(el);paths[key]=el;
     }
-    const point = (box, side) => [box.x + box.width / 2, side === 'top' ? box.y : side === 'bottom' ? box.y + box.height : box.y + box.height / 2];
-    const line = points => points.map((p,i) => `${i?'L':'M'} ${p[0]} ${p[1]}`).join(' ');
-    function stopPulse() {
-      cancelAnimationFrame(pulseFrame);pulseFrame=0;pulses.replaceChildren();
+    function label(key,text,parent=shapes) {
+      const el=node('text',{class:'nh-label','dominant-baseline':'central'},text);parent.append(el);labels[key]=el;
     }
-    function layout() {
-      stopPulse();
-      const sceneRect = scene.getBoundingClientRect();
-      if (!sceneRect.width) return;
-      const relative = (node, to=sceneRect) => {const b=node.getBoundingClientRect();return {x:b.left-to.left,y:b.top-to.top,width:b.width,height:b.height};};
-      const b=Object.fromEntries(Object.entries(nodes).map(([key,node]) => [key,relative(node)]));
-      b.core=relative(core);
-      lines.replaceChildren();innerLines.replaceChildren();
-      lines.setAttribute('viewBox',`0 0 ${sceneRect.width} ${sceneRect.height}`);
-      pulses.setAttribute('viewBox',`0 0 ${sceneRect.width} ${sceneRect.height}`);
-      arrowDefs(lines,'arrow');arrowDefs(innerLines,'inner-arrow');
-      const outerPairs = [['encoder','groups'],['groups','core'],['core','return'],['return','decoder']];
-      for(const [from,to] of outerPairs) addArrow(line([point(b[from],'top'),point(b[to],'bottom')]),lines,'arrow');
-      const outerStart = point(b.encoder,'top');
-      const outerJoin = [sceneRect.width/2,(b.return.y+b.decoder.y+b.decoder.height)/2];
-      const skipX=Math.max(11, b.core.x-24);
-      const skip = path('outer-skip',line([outerStart,[skipX,outerStart[1]],[skipX,outerJoin[1]],outerJoin]),lines,'nh-skip');
-      lines.appendChild(svgNode('circle',{cx:outerJoin[0],cy:outerJoin[1],r:'8',class:'nh-sum'}));
-      const sum=svgNode('text',{x:outerJoin[0],y:outerJoin[1],class:'nh-sum-label','text-anchor':'middle','dominant-baseline':'central'});sum.textContent='+';lines.appendChild(sum);
-      const skipLabel=svgNode('text',{x:skipX-8,y:(outerStart[1]+outerJoin[1])/2,class:'nh-path-label','text-anchor':'end'});skipLabel.textContent='Skip';lines.appendChild(skipLabel);
-
-      const c=core.getBoundingClientRect();
-      const ib=Object.fromEntries(['inner-encoder','inner-form','transformer','inner-return','inner-decoder'].map(key=>[key,relative(nodes[key],c)]));
-      innerLines.setAttribute('viewBox',`0 0 ${c.width} ${c.height}`);
-      for(const [from,to] of [['inner-encoder','inner-form'],['inner-form','transformer'],['transformer','inner-return'],['inner-return','inner-decoder']]) addArrow(line([point(ib[from],'top'),point(ib[to],'bottom')]),innerLines,'inner-arrow');
-      const is=point(ib['inner-encoder'],'top');
-      const ij=[c.width/2,(ib['inner-return'].y+ib['inner-decoder'].y+ib['inner-decoder'].height)/2];
-      const ix=Math.max(10,ib['inner-encoder'].x-18);
-      path('inner-skip',line([is,[ix,is[1]],[ix,ij[1]],ij]),innerLines,'nh-skip');
-      innerLines.appendChild(svgNode('circle',{cx:ij[0],cy:ij[1],r:'6',class:'nh-sum'}));
-      const isum=svgNode('text',{x:ij[0],y:ij[1],class:'nh-sum-label','text-anchor':'middle','dominant-baseline':'central'});isum.textContent='+';innerLines.appendChild(isum);
-      geometry={b,skip};
+    function sum(key,parent=shapes) {
+      const group=node('g',{'data-nh-node':key});
+      group.append(node('circle',{r:10,class:'nh-sum'}),node('text',{class:'nh-label','text-anchor':'middle','dominant-baseline':'central'},'+'));
+      parent.append(group);blocks[key]={group};
     }
-    function pulse() {
-      stopPulse();
-      if(reduce.matches||!geometry)return;
-      const b=geometry.b;
-      const middle=expanded ? ['inner-encoder','inner-form','transformer','inner-return','inner-decoder'] : ['core'];
-      const order=['encoder','groups',...middle,'return','decoder'];
-      const points=order.flatMap(id=>[point(b[id],'bottom'),point(b[id],'top')]);
-      const mainPath=path('motion',line(points),pulses,'nh-motion-guide');
-      const skipPath=path('skip-motion',geometry.skip.getAttribute('d'),pulses,'nh-motion-guide');
-      const mainDot=svgNode('circle',{r:'4',class:'nh-dot'}),skipDot=svgNode('circle',{r:'3.5',class:'nh-dot nh-skip-dot'});
-      pulses.append(mainDot,skipDot);
-      const paths=[mainPath,skipPath],dots=[mainDot,skipDot],lengths=paths.map(p=>p.getTotalLength());
+    block('patch','Patch projection','learned','Project the noisy image into tokens.');
+    block('encoder','Transformer','learned','Process the full token sequence.');
+    block('groups','TTG','routing',`Test time grouping. ${counts[0]} → ${counts[1]} tokens.`);
+    block('return','TTuG','routing',`Test time ungrouping. ${counts[1]} → ${counts[0]} tokens.`);
+    sum('add1');
+    block('decoder','Transformer','learned','Process the restored sequence after the skip addition.');
+    block('head','Prediction head','learned','Predict the clean image.');
+    block('skip1','W₁','learned','Learned outer skip projection.');
+    block('compact','HiT','compact','Hover or focus to inspect the next level.');
+    label('hint','Explore inside');
+    const frame=node('rect',{class:'nh-inner-frame',rx:3});inside.append(frame);
+    const innerEdges=node('g');inside.append(innerEdges);
+    block('inner-encoder','Transformer','learned','Process the first compact sequence.',inside);
+    block('inner-form','TTG','routing',`Test time grouping. ${counts[1]} → ${counts[2]} tokens.`,inside);
+    block('transformer','Transformer','learned','Repeat L Transformer blocks at a fixed token count.',inside);
+    block('inner-return','TTuG','routing',`Test time ungrouping. ${counts[2]} → ${counts[1]} tokens.`,inside);
+    sum('add2',inside);
+    block('inner-decoder','Transformer','learned','Process the restored first compact sequence.',inside);
+    block('skip2','W₂','learned','Learned inner skip projection.',inside);
+    label('repeat','× L',inside);
+    label('input','xₜ');label('output','Clean image');
+    for (const key of ['n0','n1','n0out']) label(key,String(key==='n1'?counts[1]:counts[0]));
+    label('n2',String(counts[2]),inside);
+    for (const key of ['input','patch','encoder','groups','coreOut','return','add1','decoder','head']) edge(key);
+    edge('skip1a',true);edge('skip1b',true);
+    for (const key of ['inner-encoder','inner-form','transformer','inner-return','add2']) edge(key,false,innerEdges);
+    edge('skip2a',true,innerEdges);edge('skip2b',true,innerEdges);
+    let expanded=false,pulseFrame=0,width=0,geometry,lastTrace='';
+    function drawBlock(key,x,y,top,bottom,height) {
+      const b=blocks[key],left=x-top/2,right=x+top/2,bottomY=y+height,r=3;
+      const d=top===bottom
+        ?`M${left+r},${y}H${right-r}Q${right},${y} ${right},${y+r}V${bottomY-r}Q${right},${bottomY} ${right-r},${bottomY}H${left+r}Q${left},${bottomY} ${left},${bottomY-r}V${y+r}Q${left},${y} ${left+r},${y}Z`
+        :`M${left},${y}H${right}L${x+bottom/2},${bottomY}H${x-bottom/2}Z`;
+      set(b.shape,{d});
+      set(b.text,{x,y:y+height/2});
+    }
+    function draw() {
+      if(!width)return;
+      const c=width*.57,wide=Math.min(300,width*.57),mid=wide*.8,small=wide*.62;
+      const coreY=196,coreH=320,end=coreY+coreH;
+      const ix=c-mid/2-58,iw=mid/2+wide/2+98;
+      const ungroupY=end+24,addY=ungroupY+56,decoderY=addY+22,headY=decoderY+56,height=headY+86;
+      scene.style.height=`${height}px`;set(svg,{viewBox:`0 0 ${width} ${height}`,width,height});
+      const w1=Math.max(24,c-wide/2-54),w2=c-mid/2-32;
+      const box=(key,y,w,h=34)=>drawBlock(key,c,y,w,w,h);
+      box('patch',36,wide,30);box('encoder',86,wide);
+      drawBlock('groups',c,142,wide,mid,32);drawBlock('return',c,ungroupY,mid,wide,32);
+      set(blocks.add1.group,{transform:`translate(${c} ${addY})`});
+      box('decoder',decoderY,wide);box('head',headY,wide,30);
+      drawBlock('skip1',w1,addY-81,40,40,30);
+      drawBlock('compact',ix+iw/2,coreY,iw,iw,coreH);
+      set(blocks.compact.text,{y:coreY+coreH/2-16});
+      set(blocks.compact.group,{opacity:expanded?0:1,'aria-hidden':expanded});
+      set(labels.hint,{x:ix+iw/2,y:coreY+coreH/2+20,'text-anchor':'middle',opacity:expanded?0:1});
+      set(labels.input,{x:c,y:14,'text-anchor':'middle'});set(labels.output,{x:c,y:headY+72,'text-anchor':'middle'});
+      const countX=c+wide/2+12;
+      set(labels.n0,{x:countX,y:103});set(labels.n1,{x:countX,y:coreY+29});set(labels.n0out,{x:countX,y:decoderY+17});
+      for(const [key,y1,y2] of [['input',23,34],['patch',66,84],['encoder',120,140],['groups',174,expanded?206:194],['coreOut',expanded?end-24:end,ungroupY-2],['return',ungroupY+32,addY-11],['add1',addY+10,decoderY-2],['decoder',decoderY+34,headY-2],['head',headY+30,headY+55]]) set(paths[key],{d:route([[c,y1],[c,y2]])});
+      set(paths.skip1a,{d:route([[c,131],[w1,131],[w1,addY-83]])});
+      set(paths.skip1b,{d:route([[w1,addY-51],[w1,addY],[c-11,addY]])});
+      set(frame,{x:ix,y:coreY,width:iw,height:coreH});set(clipRect,{x:0,y:coreY,width,height:coreH});
+      set(inside,{opacity:expanded?1:0,'aria-hidden':!expanded});
+      box('inner-encoder',coreY+12,mid);drawBlock('inner-form',c,coreY+68,mid,small,32);
+      box('transformer',coreY+122,small,40);drawBlock('inner-return',c,coreY+184,small,mid,32);
+      set(blocks.add2.group,{transform:`translate(${c} ${coreY+240})`});
+      box('inner-decoder',coreY+262,mid);drawBlock('skip2',w2,coreY+143,36,36,30);
+      set(labels.repeat,{x:c+small/2+9,y:coreY+142});set(labels.n2,{x:countX,y:coreY+142});
+      for(const [key,y1,y2] of [['inner-encoder',coreY+46,coreY+66],['inner-form',coreY+100,coreY+120],['transformer',coreY+162,coreY+182],['inner-return',coreY+216,coreY+229],['add2',coreY+250,coreY+260]]) set(paths[key],{d:route([[c,y1],[c,y2]])});
+      set(paths.skip2a,{d:route([[c,coreY+57],[w2,coreY+57],[w2,coreY+141]])});
+      set(paths.skip2b,{d:route([[w2,coreY+173],[w2,coreY+240],[c-11,coreY+240]])});
+      core.style.cssText=`left:${ix}px;top:${coreY}px;width:${iw}px;height:${coreH}px`;
+      geometry={c,w1,w2,coreY,addY,headY};
+    }
+    function stopPulse(){cancelAnimationFrame(pulseFrame);pulseFrame=0;particles.replaceChildren();}
+    function pulse(){
+      stopPulse();if(reduce.matches||!geometry)return;
+      const g=geometry,routes=[route([[g.c,24],[g.c,g.headY+55]]),route([[g.c,131],[g.w1,131],[g.w1,g.addY],[g.c,g.addY]])];
+      if(expanded)routes.push(route([[g.c,g.coreY+57],[g.w2,g.coreY+57],[g.w2,g.coreY+240],[g.c,g.coreY+240]]));
+      const moving=routes.map(d=>{const guide=node('path',{d,fill:'none',stroke:'none'}),dot=node('circle',{r:3.5,class:'nh-dot'});particles.append(guide,dot);return{guide,dot,length:guide.getTotalLength()};});
       let start;
-      function step(now) {
-        if(start===undefined)start=now;
-        const progress=Math.min(1,(now-start)/850);
-        for(let i=0;i<paths.length;i++) {const p=paths[i].getPointAtLength(progress*lengths[i]);dots[i].setAttribute('cx',p.x);dots[i].setAttribute('cy',p.y);}
+      function step(now){
+        if(start===undefined)start=now;const progress=Math.min(1,(now-start)/1000);
+        for(const item of moving){const p=item.guide.getPointAtLength(item.length*progress);set(item.dot,{cx:p.x,cy:p.y});}
         if(progress<1)pulseFrame=requestAnimationFrame(step);else stopPulse();
       }
       pulseFrame=requestAnimationFrame(step);
     }
-    function render(state={}) {
-      activeState=state;
-      const nextExpanded=state.level===1||state.preview===1||state.preview===true;
-      const changed=nextExpanded!==expanded;
-      expanded=nextExpanded;
-      scene.classList.toggle('nh-expanded',expanded);
-      scene.classList.toggle('nh-locked',Boolean(state.locked&&state.level===1));
-      scene.dataset.level=String(state.level===1?1:0);
-      scene.dataset.patch=state.patch==null?'':String(state.patch);
-      scene.dataset.group=state.group==null?'':String(state.group);
-      core.setAttribute('aria-expanded',String(expanded));
-      core.setAttribute('aria-pressed',String(Boolean(state.locked)));
-      home.setAttribute('aria-pressed',String(!state.locked));
-      inner.setAttribute('aria-hidden',String(!expanded));
+    function render(state={}){
+      const next=state.level===1||state.preview===1||state.preview===true;
+      scene.dataset.level=String(state.level===1?2:1);scene.dataset.patch=String(state.patch??'');scene.dataset.group=String(state.group??'');
+      scene.classList.toggle('nh-expanded',Boolean(next));core.setAttribute('aria-expanded',String(Boolean(next)));core.setAttribute('aria-pressed',String(Boolean(state.locked)));
       const trace=[state.level,state.patch,state.group].join(':');
-      if(changed) layout();
-      if(trace!==lastTrace) {lastTrace=trace;pulse();}
+      const changed=next!==expanded;
+      expanded=next;
+      if(changed)draw();
+      if(changed||trace!==lastTrace)pulse();
+      lastTrace=trace;
     }
-    core.addEventListener('pointerenter',event=>{if(event.pointerType!=='touch')options.onPreview?.(1);});
-    core.addEventListener('pointerleave',()=>options.onLeave?.());
-    core.addEventListener('focus',()=>options.onPreview?.(1));
-    core.addEventListener('blur',()=>options.onLeave?.());
+    core.addEventListener('pointerenter',e=>{if(e.pointerType!=='touch')options.onPreview?.(1);});
+    core.addEventListener('pointerleave',()=>options.onLeave?.());core.addEventListener('focus',()=>options.onPreview?.(1));core.addEventListener('blur',()=>options.onLeave?.());
     core.addEventListener('click',()=>options.onSelect?.(1));
-    home.addEventListener('click',()=>options.onSelect?.(0));
-    core.addEventListener('keydown',event=>{if(event.key==='Escape'){event.preventDefault();home.focus();options.onSelect?.(0);}});
-    const resize=new ResizeObserver(layout);resize.observe(scene);
+    core.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();options.onSelect?.(0);element.closest('.flow-architecture-column')?.querySelector('[data-flow-level="0"]')?.focus();}});
+    const resize=new ResizeObserver(entries=>{const next=entries[0].contentRect.width;if(Math.abs(next-width)<.5)return;width=next;stopPulse();draw();});resize.observe(scene);
     const motionChange=()=>{if(reduce.matches)stopPulse();};reduce.addEventListener('change',motionChange);
-    layout();render({level:0});
-    return {render,destroy(){stopPulse();resize.disconnect();reduce.removeEventListener('change',motionChange);scene.remove();}};
+    width=scene.getBoundingClientRect().width;draw();render({level:0});
+    return{render,destroy(){stopPulse();resize.disconnect();reduce.removeEventListener('change',motionChange);scene.remove();}};
   }
   window.HiTNestedFlow=Object.freeze({mount});
 })();

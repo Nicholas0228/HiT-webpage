@@ -16,7 +16,6 @@
   const percent = v => `${(v * 100).toFixed(v >= .01 ? 2 : 3)}%`;
   const mix = (rgb, v) => `rgb(${rgb.map(c => Math.round(255 + (c - 255) * clamp(v, 0, 1))).join(',')})`;
   const weightColor = v => mix([98, 137, 173], Math.sqrt(clamp(v, 0, 1)));
-  const groupColor = g => mix([232, 164, 70], .16 + (g % 6) * .10);
   const sum = values => values.reduce((a, b) => a + b, 0);
   const decodeBytes = encoded => Uint8Array.from(atob(encoded), c => c.charCodeAt(0));
   function decodeFloats(encoded) {
@@ -155,11 +154,12 @@
     if (!activeImage) return;
     const e = example(), l = levelFor(e), p = focusedPatch(), maximum = scaleMaximum(), forward = state.direction === 'forward';
     const values = forwardValues(e, l, state.token);
+    const colors = window.HiTFigureStyle.groupColors(l.imageLabels);
     [query('#joint-canvas'), query('#joint-map')].forEach((canvas, index) => {
       const ctx = canvas.getContext('2d'); ctx.setTransform(2, 0, 0, 2, 0, 0); ctx.globalAlpha = 1; ctx.clearRect(0, 0, 512, 512);
       if (index === 0) ctx.drawImage(activeImage, 0, 0, 512, 512);
       else for (let patch = 0; patch < 256; patch++) {
-        ctx.fillStyle = forward ? weightColor(values[patch] / maximum) : groupColor(l.imageLabels[patch]);
+        ctx.fillStyle = forward ? weightColor(values[patch] / maximum) : colors.get(l.imageLabels[patch]);
         ctx.fillRect(patch % 16 * 32, Math.floor(patch / 16) * 32, 32, 32);
       }
       if (p !== null && !forward) {
@@ -167,21 +167,24 @@
         // Fill every patch in the group, including separate regions.
         l.imageLabels.forEach((group, patch) => {
           const selected = group === selectedGroup;
+          if (index === 1 && !selected) return;
           ctx.fillStyle = selected ? '#e8a446' : '#ffffff';
-          ctx.globalAlpha = selected ? (index === 0 ? .28 : .72) : (index === 0 ? .62 : .42);
+          ctx.globalAlpha = index === 0 ? (selected ? .08 : .32) : 1;
           ctx.fillRect(patch % 16 * 32, Math.floor(patch / 16) * 32, 32, 32);
         });
         ctx.globalAlpha = 1;
       }
       boundaryPath(ctx, l.imageLabels); ctx.lineJoin = 'round'; ctx.lineCap = 'round';
-      if (index === 0) {ctx.globalAlpha = .2; ctx.strokeStyle = '#000000'; ctx.lineWidth = 2.5; ctx.stroke();}
-      ctx.globalAlpha = .92; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = index === 0 ? 1.15 : 1.3; ctx.stroke(); ctx.globalAlpha = 1;
+      ctx.globalAlpha = index === 0 ? .45 : .12; ctx.strokeStyle = '#000000'; ctx.lineWidth = index === 0 ? 5 : 3.8; ctx.stroke();
+      ctx.globalAlpha = 1; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = index === 0 ? 2.8 : 2; ctx.stroke();
       if (p !== null) {
         if (!forward) {
           const group = l.imageLabels[p];
-          boundaryPath(ctx, l.imageLabels, group); ctx.globalAlpha = 1; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 4.5; ctx.stroke(); ctx.strokeStyle = '#e8a446'; ctx.lineWidth = 2.4; ctx.stroke();
+          boundaryPath(ctx, l.imageLabels, group); ctx.globalAlpha = 1; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 6.2; ctx.stroke(); ctx.strokeStyle = '#e8a446'; ctx.lineWidth = 3.2; ctx.stroke();
         }
-        const x = p % 16 * 32, y = Math.floor(p / 16) * 32; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 5; ctx.strokeRect(x + 2, y + 2, 28, 28); ctx.strokeStyle = '#489750'; ctx.lineWidth = 2.6; ctx.strokeRect(x + 2, y + 2, 28, 28);
+        const x = p % 16 * 32, y = Math.floor(p / 16) * 32;
+        ctx.fillStyle = '#489750'; ctx.globalAlpha = .30; ctx.fillRect(x + 2, y + 2, 28, 28); ctx.globalAlpha = 1;
+        ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 5.5; ctx.strokeRect(x + 2, y + 2, 28, 28); ctx.strokeStyle = '#489750'; ctx.lineWidth = 3; ctx.strokeRect(x + 2, y + 2, 28, 28);
       }
       canvas.setAttribute('aria-label', `${index === 0 ? e.caption + ` ${inputLabel()} with hard group boundaries.` : forward ? `Image weights for ${e.tokens[state.token].text}.` : 'Hard image groups.'} Level ${state.level + 1}.${p !== null ? ` Selected patch ${p}, group ${l.imageLabels[p]}.` : ''}`);
     });
@@ -227,7 +230,7 @@
     query('.joint-weight-legend').lastElementChild.textContent = reverse ? 'Word connection' : 'Image connection';
     query('.joint-scale-range').textContent = state.direction === 'groups' ? '' : `${reverse ? 'Caption routing weight' : isLocal() ? 'Image routing weight' : 'Relative image weight'}: 0 to ${!reverse && !isLocal() ? 'the group peak' : percent(maximum)}.`;
     query('.joint-legend-ramp').style.background = `linear-gradient(90deg,${Array.from({length: 17}, (_, i) => `${weightColor(i / 16)} ${i / 16 * 100}%`).join(',')})`;
-    query('.joint-scale-note').textContent = forward ? isLocal() ? 'Square-root scale for the selected token at this time and level.' : 'Square-root scale within this group. The saved values show relative weights.' : reverse ? `Token colors show soft caption connections. One square-root scale ${isLocal() ? 'covers all tokens at this level' : 'covers both levels'}. The maps show hard groups; shades can repeat.` : 'Shades can repeat. Boundaries and the selected group show exact membership.';
+    query('.joint-scale-note').textContent = forward ? isLocal() ? 'Square-root scale for the selected token at this time and level.' : 'Square-root scale within this group. The saved values show relative weights.' : reverse ? `Token colors show soft caption connections. One square-root scale ${isLocal() ? 'covers all tokens at this level' : 'covers both levels'}. Map colors can repeat for distant groups.` : 'Colors distinguish touching groups. Distant groups can share a color.';
     query('.joint-science-note').textContent = `${isLocal() ? 'Local caption study: M3 GPU blocks, CPU routing.' : state.source === 0 ? 'Paper reference: CPU routing.' : 'Gallery: production GPU routing.'} ${state.time === 1 ? 'The left image is the clean model input.' : activeInput.status === 'verified-input' ? 'The left image shows the noisy model input. Its tensor hash matches the saved run.' : 'The left image is a noise preview reconstructed from the saved seed and noise formula. It does not exactly match the saved input hash. The groups and word connections come from the original run.'}`;
     drawViews();
     const viewKey = [state.source, state.example, state.caption, state.time, state.level, state.direction, state.token].join(':');
