@@ -15,8 +15,38 @@
 
 ::selection { color: #000000; background: #d8d8d8; }
 
+/* Passive tips have their own surface. They are not buttons. */
+.ui-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 14px 16px;
+  border: 1px solid rgba(0,0,0,.055);
+  border-radius: 18px;
+  background: linear-gradient(150deg, rgba(250,250,252,.96), rgba(241,241,244,.9));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+  color: var(--ui-ink);
+  font-size: var(--body-text-size);
+  font-weight: 400;
+  line-height: 1.5;
+}
+.ui-hint .ui-hint-icon {
+  display: block;
+  flex: 0 0 24px;
+  width: 24px;
+  height: 24px;
+  margin-top: 1px;
+  color: #000;
+}
+.ui-hint > p { min-width: 0; margin: 0; font-size: inherit; line-height: inherit; }
+.ui-hint.ui-hint-compact { align-items: center; gap: 8px; padding: 7px 12px; border-radius: 999px; }
+.ui-hint-compact .ui-hint-icon { flex-basis: 20px; width: 20px; height: 20px; margin-top: 0; }
+.ui-sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
 /* One rail and one moving glass capsule for every segmented control. */
-:is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs),
+:is(.groups-times, .efficiency-tabs, .flow-level-controls),
 #joint-viewer .joint-segment {
   position: relative;
   isolation: isolate;
@@ -32,7 +62,7 @@
   backdrop-filter: var(--ui-blur);
 }
 
-:is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs) > button,
+:is(.groups-times, .efficiency-tabs, .flow-level-controls) > button,
 #joint-viewer .joint-segment > button {
   position: relative;
   z-index: 1;
@@ -52,7 +82,7 @@
   transition: background-color 180ms ease, box-shadow 180ms ease;
 }
 
-:is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs) > button:is([aria-pressed="true"], [aria-selected="true"]),
+:is(.groups-times, .efficiency-tabs, .flow-level-controls) > button:is([aria-pressed="true"], [aria-selected="true"]),
 #joint-viewer .joint-segment > button[aria-pressed="true"] {
   background: var(--ui-glass);
   border-color: rgba(0,0,0,.09);
@@ -78,7 +108,7 @@
 .glass-segment.glass-ready::before {
   transition: transform 360ms var(--ui-ease), width 360ms var(--ui-ease);
 }
-:is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs).glass-segment > button:is([aria-pressed="true"], [aria-selected="true"]),
+:is(.groups-times, .efficiency-tabs, .flow-level-controls).glass-segment > button:is([aria-pressed="true"], [aria-selected="true"]),
 #joint-viewer .joint-segment.glass-segment > button[aria-pressed="true"] {
   background: transparent;
   border-color: transparent;
@@ -86,7 +116,7 @@
 }
 
 /* Native menus keep their normal keyboard behavior. */
-:is(.groups-epoch, .groups-group-select, .flow-details select),
+:is(.groups-epoch, .groups-group-select),
 #joint-viewer select {
   appearance: none;
   min-height: 46px;
@@ -109,8 +139,7 @@
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-:is(.groups-reset, .groups-details > summary, .flow-details > summary, .flow-paper > summary),
-#joint-viewer :is(.joint-reset, .joint-follow, .joint-details > summary) {
+#joint-viewer :is(.joint-reset, .joint-follow) {
   box-sizing: border-box;
   width: fit-content;
   min-height: 44px;
@@ -129,27 +158,6 @@
   cursor: pointer;
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
-:is(.groups-details, .flow-details, .flow-paper) > summary,
-#joint-viewer .joint-details > summary {
-  list-style: none;
-}
-:is(.groups-details, .flow-details, .flow-paper) > summary::-webkit-details-marker,
-#joint-viewer .joint-details > summary::-webkit-details-marker { display: none; }
-:is(.groups-details, .flow-details, .flow-paper) > summary::after,
-#joint-viewer .joint-details > summary::after {
-  content: "";
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  margin: 0 2px 3px 14px;
-  border-right: 1.5px solid #000;
-  border-bottom: 1.5px solid #000;
-  transform: rotate(45deg);
-  transition: transform 200ms var(--ui-ease);
-}
-:is(.groups-details, .flow-details, .flow-paper)[open] > summary::after,
-#joint-viewer .joint-details[open] > summary::after { transform: translateY(3px) rotate(225deg); }
-
 /* Image selection is a control layer. The images keep their data colors. */
 .groups-examples,
 #joint-viewer .joint-thumbnails {
@@ -221,36 +229,25 @@
   backdrop-filter: var(--ui-blur);
   color: #000;
 }
-.flow-result {
-  padding: 16px 20px;
-  border-color: var(--ui-line);
-  border-radius: 18px;
-  background: #f7f7f7;
-}
-.flow-equation { border-color: #c2c2c2; }
-.groups-details,
-#joint-viewer .joint-details { margin-top: 16px; }
-.groups-detail-content,
-#joint-viewer .joint-detail-grid { padding-top: 18px; }
 .groups-show { border-color: rgba(0,0,0,.4); border-radius: 6px; box-shadow: inset 0 1px 2px rgba(0,0,0,.08); }
 
 @media (hover: hover) {
-  :is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs) > button:hover,
+  :is(.groups-times, .efficiency-tabs, .flow-level-controls) > button:hover,
   #joint-viewer .joint-segment > button:hover { background-color: rgba(255,255,255,.36); }
-  :is(.groups-reset, .groups-epoch, .groups-group-select, .flow-details select, .groups-details > summary, .flow-details > summary, .flow-paper > summary):hover,
-  #joint-viewer :is(select, .joint-reset, .joint-follow, .joint-details > summary):hover { border-color: rgba(0,0,0,.28); }
+  :is(.groups-epoch, .groups-group-select):hover,
+  #joint-viewer :is(select, .joint-reset, .joint-follow):hover { border-color: rgba(0,0,0,.28); }
   .groups-example:hover, .groups-example[aria-pressed="true"]:hover,
   #joint-viewer .joint-example:hover { border-color: rgba(0,0,0,.16); background-color: rgba(255,255,255,.65); }
 }
 
-:is(.groups-time, .efficiency-tab, .flow-level-controls button, .flow-tabs button, .groups-epoch, .groups-group-select, .flow-details select, .groups-reset, .groups-example, .groups-details > summary, .flow-details > summary, .flow-paper > summary):focus-visible,
-#joint-viewer :is(select, .joint-segment > button, .joint-reset, .joint-follow, .joint-example, .joint-details > summary):focus-visible {
+:is(.groups-time, .efficiency-tab, .flow-level-controls button, .groups-epoch, .groups-group-select, .groups-example):focus-visible,
+#joint-viewer :is(select, .joint-segment > button, .joint-reset, .joint-follow, .joint-example):focus-visible {
   outline: 2px solid #000000;
   outline-offset: 3px;
 }
 
 @media (max-width: 620px) {
-  :is(.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs) > button,
+  :is(.groups-times, .efficiency-tabs, .flow-level-controls) > button,
   #joint-viewer .joint-segment > button { padding-inline: 13px; }
   .groups-examples,
   #joint-viewer .joint-thumbnails { margin-bottom: 24px; border-radius: 22px; }
@@ -258,16 +255,14 @@
   #joint-viewer .joint-example { flex-basis: 100px; }
 }
 @media (max-width: 420px) {
-  .groups-times, .efficiency-tabs, .flow-tabs { width: 100%; }
-  .efficiency-tabs > button, .flow-tabs > button { flex: 1; white-space: normal; }
+  .groups-times, .efficiency-tabs { width: 100%; }
+  .efficiency-tabs > button { flex: 1; white-space: normal; }
   .groups-times > button { padding-inline: 8px; }
   #joint-viewer .joint-tools { gap: 10px; }
   #joint-viewer .joint-reset { padding-inline: 13px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .glass-segment.glass-ready::before,
-  :is(.groups-details, .flow-details, .flow-paper) > summary::after,
-  #joint-viewer .joint-details > summary::after { transition: none; }
+  .glass-segment.glass-ready::before { transition: none; }
 }
 @media (prefers-reduced-transparency: reduce), (prefers-contrast: more) {
   :root {
@@ -277,6 +272,7 @@
     --ui-blur: none;
   }
   .groups-examples, #joint-viewer .joint-thumbnails { background: #f5f5f5; }
+  .ui-hint { background: #f5f5f7; border-color: var(--ui-line); box-shadow: none; }
 }
 @media (forced-colors: active) {
   .glass-segment::before { display: none; }

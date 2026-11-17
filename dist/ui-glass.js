@@ -1,6 +1,6 @@
 /* Follow each control's existing state. This does not change viewer data. */
 (() => {
-  const selector = '.groups-times, .efficiency-tabs, .flow-level-controls, .flow-tabs, #joint-viewer .joint-segment';
+  const selector = '.groups-times, .efficiency-tabs, .flow-level-controls, #joint-viewer .joint-segment';
   const bound = new WeakSet();
   function bind(rail) {
     if (bound.has(rail)) return;

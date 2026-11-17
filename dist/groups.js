@@ -43,7 +43,10 @@
       <div class="groups-examples" role="group" aria-label="Choose an ImageNet example">
         ${data.examples.map((example, index) => `<button type="button" class="groups-example" data-example="${index}" aria-pressed="${index === 0}" aria-label="Show ${escape(example.name)}"><img src="${escape(new URL(example.image, dataUrl).href)}" alt="" width="60" height="60" loading="lazy"><span>${escape(example.name)}</span></button>`).join('')}
       </div>
-      <p class="groups-hint">Move over or tap an image region.</p>
+      <aside class="groups-hint ui-hint" aria-label="Interaction tip">
+        <svg class="ui-hint-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 3 12 9-6 1.5L9 20 6 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <p id="groups-keyboard-help">Move over or tap an image region to inspect its group.<span class="ui-sr-only"> Use arrow keys to move. Press Escape to restore the default view.</span></p>
+      </aside>
       <div class="groups-layout">
         <div class="groups-image-wrap">
           <img class="groups-image" alt="" width="256" height="256" decoding="async">
@@ -69,7 +72,6 @@
           </label>
           <div class="groups-controls">
             <label class="groups-show-label"><input class="groups-show" type="checkbox">All group boundaries</label>
-            <button class="groups-reset" type="button">Reset paper view</button>
           </div>
         </div>
       </div>
@@ -79,21 +81,7 @@
           <span class="groups-legend-item"><i class="groups-swatch" aria-hidden="true"></i>Selected group</span>
           <span class="groups-legend-item"><i class="groups-boundary" aria-hidden="true"></i>Boundary</span>
         </div>
-      </div>
-      <details class="groups-details">
-        <summary>Details</summary>
-        <div class="groups-detail-content">
-          <p class="groups-subject"></p>
-          <p class="groups-help" id="groups-keyboard-help">Move over or tap a patch to inspect its group. Use arrow keys to move. Press Escape to restore the default view.</p>
-          <p class="groups-note">One grouping stage · eight images · four saved epochs · four saved times. Group IDs come from the source data. The clean image stays fixed.</p>
-        </div>
-      </details>`;
-    // Keep the existing explanation in the page, inside the same details panel.
-    const explanation = document.querySelector('#discover > .story-caption');
-    if (explanation) {
-      explanation.classList.replace('story-caption', 'groups-explanation');
-      root.querySelector('.groups-detail-content').appendChild(explanation);
-    }
+      </div>`;
     const photo = root.querySelector('.groups-image');
     const canvas = root.querySelector('.groups-canvas');
     const ctx = canvas.getContext('2d');
@@ -101,7 +89,6 @@
     const selection = root.querySelector('.groups-selection');
     const epochSelect = root.querySelector('.groups-epoch');
     const groupSelect = root.querySelector('.groups-group-select');
-    const resetButton = root.querySelector('.groups-reset');
     const timeButtons = [...root.querySelectorAll('.groups-time')];
     const exampleButtons = [...root.querySelectorAll('.groups-example')];
     const show = root.querySelector('.groups-show');
@@ -161,9 +148,6 @@
       root.dataset.selectionKind = example.selectionKind;
       const isDefault = state.epoch === example.default.epoch && saved.t === example.default.t && selected === example.default.group;
       root.dataset.view = isDefault ? example.selectionKind : 'inspection';
-      root.querySelector('.groups-subject').textContent = isDefault
-        ? `${example.selectionKind === 'paper' ? 'Paper' : 'Reference'} selection: ${example.subject.toLowerCase()}.`
-        : `${example.selectionKind === 'paper' ? 'Paper' : 'Reference'} default: group ${example.default.group} at epoch 80, t = 0.75.`;
       selection.textContent = `Group ${selected} · ${patchCount} ${patchCount === 1 ? 'image patch' : 'image patches'}`;
       groupSelect.value = String(selected);
       canvas.setAttribute('aria-label', `${example.name}. Epoch ${state.epoch}, diffusion time ${formatTime(saved.t)}. ${saved.count} image groups. Group ${selected} has ${patchCount} image patches.`);
@@ -181,7 +165,6 @@
         photo.src = new URL(example.image, dataUrl).href;
       }
       root.querySelector('.groups-output-count').textContent = String(frame().count);
-      resetButton.textContent = example.selectionKind === 'paper' ? 'Reset paper view' : 'Reset reference view';
       epochSelect.value = String(state.epoch);
       const counts = new Map();
       frame().groups.forEach(id => counts.set(id, (counts.get(id) || 0) + 1));
@@ -278,7 +261,6 @@
       resetDefault();
     }));
     show.addEventListener('change', () => { state.boundaries = show.checked; requestDraw(); });
-    resetButton.addEventListener('click', () => { announce(); resetDefault(); });
     resetDefault();
   }
 

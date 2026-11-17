@@ -16,7 +16,6 @@
   const percent = v => `${(v * 100).toFixed(v >= .01 ? 2 : 3)}%`;
   const mix = (rgb, v) => `rgb(${rgb.map(c => Math.round(255 + (c - 255) * clamp(v, 0, 1))).join(',')})`;
   const weightColor = v => mix([98, 137, 173], Math.sqrt(clamp(v, 0, 1)));
-  const sum = values => values.reduce((a, b) => a + b, 0);
   const decodeBytes = encoded => Uint8Array.from(atob(encoded), c => c.charCodeAt(0));
   function decodeFloats(encoded) {
     const bytes = decodeBytes(encoded), view = new DataView(bytes.buffer);
@@ -30,7 +29,7 @@
   mount.innerHTML = `
     <p class="joint-loading" role="status">Loading the saved connections…</p>
     <div class="joint-content" hidden>
-      <div class="joint-gallery-heading"><h3 class="joint-example-title"></h3><p class="joint-gallery-help">Choose an image.</p></div>
+      <div class="joint-gallery-heading"><h3 class="joint-example-title"></h3><aside class="joint-gallery-help ui-hint ui-hint-compact" aria-label="Gallery tip"><svg class="ui-hint-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v14H4zM4 15l5-5 5 5 3-3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="16" cy="9" r="1" fill="currentColor"/></svg><p>Choose an image.</p></aside></div>
       <div class="joint-thumbnails" role="group" aria-label="Choose an example"></div>
       <div class="joint-toolbar">
         <label class="joint-time-control">Input time <select id="joint-time" aria-label="Choose saved input time t"></select></label>
@@ -46,7 +45,10 @@
         <div class="joint-caption-header">
           <div class="joint-caption-copy">
             <div class="joint-caption" role="group" aria-label="Caption tokens"></div>
-            <p class="joint-hint">Move over an image region or a caption word.</p>
+            <aside class="joint-hint ui-hint" aria-label="Interaction tip">
+              <svg class="ui-hint-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 3 12 9-6 1.5L9 20 6 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+              <p id="joint-patch-help">Move over or tap an image region or a caption word.<span class="ui-sr-only"> Use arrow keys to move between patches. Press Escape to clear.</span></p>
+            </aside>
           </div>
           <a class="joint-follow" target="_blank" rel="noopener noreferrer" hidden>
             <span class="joint-follow-label"></span><img src="${new URL('assets/x-logo.svg', scriptURL).href}" alt="" aria-hidden="true" width="18" height="18">
@@ -65,17 +67,6 @@
           </div>
         </div>
       </div>
-      <details class="joint-details">
-        <summary>Details</summary>
-        <div class="joint-detail-grid">
-          <p class="joint-inspection"></p><p class="joint-mass"></p>
-          <p class="joint-scale-range"></p><p class="joint-scale-note"></p>
-          <p class="joint-science-note"></p>
-          <p class="joint-patch-help" id="joint-patch-help">Move over either image to show its group and word connections. On a touch screen, tap a region. Use arrow keys to move. Press Escape to clear.</p>
-          <p class="joint-token-note"></p>
-          <div class="joint-run-data"></div>
-        </div>
-      </details>
     </div>
     <span class="joint-sr-only" id="joint-announcement" role="status" aria-live="polite"></span>`;
 
@@ -108,9 +99,6 @@
     const boundary = token.special === 'end' ? 'Caption end.' : token.special === 'space' ? 'Word-start token.' : token.wordStart ? 'Starts a word.' : 'Continues the preceding word.';
     return `Token ${token.position}: ${token.text}. Group ${l.tokenGroups[index]}. ${boundary}${isReverse() ? ` ${percent(reverseValues(e, l, state.patch)[index])} routing weight.` : ''}`;
   }
-  function resetTokenDetail() {
-    query('.joint-token-note').textContent = isReverse() ? 'Token colors show the selected patch’s caption connections. End marks the caption end.' : 'Select a token to see its image connections. End marks the caption end.';
-  }
   function buildTokens() {
     const e = example(), caption = query('.joint-caption'), key = `${e.source}:${e.id}`;
     if (caption.dataset.example === key) return;
@@ -129,12 +117,10 @@
         state.token = index; activeFamily.selectedTokens[state.caption] = index;
         state.direction = 'forward'; state.pinnedPatch = null; state.hoverPatch = null;
         if (changed) render(animate);
-        query('.joint-token-note').textContent = tokenDescription(index);
       };
       button.addEventListener('click', () => {selectToken(); announce();});
       button.addEventListener('pointerenter', event => {if (event.pointerType !== 'touch') selectToken();});
       button.addEventListener('focus', () => selectToken());
-      button.addEventListener('blur', resetTokenDetail);
       word.appendChild(button); tokenButtons.push(button);
     });
     caption.dataset.example = key; caption.setAttribute('aria-label', `Caption tokens: ${e.caption}`);
@@ -190,18 +176,6 @@
     });
     mount.dataset.jointPinnedPatch = ''; // Pointer movement never locks selection.
     mount.dataset.jointHoverPatch = state.hoverPatch === null ? '' : String(state.hoverPatch);
-    query('.joint-inspection').textContent = p === null ? (forward ? 'The right image shows soft image connections.' : 'Hover a region to inspect its group.') : forward ? `Patch ${p} · Group ${l.imageLabels[p]} · ${isLocal() ? percent(values[p]) + ' routing weight' : (values[p] / 255 * 100).toFixed(1) + '% of this group’s peak'}` : `Patch ${p} · Group ${l.imageLabels[p]} · ${l.imageLabels.filter(g => g === l.imageLabels[p]).length} image ${l.imageLabels.filter(g => g === l.imageLabels[p]).length === 1 ? 'patch' : 'patches'}`;
-  }
-  function renderDetails() {
-    const source = data.sources[state.source], box = query('.joint-run-data'); box.replaceChildren();
-    const lines = isLocal() ? [
-      'Local caption study: Apple M3 GPU blocks with CPU routing. This is a separate run from the production GPU gallery.',
-      `Precision: ${activeFamily.model.dtype}. Routing: ${activeFamily.model.routing}.`,
-      `The caption uses the saved image and fixed noise. Noise seed: ${activeFamily.noise.seed}.`,
-      'Group IDs apply only to the selected caption, time, and level.'
-    ] : [source.id === 'paper' ? 'Paper reference: CPU routing.' : 'Gallery: production GPU routing.', 'The forward maps are saved as relative values within each group. Reverse token weights keep their saved float32 values.'];
-    lines.push('40,000 updates · EMA 0.9995 · 16 × 16 image patches.', 'These maps show routing weights, not attention maps or object masks. A token can have soft image connections with no image patches in its hard group.', 'Token pieces keep their original groups. End and separate word-start tokens are included.', `Checkpoint SHA-256: ${data.checkpointSha256}`);
-    lines.forEach(text => {const p = document.createElement('p'); p.textContent = text; box.appendChild(p);});
   }
   function render(animate = true) {
     const e = example(), l = levelFor(e), token = e.tokens[state.token], reverse = isReverse(), forward = state.direction === 'forward', maximum = scaleMaximum();
@@ -210,7 +184,7 @@
     all('[data-joint-level]').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.jointLevel) === state.level)));
     all('[data-joint-example]').forEach(b => b.setAttribute('aria-pressed', String(Number(b.dataset.jointExample) === state.example)));
     query('.joint-example-title').textContent = gallery[state.example].name;
-    buildTokens(); resetTokenDetail();
+    buildTokens();
     const weights = reverseValues(e, l, state.patch);
     tokenButtons.forEach((b, i) => {
       const selected = forward && i === state.token;
@@ -219,19 +193,15 @@
       b.dataset.jointGroup = String(l.tokenGroups[i]); b.dataset.jointWeight = String(reverse ? weights[i] : 0); b.dataset.jointRelativeWeight = String(reverse ? weights[i] / maximum : 0);
       b.setAttribute('aria-label', `${tokenDescription(i)} Select to see its image connections.`);
     });
-    const group = l.tokenGroups[state.token], imageGroups = new Set(l.imageLabels).size;
+    const imageGroups = new Set(l.imageLabels).size;
     query('#joint-image-title').textContent = inputLabel();
     query('#joint-map-title').textContent = forward ? `Image inputs for “${token.text}”` : 'Hard groups';
     query('.joint-selection').textContent = forward ? `“${token.text}” → image` : reverse ? `Group ${l.imageLabels[state.patch]} · ${l.imageLabels.filter(g => g === l.imageLabels[state.patch]).length} image ${l.imageLabels.filter(g => g === l.imageLabels[state.patch]).length === 1 ? 'patch' : 'patches'}` : `${imageGroups} image groups`;
-    query('.joint-mass').textContent = forward ? `Image share ${percent(isLocal() ? sum(forwardValues(e, l, state.token)) : l.poolMass[group][0])}` : reverse ? `Caption share ${percent(isLocal() ? sum(weights) : l.patchMass[state.patch * 3 + 1])}` : '';
     query('.joint-weight-legend').hidden = state.direction === 'groups';
     query('.joint-group-legend').hidden = forward;
     query('.joint-target-legend').hidden = !reverse;
     query('.joint-weight-legend').lastElementChild.textContent = reverse ? 'Word connection' : 'Image connection';
-    query('.joint-scale-range').textContent = state.direction === 'groups' ? '' : `${reverse ? 'Caption routing weight' : isLocal() ? 'Image routing weight' : 'Relative image weight'}: 0 to ${!reverse && !isLocal() ? 'the group peak' : percent(maximum)}.`;
     query('.joint-legend-ramp').style.background = `linear-gradient(90deg,${Array.from({length: 17}, (_, i) => `${weightColor(i / 16)} ${i / 16 * 100}%`).join(',')})`;
-    query('.joint-scale-note').textContent = forward ? isLocal() ? 'Square-root scale for the selected token at this time and level.' : 'Square-root scale within this group. The saved values show relative weights.' : reverse ? `Token colors show soft caption connections. One square-root scale ${isLocal() ? 'covers all tokens at this level' : 'covers both levels'}. Map colors can repeat for distant groups.` : 'Colors distinguish touching groups. Distant groups can share a color.';
-    query('.joint-science-note').textContent = `${isLocal() ? 'Local caption study: M3 GPU blocks, CPU routing.' : state.source === 0 ? 'Paper reference: CPU routing.' : 'Gallery: production GPU routing.'} ${state.time === 1 ? 'The left image is the clean model input.' : activeInput.status === 'verified-input' ? 'The left image shows the noisy model input. Its tensor hash matches the saved run.' : 'The left image is a noise preview reconstructed from the saved seed and noise formula. It does not exactly match the saved input hash. The groups and word connections come from the original run.'}`;
     drawViews();
     const viewKey = [state.source, state.example, state.caption, state.time, state.level, state.direction, state.token].join(':');
     if (animate && previousView && previousView !== viewKey && !reducedMotion.matches) all('canvas').forEach(canvas => {canvas.getAnimations?.().forEach(a => a.cancel()); canvas.animate?.([{opacity: .75}, {opacity: 1}], {duration: 150, easing: 'ease-out'});});
@@ -335,7 +305,7 @@
     state.source = sourceIndex; state.example = index; state.caption = 0; state.time = selectedTime;
     if (reset) {state.level = 1; family.selectedTokens = family.variants.map(e => e.defaultToken);}
     state.token = family.selectedTokens[0]; state.patch = example().defaultPatch; state.hoverPatch = null; state.pinnedPatch = null; state.direction = 'groups';
-    buildTimeControl(); updateFollow(entry); renderDetails();
+    buildTimeControl(); updateFollow(entry);
     query('.joint-content').hidden = false; render(); setBusy(false); mount.dataset.jointReady = 'true'; announce();
   }
   async function chooseTime(time) {
