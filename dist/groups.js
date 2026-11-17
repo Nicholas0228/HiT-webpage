@@ -1,4 +1,4 @@
-/* Original, one-stage ImageNet assignments. Keep source group IDs unchanged. */
+/* Two-stage ImageNet assignments of HiT-XL/16. Keep source group IDs unchanged. */
 (() => {
   'use strict';
   const root = document.getElementById('grouping-viewer');
@@ -6,7 +6,7 @@
   const scriptUrl = document.currentScript?.src || location.href;
   const dataUrl = new URL('assets/groups/data.json', scriptUrl);
   const times = [0.25, 0.5, 0.75, 1];
-  const epochs = [20, 40, 60, 80];
+  const levels = [1, 2];
   const escape = text => String(text).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
   const clamp = (number, low, high) => Math.max(low, Math.min(high, number));
   const formatTime = value => value.toFixed(2);
@@ -14,22 +14,22 @@
   root.innerHTML = '<p class="groups-loading" role="status">Loading image groups…</p>';
 
   function validate(data) {
-    if (data.schema !== 3 || data.stageCount !== 1 || data.defaultEpoch !== 80 || data.imageTime !== 1 || data.defaultTime !== 0.75) throw new Error('Unexpected ImageNet source.');
+    if (data.schema !== 4 || data.stageCount !== 2 || data.imageTime !== 1 || !times.includes(data.defaultTime) || !levels.includes(data.defaultLevel)) throw new Error('Unexpected ImageNet source.');
     if (!Array.isArray(data.times) || data.times.join(',') !== times.join(',')) throw new Error('The saved diffusion times are incomplete.');
-    if (!Array.isArray(data.epochs) || data.epochs.join(',') !== epochs.join(',')) throw new Error('The saved epochs are incomplete.');
-    if (!Array.isArray(data.examples) || data.examples.length !== 8) throw new Error('The source examples are incomplete.');
+    if (!Array.isArray(data.levels) || data.levels.join(',') !== levels.join(',')) throw new Error('The saved levels are incomplete.');
+    if (!Array.isArray(data.examples) || data.examples.length < 1) throw new Error('The source examples are incomplete.');
     data.examples.forEach(example => {
-      if (example.grid !== 16 || !example.epochs || !['paper', 'reference'].includes(example.selectionKind)) throw new Error('The image group data are incomplete.');
-      epochs.forEach(epoch => {
-        const frames = example.epochs[String(epoch)];
-        if (!Array.isArray(frames) || frames.length !== times.length) throw new Error('The saved epoch is incomplete.');
+      if (example.grid !== 16 || !example.levels) throw new Error('The image group data are incomplete.');
+      levels.forEach(level => {
+        const frames = example.levels[String(level)];
+        if (!Array.isArray(frames) || frames.length !== times.length) throw new Error('The saved level is incomplete.');
         frames.forEach((frame, index) => {
           if (frame.t !== times[index] || !Array.isArray(frame.groups) || frame.groups.length !== 256 || frame.groups.some(id => !Number.isInteger(id) || id < 0) || new Set(frame.groups).size !== frame.count) throw new Error('The saved labels are invalid.');
         });
       });
       const initial = example.default;
-      const labels = example.epochs[String(data.defaultEpoch)][times.indexOf(data.defaultTime)].groups;
-      if (!initial || initial.epoch !== data.defaultEpoch || initial.t !== data.defaultTime || !Number.isInteger(initial.focusPatch) || labels[initial.focusPatch] !== initial.group || labels.filter(id => id === initial.group).length !== initial.patchCount) throw new Error('The default selection is invalid.');
+      const labels = example.levels[String(data.defaultLevel)][times.indexOf(data.defaultTime)].groups;
+      if (!initial || initial.level !== data.defaultLevel || initial.t !== data.defaultTime || !Number.isInteger(initial.focusPatch) || labels[initial.focusPatch] !== initial.group || labels.filter(id => id === initial.group).length !== initial.patchCount) throw new Error('The default selection is invalid.');
     });
     return data;
   }
@@ -38,7 +38,7 @@
     const response = await fetch(dataUrl);
     if (!response.ok) throw new Error('The image group data could not load.');
     const data = validate(await response.json());
-    const state = { example: 0, epoch: data.defaultEpoch, time: times.indexOf(data.defaultTime), selectedPatch: 0, hoverPatch: null, focusPatch: 0, keyboardFocus: false, boundaries: true };
+    const state = { example: 0, level: data.defaultLevel, time: times.indexOf(data.defaultTime), selectedPatch: 0, hoverPatch: null, focusPatch: 0, keyboardFocus: false, boundaries: true };
     root.innerHTML = `
       <div class="groups-examples" role="group" aria-label="Choose an ImageNet example">
         ${data.examples.map((example, index) => `<button type="button" class="groups-example" data-example="${index}" aria-pressed="${index === 0}" aria-label="Show ${escape(example.name)}"><img src="${escape(new URL(example.image, dataUrl).href)}" alt="" width="60" height="60" loading="lazy"><span>${escape(example.name)}</span></button>`).join('')}
@@ -53,11 +53,10 @@
           <canvas class="groups-canvas" width="1024" height="1024" tabindex="0" role="img" aria-describedby="groups-keyboard-help">Select an image patch to inspect its group.</canvas>
         </div>
         <div class="groups-side">
-          <label class="groups-epoch-label">Training epoch
-            <select class="groups-epoch" aria-label="Training epoch">
-              ${epochs.map(epoch => `<option value="${epoch}"${epoch === data.defaultEpoch ? ' selected' : ''}>${epoch}</option>`).join('')}
-            </select>
-          </label>
+          <span class="groups-time-label" id="groups-level-label">Hierarchy level</span>
+          <div class="groups-times groups-levels" role="group" aria-labelledby="groups-level-label">
+            ${levels.map(level => `<button class="groups-time groups-level" type="button" data-level="${level}" aria-pressed="${level === data.defaultLevel}">Level ${level}</button>`).join('')}
+          </div>
           <span class="groups-time-label" id="groups-time-label">Diffusion time, t</span>
           <div class="groups-times" role="group" aria-labelledby="groups-time-label">
             ${times.map((time, index) => `<button class="groups-time" type="button" data-time-index="${index}" aria-pressed="${time === data.defaultTime}" aria-label="Diffusion time ${formatTime(time)}">${formatTime(time)}</button>`).join('')}
@@ -87,15 +86,15 @@
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('The image canvas is unavailable.');
     const selection = root.querySelector('.groups-selection');
-    const epochSelect = root.querySelector('.groups-epoch');
+    const levelButtons = [...root.querySelectorAll('.groups-level')];
     const groupSelect = root.querySelector('.groups-group-select');
-    const timeButtons = [...root.querySelectorAll('.groups-time')];
+    const timeButtons = [...root.querySelectorAll('.groups-time[data-time-index]')];
     const exampleButtons = [...root.querySelectorAll('.groups-example')];
     const show = root.querySelector('.groups-show');
     let pendingFrame = 0;
     let imageKey = '';
     const current = () => data.examples[state.example];
-    const frame = () => current().epochs[String(state.epoch)][state.time];
+    const frame = () => current().levels[String(state.level)][state.time];
     const activePatch = () => state.hoverPatch ?? state.selectedPatch;
 
     function boundary(labels, grid, group, stroke, width) {
@@ -138,7 +137,7 @@
       }
       const patchCount = labels.filter(id => id === selected).length;
       root.dataset.example = example.id;
-      root.dataset.epoch = String(state.epoch);
+      root.dataset.level = String(state.level);
       root.dataset.time = formatTime(saved.t);
       root.dataset.selectedGroup = String(selected);
       root.dataset.selectedPatchCount = String(patchCount);
@@ -146,11 +145,11 @@
       root.dataset.focusPatch = String(state.focusPatch);
       root.dataset.showBoundaries = String(state.boundaries);
       root.dataset.selectionKind = example.selectionKind;
-      const isDefault = state.epoch === example.default.epoch && saved.t === example.default.t && selected === example.default.group;
+      const isDefault = state.level === example.default.level && saved.t === example.default.t && selected === example.default.group;
       root.dataset.view = isDefault ? example.selectionKind : 'inspection';
       selection.textContent = `Group ${selected} · ${patchCount} ${patchCount === 1 ? 'image patch' : 'image patches'}`;
       groupSelect.value = String(selected);
-      canvas.setAttribute('aria-label', `${example.name}. Epoch ${state.epoch}, diffusion time ${formatTime(saved.t)}. ${saved.count} image groups. Group ${selected} has ${patchCount} image patches.`);
+      canvas.setAttribute('aria-label', `${example.name}. Level ${state.level}, diffusion time ${formatTime(saved.t)}. ${saved.count} image groups. Group ${selected} has ${patchCount} image patches.`);
       root.dataset.ready = 'true';
     }
 
@@ -165,7 +164,7 @@
         photo.src = new URL(example.image, dataUrl).href;
       }
       root.querySelector('.groups-output-count').textContent = String(frame().count);
-      epochSelect.value = String(state.epoch);
+      levelButtons.forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.level) === state.level)));
       const counts = new Map();
       frame().groups.forEach(id => counts.set(id, (counts.get(id) || 0) + 1));
       groupSelect.innerHTML = [...counts].sort(([a], [b]) => a - b).map(([id, count]) => `<option value="${id}">Group ${id} · ${count} ${count === 1 ? 'patch' : 'patches'}</option>`).join('');
@@ -176,7 +175,7 @@
     }
 
     function resetDefault() {
-      state.epoch = current().default.epoch;
+      state.level = current().default.level;
       state.time = times.indexOf(current().default.t);
       state.selectedPatch = current().default.focusPatch;
       state.focusPatch = state.selectedPatch;
@@ -229,14 +228,14 @@
       requestDraw();
     });
     canvas.addEventListener('blur', () => { state.keyboardFocus = false; requestDraw(); });
-    epochSelect.addEventListener('change', () => {
-      state.epoch = Number(epochSelect.value);
+    levelButtons.forEach(button => button.addEventListener('click', () => {
+      state.level = Number(button.dataset.level);
       state.selectedPatch = state.focusPatch;
       state.hoverPatch = null;
       state.keyboardFocus = false;
       announce();
       update();
-    });
+    }));
     groupSelect.addEventListener('change', () => {
       const selected = Number(groupSelect.value);
       const labels = frame().groups;
