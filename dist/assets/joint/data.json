@@ -1,1 +1,204 @@
-{"schema":3,"grid":16,"update":40000,"ema":0.9995,"checkpointSha256":"957a57769e5283c8e555d876182cb449fdf93c83af792ead81832b07e44b29fe","defaultSource":0,"defaultTime":0.7,"sources":[{"id":"paper","model":"joint-valid-global1024-40k","name":"Paper reference · CPU · 3 images","times":[0.7,1.0],"defaultTime":0.7,"examples":[{"id":"coco-11911","name":"Bananas","caption":"A young boy smiling while holding two bananas up to his face.","image":"paper/coco-11911.jpg","imageSha256":"66736e79b87bd971c256f12cf5336329925308b31d0250ee936164a2083686b7","data":"paper/coco-11911.json","defaultToken":7,"defaultPatch":130,"dataSha256":"0760a38228391091d2cd92a2aad7bdd48b624c5dc3f92c974cdb23075de2a9e9"},{"id":"coco-04216","name":"Stop sign","caption":"A stop sign with a eating animals sticker on it.","image":"paper/coco-04216.jpg","imageSha256":"e6908fc4f390ba9e165cd3dfaf4acdb636e8bfed133709663cd0609967e68451","data":"paper/coco-04216.json","defaultToken":1,"defaultPatch":119,"dataSha256":"c57f2a4ef09686e222ab8f6f7c9475fa33fb19260c704a954907daa760d51f8b"},{"id":"coco-13135","name":"Luggage","caption":"The lady is searching for luggage on the tarmac.","image":"paper/coco-13135.jpg","imageSha256":"853bb0341f644481a7e7053b144921d00ecf042bd2c696f9dd232515d09f5b17","data":"paper/coco-13135.json","defaultToken":5,"defaultPatch":215,"dataSha256":"c4ba118d5714132250727f9337f2d378fcf1f6b7556e1584738347a39018c477"}]},{"id":"gpu","model":"gpu-gallery-40k","name":"GPU gallery · 20 images","times":[1.0,0.85,0.7,0.5,0.25],"defaultTime":0.7,"examples":[{"id":"thanos-gauntlet","name":"Thanos gauntlet","caption":"Thanos, a muscular purple-skinned warrior in dark armor with gold trim, grimaces while raising a golden gauntlet studded with glowing multicolored gemstones. Bright colored beams radiate from his raised hand against an orange, star-filled cosmic background.","image":"gpu/thanos-gauntlet.png","imageSha256":"b3920a685be5ae59e200354076d8752c8a407577efee989476cc909edb768994","data":"gpu/thanos-gauntlet.json","defaultToken":6,"defaultPatch":136,"dataSha256":"1e06a1f96618629739d1c2e6dbb321372321c16e0043bad252e26fb91197915b"},{"id":"thanos-portrait","name":"Thanos portrait","caption":"Thanos, a muscular purple-skinned warrior with a stern expression, wears dark blue armor with gold trim and raises a golden gauntlet studded with glowing multicolored gemstones. Blue, purple and orange nebulae fill the starry cosmic background.","image":"gpu/thanos-portrait.png","imageSha256":"f2d2babcc3f7704cd5adcf0eac7f4fae4bd9c37bad6e8815fef672053c257622","data":"gpu/thanos-portrait.json","defaultToken":6,"defaultPatch":136,"dataSha256":"493a1bc58898314ae02586becee9305d4393afb0d99a9adeb3534c438e6f6aa1"},{"id":"coco-11911","name":"Bananas","caption":"A young boy smiling while holding two bananas up to his face.","image":"gpu/coco-11911.png","imageSha256":"c94f9ac21f2fb2d5482f25f75b2b228da70a0a7fa28b73fd0a07bc39a27fafdf","data":"gpu/coco-11911.json","defaultToken":7,"defaultPatch":130,"dataSha256":"ab373936a631fffb9ba37d4fa850bdce39dadc31fc0dbb95046d48baa4315e42"},{"id":"coco-04216","name":"Stop sign","caption":"A stop sign with a eating animals sticker on it.","image":"gpu/coco-04216.png","imageSha256":"a4726b4071e8d99bdb597d6d28b784c04e9c16c85bf4f282ee122144f1eff4cc","data":"gpu/coco-04216.json","defaultToken":1,"defaultPatch":119,"dataSha256":"42d6c65a810b799458c371d0b79de9325cda0bd707d3b7b89d53ff171a1b2d23"},{"id":"coco-13135","name":"Luggage","caption":"The lady is searching for luggage on the tarmac.","image":"gpu/coco-13135.png","imageSha256":"eab1e4ccc6e1b870e68c07a3e57140df6a38d156cbbc69b8df1775923101e5df","data":"gpu/coco-13135.json","defaultToken":5,"defaultPatch":215,"dataSha256":"72a6e26e8817c944538fc76c0b211d1cfff976900a29b35e8d08029356b3f401"},{"id":"coco-29056","name":"Orange peels","caption":"Slices of orange peels on a white plate.","image":"gpu/coco-29056.png","imageSha256":"46937eb8da9f91074d5d7f88c991439eaa150ee68c3b83c53dbc434ce5a70e0f","data":"gpu/coco-29056.json","defaultToken":0,"defaultPatch":136,"dataSha256":"25e567bd8828b5792d3faddb8fe942436115f9190689efaca09f70112ccc10cc"},{"id":"coco-17311","name":"Game","caption":"A couple fighting each other over a wii remote control","image":"gpu/coco-17311.png","imageSha256":"21c9b51664fea79577805d0e3d64700f4a7b340cc10bdfea26941cf3c878a0d1","data":"gpu/coco-17311.json","defaultToken":1,"defaultPatch":136,"dataSha256":"26dceb78cd7fdafb1dd1e694f15cdee3e7a04207e1fec2a438136f94bfdb66c9"},{"id":"coco-16212","name":"Bench","caption":"a person sitting on a bench near a house","image":"gpu/coco-16212.png","imageSha256":"1b8dc1f6d323d4edcd729db9a2c83081632e0c3ed37db4c914db48b9cb685dd4","data":"gpu/coco-16212.json","defaultToken":2,"defaultPatch":136,"dataSha256":"ceb54b67203b5a1f034763544acfbfd4a2f8f3bff0fa12df6fc006eee654c518"},{"id":"coco-17662","name":"Train","caption":"A train passing by some houses on the street","image":"gpu/coco-17662.png","imageSha256":"13283eff721ca7065f693f7f7d947acc159c34cada578267f559580e67689b37","data":"gpu/coco-17662.json","defaultToken":1,"defaultPatch":136,"dataSha256":"79e9fb3d192277417372a9ea76a164f950d818279281ce3f3b0ba56247075b7f"},{"id":"coco-06617","name":"Garage","caption":"Several garage doors scribbled with graffiti in an urban area.","image":"gpu/coco-06617.png","imageSha256":"621171f21a9f2468a4a0b36be201d11689ceb1f4c55b01e93b217ef7ce1cf7ee","data":"gpu/coco-06617.json","defaultToken":1,"defaultPatch":136,"dataSha256":"67a612deea0d9bd192309c6e3dc60ab41d39c2613c0d4a6a8a77bf8df89c9832"},{"id":"coco-28742","name":"Bathroom","caption":"A white toilet in a trendy wall papered bathroom.","image":"gpu/coco-28742.png","imageSha256":"5646d4123d11a2bacf6f27a847dca7dacfe84026d25d16ce2391064504a2287f","data":"gpu/coco-28742.json","defaultToken":1,"defaultPatch":136,"dataSha256":"930df8681a263ad9f06a2dd4016802a7efac48d4f56cd4341109296f360fddf7"},{"id":"coco-29241","name":"Baseball","caption":"A baseball pitcher throws a pitch to the batter standing at home plate.","image":"gpu/coco-29241.png","imageSha256":"bc0566c7398600424479c59efc9b53deb8d992d98a3395355558c21cfe749138","data":"gpu/coco-29241.json","defaultToken":1,"defaultPatch":136,"dataSha256":"576a787ba3a2e851c9ad2fc2a07840396d63f7c6824248df8e6b9e20ff8f7fd3"},{"id":"coco-21756","name":"Park","caption":"A man flying a cat in a park next to a tree.","image":"gpu/coco-21756.png","imageSha256":"41e08f7943b9c00339e8bf86a072f1977939cb85b38034933c0f5b016d6f5804","data":"gpu/coco-21756.json","defaultToken":2,"defaultPatch":136,"dataSha256":"fa60c0a2b06b557f80e7ad34d33c01801308538d759bea383e8b3a796b5392db"},{"id":"coco-28268","name":"Bedroom","caption":"A dainty girl's bedroom with floral wall paper.","image":"gpu/coco-28268.png","imageSha256":"b689ee3fac803663b8212b4b8b3347f12dfbbf2889d391eb0e15e75dfac09e5f","data":"gpu/coco-28268.json","defaultToken":8,"defaultPatch":136,"dataSha256":"38af2b238ce6510268b69b570a9a6bbff940d3198be6d23c835cb7d26ac649d5"},{"id":"coco-08754","name":"Cow","caption":"Three people are walking in a grassy field past a cow.","image":"gpu/coco-08754.png","imageSha256":"cc3c0dd1fe690504dd59e1c22a4dfac867e7f2278f2b67616c84550534863235","data":"gpu/coco-08754.json","defaultToken":0,"defaultPatch":136,"dataSha256":"6fcebb4599d73261c55fc289c377fa8c9dd2fe4c874e8a17686d1df91aed34bf"},{"id":"coco-02350","name":"Fireplug","caption":"The fireplug is the dominant element with the architecturally interesting building in the background.","image":"gpu/coco-02350.png","imageSha256":"c4a0d8c4d2b591503f255b0f577345a0952b6622c0afcd5a01b18a8c51cc8670","data":"gpu/coco-02350.json","defaultToken":6,"defaultPatch":136,"dataSha256":"b472987ea1d684cf3821623f2952927307ebf2b0474f797f84d4b38286d85200"},{"id":"coco-03270","name":"Laptop","caption":"a cat on a laptop on a desk","image":"gpu/coco-03270.png","imageSha256":"6995caddcb15a6b056c631f6cbff87e72afb21714e809f47becff81b6a69af96","data":"gpu/coco-03270.json","defaultToken":6,"defaultPatch":136,"dataSha256":"4b52b2fce24044af439180f0ee36ea6af3e6a2ff4aea1ab73225bbafd8608470"},{"id":"coco-08958","name":"Dog","caption":"A man with his dog on a leash talking to another man","image":"gpu/coco-08958.png","imageSha256":"07330c599b7e0c800f4b2d6cc2592701616d26807d418280dbca0fb0606b7b98","data":"gpu/coco-08958.json","defaultToken":10,"defaultPatch":136,"dataSha256":"5d267d68ab9b46e4d03e4eff795bc4b1b49913089042eb83a5dab9f9e46a1604"},{"id":"coco-06544","name":"Music","caption":"A lady playing a song on an MP3 player.","image":"gpu/coco-06544.png","imageSha256":"f6a69ff72a51aa37303800d471a0cad484756a7fbcdcc445c12aa4159840f4b9","data":"gpu/coco-06544.json","defaultToken":2,"defaultPatch":136,"dataSha256":"0aa51b196318cac764a9af6e586a0e048dd2ee7d385f18e4092600738762650d"},{"id":"coco-27468","name":"Umbrella","caption":"A person carrying an umbrella walking on a path next to water.","image":"gpu/coco-27468.png","imageSha256":"29796bb862428f969d5f9441380851e6fad5e804ab410118bd8927f8fd05aa38","data":"gpu/coco-27468.json","defaultToken":1,"defaultPatch":136,"dataSha256":"870889fe248ab4bcec1623364be81d75baf6157abbc8e4ca5c4dd382a530be42"}]}]}
+{
+ "schema": 4,
+ "grid": 32,
+ "times": [
+  1.0,
+  0.85,
+  0.7,
+  0.5,
+  0.25
+ ],
+ "defaultTime": 0.7,
+ "model": {
+  "label": "HiT-B/16 D27",
+  "update": 290000,
+  "ema": 0.99995,
+  "weightsSha256": "b955c918bc55a48d11134f88fa4becad493322e9723db095a5403f7eb7155f0f",
+  "dtype": "BF16 autocast, FP32 routers",
+  "routing": "exact average linkage on the GPU, FP32 trees"
+ },
+ "examples": [
+  {
+   "id": "xiaoyu",
+   "name": "Xiaoyu",
+   "caption": "A man holds a camera.",
+   "image": "images/xiaoyu.png",
+   "thumbnail": "thumbs/xiaoyu.jpg",
+   "data": "hit/xiaoyu.json",
+   "defaultTime": 1,
+   "xProfile": "https://x.com/XiaoyuW9401147"
+  },
+  {
+   "id": "yifei",
+   "name": "Yifei",
+   "caption": "A person sits on a rock near a bridge.",
+   "image": "images/yifei.png",
+   "thumbnail": "thumbs/yifei.jpg",
+   "data": "hit/yifei.json",
+   "defaultTime": 1,
+   "xProfile": "https://x.com/WangYw251"
+  },
+  {
+   "id": "weihang",
+   "name": "Weihang",
+   "caption": "A man wearing glasses in front of mountains.",
+   "image": "images/weihang.png",
+   "thumbnail": "thumbs/weihang.jpg",
+   "data": "hit/weihang.json",
+   "defaultTime": 1,
+   "xProfile": "https://x.com/Weihang404"
+  },
+  {
+   "id": "hand",
+   "name": "Hand",
+   "caption": "A man holds up his hand with gems.",
+   "image": "images/hand.png",
+   "thumbnail": "thumbs/hand.jpg",
+   "data": "hit/hand.json"
+  },
+  {
+   "id": "coco-11911",
+   "name": "Bananas",
+   "caption": "A young boy smiling while holding two bananas up to his face.",
+   "image": "images/coco-11911.png",
+   "thumbnail": "thumbs/coco-11911.jpg",
+   "data": "hit/coco-11911.json"
+  },
+  {
+   "id": "coco-04216",
+   "name": "Stop sign",
+   "caption": "A stop sign with a eating animals sticker on it.",
+   "image": "images/coco-04216.png",
+   "thumbnail": "thumbs/coco-04216.jpg",
+   "data": "hit/coco-04216.json"
+  },
+  {
+   "id": "coco-13135",
+   "name": "Luggage",
+   "caption": "The lady is searching for luggage on the tarmac.",
+   "image": "images/coco-13135.png",
+   "thumbnail": "thumbs/coco-13135.jpg",
+   "data": "hit/coco-13135.json"
+  },
+  {
+   "id": "coco-29056",
+   "name": "Orange peels",
+   "caption": "Slices of orange peels on a white plate.",
+   "image": "images/coco-29056.png",
+   "thumbnail": "thumbs/coco-29056.jpg",
+   "data": "hit/coco-29056.json"
+  },
+  {
+   "id": "coco-17311",
+   "name": "Game",
+   "caption": "A couple fighting each other over a wii remote control",
+   "image": "images/coco-17311.png",
+   "thumbnail": "thumbs/coco-17311.jpg",
+   "data": "hit/coco-17311.json"
+  },
+  {
+   "id": "coco-16212",
+   "name": "Bench",
+   "caption": "a person sitting on a bench near a house",
+   "image": "images/coco-16212.png",
+   "thumbnail": "thumbs/coco-16212.jpg",
+   "data": "hit/coco-16212.json"
+  },
+  {
+   "id": "coco-17662",
+   "name": "Train",
+   "caption": "A train passing by some houses on the street",
+   "image": "images/coco-17662.png",
+   "thumbnail": "thumbs/coco-17662.jpg",
+   "data": "hit/coco-17662.json"
+  },
+  {
+   "id": "coco-06617",
+   "name": "Garage",
+   "caption": "Several garage doors scribbled with graffiti in an urban area.",
+   "image": "images/coco-06617.png",
+   "thumbnail": "thumbs/coco-06617.jpg",
+   "data": "hit/coco-06617.json"
+  },
+  {
+   "id": "coco-28742",
+   "name": "Bathroom",
+   "caption": "A white toilet in a trendy wall papered bathroom.",
+   "image": "images/coco-28742.png",
+   "thumbnail": "thumbs/coco-28742.jpg",
+   "data": "hit/coco-28742.json"
+  },
+  {
+   "id": "coco-29241",
+   "name": "Baseball",
+   "caption": "A baseball pitcher throws a pitch to the batter standing at home plate.",
+   "image": "images/coco-29241.png",
+   "thumbnail": "thumbs/coco-29241.jpg",
+   "data": "hit/coco-29241.json"
+  },
+  {
+   "id": "coco-21756",
+   "name": "Park",
+   "caption": "A man flying a cat in a park next to a tree.",
+   "image": "images/coco-21756.png",
+   "thumbnail": "thumbs/coco-21756.jpg",
+   "data": "hit/coco-21756.json"
+  },
+  {
+   "id": "coco-28268",
+   "name": "Bedroom",
+   "caption": "A dainty girl's bedroom with floral wall paper.",
+   "image": "images/coco-28268.png",
+   "thumbnail": "thumbs/coco-28268.jpg",
+   "data": "hit/coco-28268.json"
+  },
+  {
+   "id": "coco-08754",
+   "name": "Cow",
+   "caption": "Three people are walking in a grassy field past a cow.",
+   "image": "images/coco-08754.png",
+   "thumbnail": "thumbs/coco-08754.jpg",
+   "data": "hit/coco-08754.json"
+  },
+  {
+   "id": "coco-02350",
+   "name": "Fireplug",
+   "caption": "The fireplug is the dominant element with the architecturally interesting building in the background.",
+   "image": "images/coco-02350.png",
+   "thumbnail": "thumbs/coco-02350.jpg",
+   "data": "hit/coco-02350.json"
+  },
+  {
+   "id": "coco-03270",
+   "name": "Laptop",
+   "caption": "a cat on a laptop on a desk",
+   "image": "images/coco-03270.png",
+   "thumbnail": "thumbs/coco-03270.jpg",
+   "data": "hit/coco-03270.json"
+  },
+  {
+   "id": "coco-08958",
+   "name": "Dog",
+   "caption": "A man with his dog on a leash talking to another man",
+   "image": "images/coco-08958.png",
+   "thumbnail": "thumbs/coco-08958.jpg",
+   "data": "hit/coco-08958.json"
+  },
+  {
+   "id": "coco-06544",
+   "name": "Music",
+   "caption": "A lady playing a song on an MP3 player.",
+   "image": "images/coco-06544.png",
+   "thumbnail": "thumbs/coco-06544.jpg",
+   "data": "hit/coco-06544.json"
+  },
+  {
+   "id": "coco-27468",
+   "name": "Umbrella",
+   "caption": "A person carrying an umbrella walking on a path next to water.",
+   "image": "images/coco-27468.png",
+   "thumbnail": "thumbs/coco-27468.jpg",
+   "data": "hit/coco-27468.json"
+  }
+ ]
+}

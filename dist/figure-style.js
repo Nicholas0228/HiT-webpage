@@ -17,10 +17,17 @@
       }
     });
     const assigned=new Map(),coverage=palette.map(()=>0),fills=palette.map(rgb=>mix(rgb,.82));
+    // Keep the neighbor colors of each group. This keeps large maps fast.
+    const neighborColors=new Map(groups.map(g=>[g,new Set()]));
     while(assigned.size<groups.length) {
-      const saturation=g=>new Set([...adjacent.get(g)].filter(n=>assigned.has(n)).map(n=>assigned.get(n))).size;
-      const g=groups.filter(n=>!assigned.has(n)).sort((a,b)=>saturation(b)-saturation(a)||adjacent.get(b).size-adjacent.get(a).size||areas.get(b)-areas.get(a)||a-b)[0];
-      const used=new Set([...adjacent.get(g)].filter(n=>assigned.has(n)).map(n=>assigned.get(n)));
+      // Order: most neighbor colors, most neighbors, largest area, lowest ID.
+      let g,saturation=-1,degree=-1,area=-1;
+      for(const n of groups) {
+        if(assigned.has(n))continue;
+        const s=neighborColors.get(n).size,d=adjacent.get(n).size,a=areas.get(n);
+        if(g===undefined||s>saturation||(s===saturation&&(d>degree||(d===degree&&(a>area||(a===area&&n<g)))))){g=n;saturation=s;degree=d;area=a;}
+      }
+      const used=neighborColors.get(g);
       let choices=fills.map((_,i)=>i).filter(i=>!used.has(i));
       if(!choices.length) {
         // Extra shades retain the same AF3 hues for unusually dense group graphs.
@@ -30,6 +37,7 @@
       }
       const color=choices.sort((a,b)=>coverage[a]-coverage[b]||a-b)[0];
       assigned.set(g,color);coverage[color]+=areas.get(g);
+      adjacent.get(g).forEach(n=>neighborColors.get(n).add(color));
     }
     const colors=new Map(groups.map(g=>[g,fills[assigned.get(g)]]));
     cache.set(labels,colors);return colors;
