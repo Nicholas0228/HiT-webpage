@@ -27,7 +27,7 @@
   "level_2": "Stage-2 hard group of the stage-1 group of each patch",
   "transform": "No interpolation, spatial smoothing, or renumbering."
  },
- "display": "Show the clean t = 1.00 image under the labels of the selected time and level.",
+ "display": "At t < 1, show a noise preview made from the saved generated PNG, recorded CPU noise seed, and source input equation. At t = 1, show the unchanged clean PNG. Use the saved group labels at the selected time and level.",
  "runtime": {
   "torch": "2.5.1+cu124",
   "gpu": "NVIDIA H100 NVL",
@@ -418,5 +418,13 @@
     0.00018102128524333239
    ]
   }
- ]
+ ],
+ "display_preview": {
+  "generator": "torch.randn((3, 256, 256), generator=torch.Generator(device=\"cpu\").manual_seed(noise_seed), dtype=torch.float32)",
+  "torch_version": "2.13.0",
+  "input": "x = pixel / 127.5 - 1; z_t = t*x + (1-t)*noise",
+  "output": "round((z_t + 1)*127.5), clamp to [0,255], uint8 RGB PNG",
+  "noise_shared_across_times_and_levels": true,
+  "saved_group_labels_changed": false
+ }
 }

@@ -1,56 +1,73 @@
 {
-  "version": 1,
+  "version": 2,
   "provenance": {
-    "source": "source-figure.pdf",
-    "sourceFile": "hit-xl16-vs-jit-h16-cfg.pdf",
-    "sha256": "b5851a271f17ced40e1fde5484468905961978df688ee95be3f01d4a64035c72",
-    "method": "Original PDF polyline vertices, transformed using vector tick positions and the original logarithmic FID axis. No additional checkpoints or curve smoothing.",
-    "precision": "Figure-derived estimates. These are not raw evaluation logs.",
-    "epochs": "Recovered from the labeled epoch-80 and epoch-320 endpoints and the update positions. Checkpoint spacing is consistent with the draft.",
-    "matchedQuality": "Log-linear interpolation of JiT epoch-120 and epoch-160 points to the final HiT FID. This is an estimate, not an evaluated JiT checkpoint.",
-    "conditions": "ImageNet-256; FID-50K; CFG 2.4; EMA 0.9999.",
-    "cost": "Estimated cumulative forward and backward training matrix FLOPs. Runtime overhead, extra recomputation and group-count variation are excluded."
+    "source": "Final result table and updated comparison figure supplied by the author on 2026-11-17.",
+    "fid": "All supplied table values are preserved. The updated reference figure gives the more precise HiT epoch 600 result of 1.4778.",
+    "updates": "Optimizer update counts supplied in the final table, in thousands.",
+    "matchedQuality": "Both series are compared at JiT epoch 400 FID 2.1592. HiT is interpolated linearly in log FID between epochs 160 and 200. No extrapolation.",
+    "cost": "Estimated cumulative training EFLOPs. HiT uses approximately 1.36 EFLOPs per epoch, read from the author supplied updated compute plot (about 815 EFLOPs at epoch 600). JiT retains the reference plot conversion of approximately 1.39846 EFLOPs per epoch. These are plot based estimates, not measured runtime."
   },
   "axes": {
     "fid": {
       "scale": "log",
-      "min": 1.4,
-      "max": 260,
+      "min": 1.3,
+      "max": 35,
       "ticks": [
+        1.5,
         2,
         3,
         5,
         10,
         20,
-        50,
-        100,
-        200
+        30
       ]
     },
     "flops": {
       "field": "eflops",
       "min": 0,
-      "max": 530,
+      "max": 900,
       "ticks": [
         0,
         100,
         200,
         300,
         400,
-        500
+        500,
+        600,
+        700,
+        800,
+        900
       ],
-      "label": "Estimated training EFLOPs"
+      "mobileTicks": [
+        0,
+        200,
+        400,
+        600,
+        800
+      ],
+      "label": "Training EFLOPs"
     },
     "updates": {
       "field": "updatesK",
       "min": 0,
-      "max": 475,
+      "max": 800,
       "ticks": [
         0,
         100,
         200,
         300,
-        400
+        400,
+        500,
+        600,
+        700,
+        800
+      ],
+      "mobileTicks": [
+        0,
+        200,
+        400,
+        600,
+        800
       ],
       "label": "Training updates (thousands)"
     }
@@ -58,243 +75,132 @@
   "comparison": {
     "targetSeries": "hit",
     "baselineSeries": "jit",
-    "reportedFlopsRatio": 2.6,
-    "reportedUpdatesRatio": 1.9
+    "targetFid": 2.1592
   },
   "series": [
     {
       "id": "hit",
       "label": "HiT-XL/16",
+      "settings": "tail GG · CFG 2.6",
+      "estimatedEflopsPerEpoch": 1.36,
       "points": [
         {
-          "epoch": 20,
-          "fid": 88.3608479,
-          "updatesK": 25.02000028,
-          "eflops": 20.7599124,
-          "pdfVertices": {
-            "updates": [
-              78.60503,
-              113.83625599999999
-            ],
-            "flops": [
-              571.637974,
-              113.83625599999999
-            ]
-          }
-        },
-        {
           "epoch": 40,
-          "fid": 7.60522439,
-          "updatesK": 50.04000056,
-          "eflops": 41.5198248,
-          "pdfVertices": {
-            "updates": [
-              100.13006,
-              209.190623
-            ],
-            "flops": [
-              587.644597,
-              209.190623
-            ]
-          }
-        },
-        {
-          "epoch": 60,
-          "fid": 3.72116904,
-          "updatesK": 75.06000084,
-          "eflops": 62.2797359,
-          "pdfVertices": {
-            "updates": [
-              121.65509,
-              236.98123199999998
-            ],
-            "flops": [
-              603.651219,
-              236.98123199999998
-            ]
-          }
+          "fid": 14.3675,
+          "updatesK": 50.04,
+          "eflops": 54.4
         },
         {
           "epoch": 80,
-          "fid": 2.99624245,
-          "updatesK": 100.07999996,
-          "eflops": 83.03964829,
-          "pdfVertices": {
-            "updates": [
-              143.180119,
-              245.405489
-            ],
-            "flops": [
-              619.657842,
-              245.405489
-            ]
-          }
+          "fid": 3.8622,
+          "updatesK": 100.08,
+          "eflops": 108.8
+        },
+        {
+          "epoch": 120,
+          "fid": 2.5761,
+          "updatesK": 150.12,
+          "eflops": 163.2
+        },
+        {
+          "epoch": 160,
+          "fid": 2.2209,
+          "updatesK": 200.16,
+          "eflops": 217.6
+        },
+        {
+          "epoch": 200,
+          "fid": 2.0248,
+          "updatesK": 250.2,
+          "eflops": 272.0
+        },
+        {
+          "epoch": 240,
+          "fid": 2.0038,
+          "updatesK": 300.24,
+          "eflops": 326.4
+        },
+        {
+          "epoch": 320,
+          "fid": 1.7997,
+          "updatesK": 400.32,
+          "eflops": 435.2
+        },
+        {
+          "epoch": 400,
+          "fid": 1.6923,
+          "updatesK": 500.4,
+          "eflops": 544.0
+        },
+        {
+          "epoch": 600,
+          "fid": 1.4778,
+          "updatesK": 750.6,
+          "eflops": 816.0,
+          "variant": "tail GG with shift 1.7",
+          "settings": "tail GG · shift 1.7 · CFG 2.6"
         }
       ]
     },
     {
       "id": "jit",
       "label": "JiT-H/16",
+      "settings": "CFG 2.4",
+      "estimatedEflopsPerEpoch": 1.39846,
       "points": [
         {
-          "epoch": 20,
-          "fid": 134.18727193,
-          "updatesK": 25.02000028,
-          "eflops": 27.96925002,
-          "pdfVertices": {
-            "updates": [
-              78.60503,
-              97.59232499999999
-            ],
-            "flops": [
-              577.196627,
-              97.59232499999999
-            ]
-          }
-        },
-        {
           "epoch": 40,
-          "fid": 26.68956546,
-          "updatesK": 50.04000056,
-          "eflops": 55.93849873,
-          "pdfVertices": {
-            "updates": [
-              100.13006,
-              160.380487
-            ],
-            "flops": [
-              598.761902,
-              160.380487
-            ]
-          }
-        },
-        {
-          "epoch": 60,
-          "fid": 7.23656107,
-          "updatesK": 75.06000084,
-          "eflops": 83.90774745,
-          "pdfVertices": {
-            "updates": [
-              121.65509,
-              211.122494
-            ],
-            "flops": [
-              620.327177,
-              211.122494
-            ]
-          }
+          "fid": 26.6896,
+          "updatesK": 50.04,
+          "eflops": 55.938
         },
         {
           "epoch": 80,
-          "fid": 4.35866757,
-          "updatesK": 100.07999996,
-          "eflops": 111.87699617,
-          "pdfVertices": {
-            "updates": [
-              143.180119,
-              230.83335399999999
-            ],
-            "flops": [
-              641.892452,
-              230.83335399999999
-            ]
-          }
+          "fid": 4.3587,
+          "updatesK": 100.08,
+          "eflops": 111.877
         },
         {
           "epoch": 120,
-          "fid": 3.41801995,
-          "updatesK": 150.12000052,
-          "eflops": 167.81549491,
-          "pdfVertices": {
-            "updates": [
-              186.230179,
-              240.285031
-            ],
-            "flops": [
-              685.023003,
-              240.285031
-            ]
-          }
+          "fid": 3.418,
+          "updatesK": 150.12,
+          "eflops": 167.815
         },
         {
           "epoch": 160,
-          "fid": 2.92819433,
-          "updatesK": 200.16000108,
-          "eflops": 223.75399234,
-          "pdfVertices": {
-            "updates": [
-              229.280239,
-              246.298657
-            ],
-            "flops": [
-              728.153553,
-              246.298657
-            ]
-          }
+          "fid": 2.9282,
+          "updatesK": 200.16,
+          "eflops": 223.754
         },
         {
           "epoch": 200,
-          "fid": 2.72831046,
-          "updatesK": 250.20000164,
-          "eflops": 279.69249108,
-          "pdfVertices": {
-            "updates": [
-              272.330299,
-              249.04753499999998
-            ],
-            "flops": [
-              771.284104,
-              249.04753499999998
-            ]
-          }
+          "fid": 2.7283,
+          "updatesK": 250.2,
+          "eflops": 279.692
         },
         {
           "epoch": 240,
-          "fid": 2.61238371,
-          "updatesK": 300.24000104,
-          "eflops": 335.63098852,
-          "pdfVertices": {
-            "updates": [
-              315.380358,
-              250.735639
-            ],
-            "flops": [
-              814.414654,
-              250.735639
-            ]
-          }
-        },
-        {
-          "epoch": 280,
-          "fid": 2.42541667,
-          "updatesK": 350.2800016,
-          "eflops": 391.56948725,
-          "pdfVertices": {
-            "updates": [
-              358.430418,
-              253.62278399999997
-            ],
-            "flops": [
-              857.545205,
-              253.62278399999997
-            ]
-          }
+          "fid": 2.6124,
+          "updatesK": 300.24,
+          "eflops": 335.63
         },
         {
           "epoch": 320,
-          "fid": 2.28168393,
-          "updatesK": 400.32000216,
-          "eflops": 447.50798469,
-          "pdfVertices": {
-            "updates": [
-              401.480478,
-              255.997886
-            ],
-            "flops": [
-              900.675755,
-              255.997886
-            ]
-          }
+          "fid": 2.2817,
+          "updatesK": 400.32,
+          "eflops": 447.507
+        },
+        {
+          "epoch": 400,
+          "fid": 2.1592,
+          "updatesK": 500.4,
+          "eflops": 559.384
+        },
+        {
+          "epoch": 600,
+          "fid": 1.9547,
+          "updatesK": 750.6,
+          "eflops": 839.076
         }
       ]
     }

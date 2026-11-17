@@ -5,6 +5,7 @@
   if (!root) return;
   const scriptUrl = document.currentScript?.src || location.href;
   const dataUrl = new URL('assets/groups/data.json', scriptUrl);
+  dataUrl.search = new URL(scriptUrl).search;
   const times = [0.25, 0.5, 0.75, 1];
   const levels = [1, 2];
   const escape = text => String(text).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
@@ -20,6 +21,7 @@
     if (!Array.isArray(data.examples) || data.examples.length < 1) throw new Error('The source examples are incomplete.');
     data.examples.forEach(example => {
       if (example.grid !== 16 || !example.levels) throw new Error('The image group data are incomplete.');
+      if (times.some(time => time !== 1 && typeof example.inputs?.[String(time)] !== 'string')) throw new Error('The noisy image previews are incomplete.');
       levels.forEach(level => {
         const frames = example.levels[String(level)];
         if (!Array.isArray(frames) || frames.length !== times.length) throw new Error('The saved level is incomplete.');
@@ -158,10 +160,12 @@
 
     function update() {
       const example = current();
-      if (imageKey !== example.id) {
-        imageKey = example.id;
-        photo.alt = example.alt;
-        photo.src = new URL(example.image, dataUrl).href;
+      const time = frame().t;
+      const nextImageKey = `${example.id}:${time}`;
+      if (imageKey !== nextImageKey) {
+        imageKey = nextImageKey;
+        photo.alt = time === 1 ? example.alt : `${example.alt} Noisy input at diffusion time ${formatTime(time)}.`;
+        photo.src = new URL(time === 1 ? example.image : example.inputs[String(time)], dataUrl).href;
       }
       root.querySelector('.groups-output-count').textContent = String(frame().count);
       levelButtons.forEach(button => button.setAttribute('aria-pressed', String(Number(button.dataset.level) === state.level)));
