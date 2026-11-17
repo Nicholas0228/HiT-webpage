@@ -14,7 +14,7 @@
     const counts=options.counts, id=`hit-paper-${++nextId}`;
     const reduce=matchMedia('(prefers-reduced-motion: reduce)');
     const scene=document.createElement('div'); scene.className='nh-scene';
-    scene.innerHTML=`<svg class="nh-diagram" role="img" aria-label="HiT hierarchy. TTG reduces the token count. TTuG restores it. Learned skips connect each encoder to its decoder."></svg>
+    scene.innerHTML=`<svg class="nh-diagram" role="img" aria-label="HiT hierarchy. Group reduces the token count. Ungroup restores it. Learned skips connect each encoder to its decoder."></svg>
       <button class="nh-core" type="button" aria-label="Explore Level 2. Click to keep this level." aria-expanded="false" aria-pressed="false"></button>
       <span class="nh-sr-only">Moving dots show feature paths. Their speed does not show model execution time.</span>`;
     element.appendChild(scene);
@@ -45,8 +45,8 @@
     }
     block('patch','Patch projection','learned','Project the noisy image into tokens.');
     block('encoder','Transformer','learned','Process the full token sequence.');
-    block('groups','TTG','routing',`Test time grouping. ${counts[0]} → ${counts[1]} tokens.`);
-    block('return','TTuG','routing',`Test time ungrouping. ${counts[1]} → ${counts[0]} tokens.`);
+    block('groups','Group','routing',`Group. ${counts[0]} → ${counts[1]} tokens.`);
+    block('return','Ungroup','routing',`Ungroup. ${counts[1]} → ${counts[0]} tokens.`);
     sum('add1');
     block('decoder','Transformer','learned','Process the restored sequence after the skip addition.');
     block('head','Prediction head','learned','Predict the clean image.');
@@ -56,9 +56,9 @@
     const frame=node('rect',{class:'nh-inner-frame',rx:3});inside.append(frame);
     const innerEdges=node('g');inside.append(innerEdges);
     block('inner-encoder','Transformer','learned','Process the first compact sequence.',inside);
-    block('inner-form','TTG','routing',`Test time grouping. ${counts[1]} → ${counts[2]} tokens.`,inside);
+    block('inner-form','Group','routing',`Group. ${counts[1]} → ${counts[2]} tokens.`,inside);
     block('transformer','Transformer','learned','Repeat L Transformer blocks at a fixed token count.',inside);
-    block('inner-return','TTuG','routing',`Test time ungrouping. ${counts[2]} → ${counts[1]} tokens.`,inside);
+    block('inner-return','Ungroup','routing',`Ungroup. ${counts[2]} → ${counts[1]} tokens.`,inside);
     sum('add2',inside);
     block('inner-decoder','Transformer','learned','Process the restored first compact sequence.',inside);
     block('skip2','W₂','learned','Learned inner skip projection.',inside);

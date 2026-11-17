@@ -35,8 +35,8 @@
             <button type="button" data-flow-level="1" aria-pressed="false">Level 2</button>
           </div>
           <div class="flow-nested"></div>
-          <div class="flow-legend flow-path-key"><span><i class="flow-key"></i>Transformer and skip</span><span><i class="flow-key routing"></i>TTG / TTuG</span></div>
-          <p class="flow-architecture-note">TTG groups tokens. TTuG restores token positions.<br>Counts include image and caption tokens.</p>
+          <div class="flow-legend flow-path-key"><span><i class="flow-key"></i>Transformer and skip</span><span><i class="flow-key routing"></i>Group / Ungroup</span></div>
+          <p class="flow-architecture-note">Group combines tokens. Ungroup restores token positions.<br>Counts include image and caption tokens.</p>
           <p class="flow-level-state" role="status" aria-live="polite">Level 1 selected</p>
         </div>
       </div>

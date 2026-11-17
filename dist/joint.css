@@ -37,7 +37,8 @@
 #joint-viewer .joint-token[aria-pressed="true"]{border-color:#489750;box-shadow:0 0 0 1px #489750}
 #joint-viewer .joint-token:hover{box-shadow:inset 0 -1px 0 #000000}
 #joint-viewer .joint-hint{margin:0 0 18px}
-#joint-viewer .joint-views{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
+#joint-viewer .joint-visualization{width:75%;min-width:0;margin-inline:auto}
+#joint-viewer .joint-views{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
 #joint-viewer .joint-figure{margin:0;min-width:0}
 #joint-viewer .joint-figure figcaption{margin:0 0 8px;font-weight:500}
 #joint-viewer canvas{display:block;width:100%;height:auto;aspect-ratio:1;background:#ffffff;border-radius:5px;cursor:crosshair;touch-action:pan-y}

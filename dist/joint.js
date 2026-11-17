@@ -52,16 +52,18 @@
             <span class="joint-follow-label"></span><img src="${new URL('assets/x-logo.svg', scriptURL).href}" alt="" aria-hidden="true" width="18" height="18">
           </a>
         </div>
-        <div class="joint-views">
-          <figure class="joint-figure"><figcaption id="joint-image-title">Clean input · t = 1</figcaption><canvas id="joint-canvas" width="1024" height="1024" tabindex="0" role="img" aria-describedby="joint-patch-help"></canvas></figure>
-          <figure class="joint-figure"><figcaption id="joint-map-title"></figcaption><canvas id="joint-map" width="1024" height="1024" tabindex="0" role="img" aria-describedby="joint-patch-help"></canvas></figure>
-        </div>
-        <div class="joint-statusbar">
-          <p class="joint-selection"></p>
-          <div class="joint-legend" aria-label="Map legend">
-            <span class="joint-weight-legend"><span class="joint-legend-ramp" aria-hidden="true"></span><span>Word connection</span></span>
-            <span class="joint-group-legend"><span class="joint-hard-key" aria-hidden="true"></span><span>Group</span></span>
-            <span class="joint-target-legend"><span class="joint-target-key" aria-hidden="true"></span><span>Patch</span></span>
+        <div class="joint-visualization">
+          <div class="joint-views">
+            <figure class="joint-figure"><figcaption id="joint-image-title">Clean input · t = 1</figcaption><canvas id="joint-canvas" width="1024" height="1024" tabindex="0" role="img" aria-describedby="joint-patch-help"></canvas></figure>
+            <figure class="joint-figure"><figcaption id="joint-map-title"></figcaption><canvas id="joint-map" width="1024" height="1024" tabindex="0" role="img" aria-describedby="joint-patch-help"></canvas></figure>
+          </div>
+          <div class="joint-statusbar">
+            <p class="joint-selection"></p>
+            <div class="joint-legend" aria-label="Map legend">
+              <span class="joint-weight-legend"><span class="joint-legend-ramp" aria-hidden="true"></span><span>Word connection</span></span>
+              <span class="joint-group-legend"><span class="joint-hard-key" aria-hidden="true"></span><span>Group</span></span>
+              <span class="joint-target-legend"><span class="joint-target-key" aria-hidden="true"></span><span>Patch</span></span>
+            </div>
           </div>
         </div>
       </div>
