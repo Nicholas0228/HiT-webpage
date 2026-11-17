@@ -81,7 +81,7 @@
     {
       "id": "hit",
       "label": "HiT-XL/16",
-      "settings": "tail GG · CFG 2.6",
+      "settings": "guidance 2.6",
       "estimatedEflopsPerEpoch": 1.36,
       "points": [
         {
@@ -138,14 +138,14 @@
           "updatesK": 750.6,
           "eflops": 816.0,
           "variant": "tail GG with shift 1.7",
-          "settings": "tail GG · shift 1.7 · CFG 2.6"
+          "settings": "guidance 2.6"
         }
       ]
     },
     {
       "id": "jit",
       "label": "JiT-H/16",
-      "settings": "CFG 2.4",
+      "settings": "guidance 2.4",
       "estimatedEflopsPerEpoch": 1.39846,
       "points": [
         {

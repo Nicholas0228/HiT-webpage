@@ -55,8 +55,7 @@
         <div class="efficiency-toolbar">
           <span class="efficiency-dataset-label">ImageNet 256 × 256</span>
           <ul class="efficiency-legend" aria-label="Models">
-            <li><span class="efficiency-key efficiency-key-hit" aria-hidden="true"></span>HiT-XL/16 · tail GG, CFG 2.6</li>
-            <li><span class="efficiency-key efficiency-key-jit" aria-hidden="true"></span>JiT-H/16 · CFG 2.4</li>
+            ${data.series.map(series => `<li><span class="efficiency-key efficiency-key-${series.id}" aria-hidden="true"></span>${series.label} · ${series.settings}</li>`).join('')}
           </ul>
         </div>
         <div class="efficiency-plots">
