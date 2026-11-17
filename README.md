@@ -1,6 +1,6 @@
 # HiT webpage
 
-This private repository is the shared source for the HiT project page.
+This repository is the shared source for the HiT project page.
 Make page edits here. The complete static site is in `dist/`.
 Read `AGENTS.md` for the design rules before you edit the page.
 
@@ -30,10 +30,17 @@ only on the remote computer's loopback address.
 Pull the latest changes before you edit. Use a separate branch for each change
 and open a pull request for review. Keep source changes in this repository.
 
-GitHub Pages and Actions are currently disabled for this repository. The
-existing Pages workflow is preserved for later use. Public publication needs
-a separate request. A future deployment can use `dist/` from this repository,
-with a link from the homepage or blog.
+The public page is at <https://nicholas0228.github.io/HiT-webpage/>.
+The blog address <https://nicholas0228.github.io/blog/hit/> redirects to it.
+
+Every push or pull request merge into `main` runs `.github/workflows/pages.yml`
+and publishes `dist/` through GitHub Pages. The workflow can also be run manually
+from the Actions tab. Wait for the deployment to finish before checking changes
+on the public page.
+
+Keep all page content, styles, scripts, and assets here. The homepage repository
+contains only the blog entry and redirect; it does not hold a second copy of the
+HiT page. Changes on a feature branch stay unpublished until merged into `main`.
 
 ## Original source
 
