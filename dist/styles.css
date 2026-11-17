@@ -113,6 +113,7 @@ a:focus-visible { outline: 2px solid #000000; outline-offset: 5px; border-radius
 }
 .authors > span { white-space: nowrap; }
 sup { font-size: 1em; vertical-align: super; line-height: 0; margin-left: 2px; }
+.affiliation-mark { font-size: .7em; }
 .affiliations {
   margin-top: 28px;
   display: flex;
@@ -124,6 +125,18 @@ sup { font-size: 1em; vertical-align: super; line-height: 0; margin-left: 2px; }
   will-change: opacity, transform;
 }
 .university { display: flex; align-items: center; gap: 9px; font-size: var(--body-text-size); }
+.contributions {
+  flex-basis: 100%;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  font-size: var(--body-text-size);
+  line-height: 1.5;
+}
+.contributions > span { white-space: nowrap; }
+.contributions sup { margin: 0 4px 0 0; }
 .university img { object-fit: contain; flex: 0 0 auto; }
 .cmu-logo { width: 30px; height: 30px; }
 .rice-logo { width: 24px; height: 30px; }

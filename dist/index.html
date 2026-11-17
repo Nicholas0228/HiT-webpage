@@ -8,7 +8,7 @@
   <title>HiT</title>
   <link rel="icon" href="assets/favicon.ico?v=7bdb7f8a915b" sizes="any">
   <link rel="icon" href="assets/favicon.svg?v=7bdb7f8a915b" type="image/svg+xml">
-  <link rel="stylesheet" href="styles.css?v=c3ecf44b32e1">
+  <link rel="stylesheet" href="styles.css?v=2cb9d58798b2">
   <script src="snap-source.js?v=200f3692f0ef" defer></script>
   <script src="intro.js?v=73a21481cde0" defer></script>
   <link rel="stylesheet" href="sections.css?v=2b1c2b47eedf">
@@ -24,10 +24,19 @@
   <script src="nested-hit.js?v=0f7f705f38fd" defer></script>
   <link rel="stylesheet" href="flow.css?v=eb9ab0d6a92f">
   <script src="flow.js?v=6b99644d7647" defer></script>
-  <link rel="stylesheet" href="ui-glass.css?v=e061d42f8184">
+  <link rel="stylesheet" href="ui-glass.css?v=b53c42082e91">
   <script src="ui-glass.js?v=392b627fb51e" defer></script>
 </head>
-<body>
+<body id="top">
+  <nav class="resource-bar" aria-label="Project resources">
+    <a class="resource-brand" href="#top" aria-label="HiT home"><img src="assets/hit-mark.svg" alt="HiT" width="680" height="565"></a>
+    <div class="resource-links">
+      <!-- TODO: Add resource URLs and remove aria-disabled when available. -->
+      <a class="resource-link" role="link" aria-disabled="true" title="Coming soon">Paper</a>
+      <a class="resource-link" role="link" aria-disabled="true" title="Coming soon">Hugging Face</a>
+      <a class="resource-link" role="link" aria-disabled="true" title="Coming soon">GitHub</a>
+    </div>
+  </nav>
   <main>
     <section class="intro" aria-label="HiT introduction">
       <div class="stage">
@@ -45,23 +54,27 @@
             <h1 class="paper-title"><span>Hierarchical Diffusion Transformer</span> <span>for <span class="unbroken">End-to-End</span> Image Generation</span></h1>
           </div>
           <div class="authors" aria-label="Authors" inert>
-            <span><a href="https://x.com/XiaoyuW9401147" target="_blank" rel="noopener noreferrer">Xiaoyu Wu</a><sup>1</sup></span>
-            <span><a href="https://x.com/WangYw251" target="_blank" rel="noopener noreferrer">Yifei Wang</a><sup>2</sup></span>
-            <span><a href="https://x.com/Weihang404" target="_blank" rel="noopener noreferrer">Weihang Guo</a><sup>2</sup></span>
-            <span><a href="https://x.com/_Chen_Wei_" target="_blank" rel="noopener noreferrer">Chen Wei</a><sup>2</sup></span>
-            <span>Lydia E Kavraki<sup>2</sup></span>
-            <span><a href="https://x.com/niloofar_mire" target="_blank" rel="noopener noreferrer">Niloofar Mireshghallah</a><sup>1</sup></span>
-            <span><a href="https://x.com/zstevenwu" target="_blank" rel="noopener noreferrer">Steven Wu</a><sup>1</sup></span>
+            <span><a href="https://x.com/XiaoyuW9401147" target="_blank" rel="noopener noreferrer">Xiaoyu Wu</a><sup><span class="affiliation-mark">△</span>,*,†</sup></span>
+            <span><a href="https://x.com/WangYw251" target="_blank" rel="noopener noreferrer">Yifei Wang</a><sup><span class="affiliation-mark">□</span>,*</sup></span>
+            <span><a href="https://x.com/Weihang404" target="_blank" rel="noopener noreferrer">Weihang Guo</a><sup><span class="affiliation-mark">□</span>,*</sup></span>
+            <span><a href="https://x.com/_Chen_Wei_" target="_blank" rel="noopener noreferrer">Chen Wei</a><sup><span class="affiliation-mark">□</span></sup></span>
+            <span>Lydia E Kavraki<sup><span class="affiliation-mark">□</span></sup></span>
+            <span><a href="https://x.com/niloofar_mire" target="_blank" rel="noopener noreferrer">Niloofar Mireshghallah</a><sup><span class="affiliation-mark">△</span></sup></span>
+            <span><a href="https://x.com/zstevenwu" target="_blank" rel="noopener noreferrer">Steven Wu</a><sup><span class="affiliation-mark">△</span></sup></span>
           </div>
-          <div class="affiliations" aria-label="Affiliations" inert>
+          <div class="affiliations" aria-label="Affiliations and contributions" inert>
             <a class="university" href="https://www.cmu.edu/" target="_blank" rel="noopener noreferrer">
               <img class="cmu-logo" src="assets/cmu.png" alt="Carnegie Mellon University logo" width="44" height="44">
-              <span><sup>1</sup> Carnegie Mellon University</span>
+              <span><sup><span class="affiliation-mark">△</span></sup> Carnegie Mellon University</span>
             </a>
             <a class="university" href="https://www.rice.edu/" target="_blank" rel="noopener noreferrer">
               <img class="rice-logo" src="assets/rice.png" alt="Rice University crest" width="35" height="44">
-              <span><sup>2</sup> Rice University</span>
+              <span><sup><span class="affiliation-mark">□</span></sup> Rice University</span>
             </a>
+            <p class="contributions" aria-label="Author contributions">
+              <span><sup>*</sup>Equal contribution.</span>
+              <span><sup>†</sup>Project lead.</span>
+            </p>
           </div>
         </div>
         <div class="scroll-cue" aria-hidden="true">

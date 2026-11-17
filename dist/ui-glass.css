@@ -15,6 +15,68 @@
 
 ::selection { color: #000000; background: #d8d8d8; }
 
+/* Floating project links share the same neutral glass surface as the controls. */
+.resource-bar {
+  position: fixed;
+  z-index: 100;
+  top: max(16px, env(safe-area-inset-top));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(1120px, calc(100% - 40px));
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px 24px;
+  padding: 10px 12px 10px 22px;
+  border: 1px solid rgba(0,0,0,.07);
+  border-radius: 24px;
+  background: var(--ui-glass);
+  box-shadow: var(--ui-shadow);
+  -webkit-backdrop-filter: var(--ui-blur);
+  backdrop-filter: var(--ui-blur);
+  color: var(--ui-ink);
+}
+.resource-brand {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+.resource-brand img { display: block; width: auto; height: 36px; }
+.resource-links { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
+.resource-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 8px 16px;
+  border: 1px solid var(--ui-line);
+  border-radius: 999px;
+  background: rgba(255,255,255,.6);
+  box-shadow: inset 0 1px 0 var(--ui-rim);
+  color: var(--ui-ink);
+  font-size: var(--body-text-size);
+  line-height: 1.25;
+  white-space: nowrap;
+  cursor: default;
+}
+.resource-bar a:hover { text-decoration: none; }
+.resource-link[href] { cursor: pointer; }
+.resource-link[href]:hover { background: #fff; border-color: rgba(0,0,0,.28); }
+@media (max-width: 600px) {
+  .resource-bar {
+    top: max(10px, env(safe-area-inset-top));
+    width: calc(100% - 20px);
+    padding: 8px;
+    border-radius: 20px;
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+  .resource-brand img { height: 26px; }
+  .resource-links { flex-wrap: nowrap; gap: 4px; }
+  .resource-link { min-height: 36px; padding: 7px 5px; }
+}
+
 /* Passive tips have their own surface. They are not buttons. */
 .ui-hint {
   display: flex;
