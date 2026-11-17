@@ -4,9 +4,10 @@
   const palette=[[35,59,145],[165,211,242],[190,96,137],[72,151,80],[98,137,173],[194,194,194]];
   const mix=(rgb,amount)=>'#'+rgb.map(c=>Math.round(255+(c-255)*amount).toString(16).padStart(2,'0')).join('');
   const cache=new WeakMap();
-  function groupColors(labels,grid=16) {
-    if(cache.has(labels))return cache.get(labels);
-    const groups=[...new Set(labels)],adjacent=new Map(groups.map(g=>[g,new Set()])),areas=new Map(groups.map(g=>[g,0]));
+  function groupColors(labels,grid=16,textGroups=null) {
+    const saved=cache.get(labels);
+    if(saved&&saved.grid===grid&&saved.textGroups===textGroups)return saved.colors;
+    const groups=[...new Set([...labels,...(textGroups||[])])],adjacent=new Map(groups.map(g=>[g,new Set()])),areas=new Map(groups.map(g=>[g,0]));
     labels.forEach((g,p)=>{
       areas.set(g,areas.get(g)+1);
       const row=Math.floor(p/grid),col=p%grid;
@@ -16,9 +17,25 @@
         const other=labels[r*grid+c];if(other!==g)adjacent.get(g).add(other);
       }
     });
+    // Text groups share one row. Give each a distinct color, including groups
+    // that have no image patches. A shared group keeps one color in both views.
+    const captionGroups=[...new Set(textGroups||[])];
+    captionGroups.forEach(g=>captionGroups.forEach(other=>{if(other!==g)adjacent.get(g).add(other);}));
     const assigned=new Map(),coverage=palette.map(()=>0),fills=palette.map(rgb=>mix(rgb,.82));
+    function addShade() {
+      const i=fills.length;
+      fills.push(mix(palette[i%palette.length],Math.max(.18,.62-.16*Math.floor((i-palette.length)/palette.length))));
+      coverage.push(0);
+      return i;
+    }
     // Keep the neighbor colors of each group. This keeps large maps fast.
     const neighborColors=new Map(groups.map(g=>[g,new Set()]));
+    // Assign the caption first so its groups use distinct hues before shades.
+    captionGroups.sort((a,b)=>areas.get(b)-areas.get(a)||a-b).forEach((g,color)=>{
+      if(color===fills.length)addShade();
+      assigned.set(g,color);coverage[color]+=areas.get(g);
+      adjacent.get(g).forEach(n=>neighborColors.get(n).add(color));
+    });
     while(assigned.size<groups.length) {
       // Order: most neighbor colors, most neighbors, largest area, lowest ID.
       let g,saturation=-1,degree=-1,area=-1;
@@ -31,16 +48,14 @@
       let choices=fills.map((_,i)=>i).filter(i=>!used.has(i));
       if(!choices.length) {
         // Extra shades retain the same AF3 hues for unusually dense group graphs.
-        const i=fills.length;
-        fills.push(mix(palette[i%palette.length],Math.max(.18,.62-.16*Math.floor((i-palette.length)/palette.length))));
-        coverage.push(0);choices=[i];
+        choices=[addShade()];
       }
       const color=choices.sort((a,b)=>coverage[a]-coverage[b]||a-b)[0];
       assigned.set(g,color);coverage[color]+=areas.get(g);
       adjacent.get(g).forEach(n=>neighborColors.get(n).add(color));
     }
     const colors=new Map(groups.map(g=>[g,fills[assigned.get(g)]]));
-    cache.set(labels,colors);return colors;
+    cache.set(labels,{grid,textGroups,colors});return colors;
   }
   window.HiTFigureStyle=Object.freeze({groupColors});
 })();

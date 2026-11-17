@@ -1,0 +1,1782 @@
+{
+ "items": [
+  {
+   "id": "t2i-user-00005-3",
+   "name": "Great Wall",
+   "group": "user-prompts",
+   "promptSource": "user",
+   "prompt": "Great Wall of China under a Van Gogh-inspired starry sky.",
+   "promptIndex": 5,
+   "sample": 3,
+   "batchSeed": 5005000,
+   "noiseSha256": "880fa34eb121bf8811853e533c4fbe05c999b072487002930ce11939f3e3bd14",
+   "selectedFile": "user-prompts/selected/t2i-user-00005-3.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/user-prompts-seed0/hit-d27-cfg7/images/00005-3.png",
+   "selectedSha256": "40ed17d15a2b94c76d62cbfc0ec92f874d051fd035c90ba2214aee7feef15e85",
+   "regeneratedFile": "user-prompts/webpage/images/t2i-user-00005-3.png",
+   "regenerationPass": "try3",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 5.9136,
+   "maxPixelDifferenceToSelected": 212,
+   "meanPixelDifferenceAllPasses": [
+    5.9136,
+    6.3708,
+    9.6896,
+    11.4754
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 4.540351081772087e-07,
+     "poolColumnError": 3.2288136830871395e-08,
+     "connectionRowError": 4.5853536823070584e-07,
+     "groups": 557,
+     "imageGroups": 544,
+     "mixedGroups": 0,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.540351081772087e-07,
+     "poolColumnError": 2.0680631651615045e-08,
+     "connectionRowError": 4.7315145135229386e-07,
+     "groups": 260,
+     "imageGroups": 254,
+     "mixedGroups": 2,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.807917465792343e-07,
+     "poolColumnError": 3.661488323647433e-08,
+     "connectionRowError": 3.900366676301559e-07,
+     "groups": 852,
+     "imageGroups": 839,
+     "mixedGroups": 0,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.807917465792343e-07,
+     "poolColumnError": 2.1340767708544206e-08,
+     "connectionRowError": 4.557469461818897e-07,
+     "groups": 321,
+     "imageGroups": 312,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 6.577531550533422e-07,
+     "poolColumnError": 7.096351528623757e-08,
+     "connectionRowError": 6.671004797453861e-07,
+     "groups": 891,
+     "imageGroups": 879,
+     "mixedGroups": 0,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 6.577531550533422e-07,
+     "poolColumnError": 2.5618469234878205e-08,
+     "connectionRowError": 5.480496734211471e-07,
+     "groups": 440,
+     "imageGroups": 431,
+     "mixedGroups": 0,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.0011693158703565e-07,
+     "poolColumnError": 6.562170362656161e-08,
+     "connectionRowError": 4.089818894659203e-07,
+     "groups": 732,
+     "imageGroups": 720,
+     "mixedGroups": 0,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.0011693158703565e-07,
+     "poolColumnError": 2.8264685703049963e-08,
+     "connectionRowError": 4.7487465482110025e-07,
+     "groups": 488,
+     "imageGroups": 481,
+     "mixedGroups": 0,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 2.720490783758578e-07,
+     "poolColumnError": 2.6839317213145364e-08,
+     "connectionRowError": 2.740801772205259e-07,
+     "groups": 213,
+     "imageGroups": 201,
+     "mixedGroups": 0,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 2.720490783758578e-07,
+     "poolColumnError": 1.776839630984739e-08,
+     "connectionRowError": 2.994889340968143e-07,
+     "groups": 146,
+     "imageGroups": 142,
+     "mixedGroups": 1,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-user-00008-7",
+   "name": "Fresh roses",
+   "group": "user-prompts",
+   "promptSource": "user",
+   "prompt": "A blackboard sign that says FRESH ROSES above red tulips in clay pots",
+   "promptIndex": 8,
+   "sample": 7,
+   "batchSeed": 8004,
+   "noiseSha256": "1dee3589f4ee28a487fc73346c696c7157e66fd0c83d76e2e9c989218afe7d0d",
+   "selectedFile": "user-prompts/selected/t2i-user-00008-7.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/user-prompts-seed0/hit-d27-cfg7/images/00008-7.png",
+   "selectedSha256": "07fcad08f3a8f9fb51918d9ae1a8bd98d30e483fe5f02bfa95ad78cfa6aa7803",
+   "regeneratedFile": "user-prompts/webpage/images/t2i-user-00008-7.png",
+   "regenerationPass": "try1",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 9.7109,
+   "maxPixelDifferenceToSelected": 221,
+   "meanPixelDifferenceAllPasses": [
+    9.7109,
+    11.9229,
+    11.9498,
+    13.2886
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 4.0668781409181065e-07,
+     "poolColumnError": 2.1775751424257805e-08,
+     "connectionRowError": 4.0681477342374706e-07,
+     "groups": 514,
+     "imageGroups": 499,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.0668781409181065e-07,
+     "poolColumnError": 2.4760769656850812e-08,
+     "connectionRowError": 4.427486497426969e-07,
+     "groups": 232,
+     "imageGroups": 221,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.239310271714203e-07,
+     "poolColumnError": 2.2594071502624047e-08,
+     "connectionRowError": 4.2329839389232404e-07,
+     "groups": 593,
+     "imageGroups": 578,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.239310271714203e-07,
+     "poolColumnError": 2.0906048003865862e-08,
+     "connectionRowError": 5.599576888837277e-07,
+     "groups": 233,
+     "imageGroups": 223,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.750980799883564e-07,
+     "poolColumnError": 2.1584262599461113e-08,
+     "connectionRowError": 4.749719644259187e-07,
+     "groups": 569,
+     "imageGroups": 558,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.750980799883564e-07,
+     "poolColumnError": 1.90014195489141e-08,
+     "connectionRowError": 4.80720123041678e-07,
+     "groups": 249,
+     "imageGroups": 243,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.8383052469725953e-07,
+     "poolColumnError": 2.8522407879982836e-08,
+     "connectionRowError": 3.8315027461877094e-07,
+     "groups": 476,
+     "imageGroups": 466,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.8383052469725953e-07,
+     "poolColumnError": 1.9789708316508836e-08,
+     "connectionRowError": 4.2863353055810904e-07,
+     "groups": 258,
+     "imageGroups": 253,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.735918205904909e-07,
+     "poolColumnError": 2.8391328843468955e-08,
+     "connectionRowError": 3.736893479100445e-07,
+     "groups": 250,
+     "imageGroups": 242,
+     "mixedGroups": 1,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.735918205904909e-07,
+     "poolColumnError": 1.8924715350365773e-08,
+     "connectionRowError": 4.0830110625833527e-07,
+     "groups": 153,
+     "imageGroups": 149,
+     "mixedGroups": 1,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-user-00000-6",
+   "name": "Beaver",
+   "group": "user-prompts",
+   "promptSource": "user",
+   "prompt": "A real beaver holding a white mug that has exactly three cute cartoon beavers on the side.",
+   "promptIndex": 0,
+   "sample": 6,
+   "batchSeed": 4,
+   "noiseSha256": "650f97d5a477efe269391759665d22e6e811c908f7e3d6bd0670bc493135348e",
+   "selectedFile": "user-prompts/selected/t2i-user-00000-6.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/user-prompts-seed0/hit-d27-cfg7/images/00000-6.png",
+   "selectedSha256": "940c1ba07e3fdad91d2e9ad5207942c368b339c279e9c69e506d1aa4ab1d17c8",
+   "regeneratedFile": "user-prompts/webpage/images/t2i-user-00000-6.png",
+   "regenerationPass": "try2",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 6.8958,
+   "maxPixelDifferenceToSelected": 248,
+   "meanPixelDifferenceAllPasses": [
+    6.8958,
+    8.1959,
+    13.5008,
+    14.5017
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 4.058596374534318e-07,
+     "poolColumnError": 2.1542502781635164e-08,
+     "connectionRowError": 4.0594194272713935e-07,
+     "groups": 417,
+     "imageGroups": 402,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.058596374534318e-07,
+     "poolColumnError": 2.4145887733695304e-08,
+     "connectionRowError": 3.6280770521202044e-07,
+     "groups": 181,
+     "imageGroups": 171,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.927747454530618e-07,
+     "poolColumnError": 2.330449766496656e-08,
+     "connectionRowError": 4.926725485354666e-07,
+     "groups": 493,
+     "imageGroups": 481,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.927747454530618e-07,
+     "poolColumnError": 2.0910142839447587e-08,
+     "connectionRowError": 5.563628535654175e-07,
+     "groups": 197,
+     "imageGroups": 189,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.802004234250035e-07,
+     "poolColumnError": 2.632815421232948e-08,
+     "connectionRowError": 4.802427580052893e-07,
+     "groups": 492,
+     "imageGroups": 483,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.802004234250035e-07,
+     "poolColumnError": 2.3143733152153345e-08,
+     "connectionRowError": 4.809462659238761e-07,
+     "groups": 232,
+     "imageGroups": 227,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.3667241911293786e-07,
+     "poolColumnError": 3.369695988908461e-08,
+     "connectionRowError": 4.3671544747159174e-07,
+     "groups": 450,
+     "imageGroups": 441,
+     "mixedGroups": 2,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.3667241911293786e-07,
+     "poolColumnError": 2.1670278904650786e-08,
+     "connectionRowError": 4.152531751788757e-07,
+     "groups": 253,
+     "imageGroups": 249,
+     "mixedGroups": 2,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.448007497297567e-07,
+     "poolColumnError": 3.8121850898242826e-08,
+     "connectionRowError": 3.4476613897105324e-07,
+     "groups": 273,
+     "imageGroups": 266,
+     "mixedGroups": 1,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.448007497297567e-07,
+     "poolColumnError": 2.053418568515042e-08,
+     "connectionRowError": 4.987051869242975e-07,
+     "groups": 173,
+     "imageGroups": 170,
+     "mixedGroups": 1,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-user-00014-6",
+   "name": "Easel",
+   "group": "user-prompts",
+   "promptSource": "user",
+   "prompt": "An Impressionist oil painting of a girl at an easel, painting \"HiT\" in bold orange letters on her canvas.",
+   "promptIndex": 14,
+   "sample": 6,
+   "batchSeed": 6014004,
+   "noiseSha256": "3bc2e056fd11bcf141b033f6fe9b68b7fc7c4ecf94761b7107ad23e72bd92733",
+   "selectedFile": "user-prompts/selected/t2i-user-00014-6.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/user-prompts-seed0/hit-d27-cfg7/images/00014-6.png",
+   "selectedSha256": "97746994fb19e993b27912d8613abcc6ff66f554d46b550be1805bf9aaee44c4",
+   "regeneratedFile": "user-prompts/webpage/images/t2i-user-00014-6.png",
+   "regenerationPass": "try1",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 4.4128,
+   "maxPixelDifferenceToSelected": 117,
+   "meanPixelDifferenceAllPasses": [
+    4.4128,
+    4.9632,
+    5.1838,
+    5.7456
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 3.243191883939289e-07,
+     "poolColumnError": 2.3121056402786166e-08,
+     "connectionRowError": 3.182056724782001e-07,
+     "groups": 562,
+     "imageGroups": 546,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.243191883939289e-07,
+     "poolColumnError": 3.2023216967047574e-08,
+     "connectionRowError": 3.482353321260234e-07,
+     "groups": 322,
+     "imageGroups": 312,
+     "mixedGroups": 3,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.6199981146012306e-07,
+     "poolColumnError": 2.4182766233948882e-08,
+     "connectionRowError": 3.715258642955632e-07,
+     "groups": 773,
+     "imageGroups": 757,
+     "mixedGroups": 0,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.6199981146012306e-07,
+     "poolColumnError": 2.8160958120970747e-08,
+     "connectionRowError": 3.6575263417937265e-07,
+     "groups": 321,
+     "imageGroups": 311,
+     "mixedGroups": 3,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.948826936550631e-07,
+     "poolColumnError": 2.636035201231124e-08,
+     "connectionRowError": 3.881335586264356e-07,
+     "groups": 869,
+     "imageGroups": 853,
+     "mixedGroups": 0,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.948826936550631e-07,
+     "poolColumnError": 2.5523123170501094e-08,
+     "connectionRowError": 4.090965766145871e-07,
+     "groups": 395,
+     "imageGroups": 383,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.768923247411294e-07,
+     "poolColumnError": 2.9377679400255374e-08,
+     "connectionRowError": 4.6715297030708314e-07,
+     "groups": 893,
+     "imageGroups": 877,
+     "mixedGroups": 0,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.768923247411294e-07,
+     "poolColumnError": 2.3828129025460498e-08,
+     "connectionRowError": 5.497212982596977e-07,
+     "groups": 485,
+     "imageGroups": 474,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.5425440653446003e-07,
+     "poolColumnError": 4.288244315198142e-08,
+     "connectionRowError": 4.4820026157132986e-07,
+     "groups": 616,
+     "imageGroups": 601,
+     "mixedGroups": 0,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.5425440653446003e-07,
+     "poolColumnError": 2.012431477016463e-08,
+     "connectionRowError": 4.994107620781563e-07,
+     "groups": 379,
+     "imageGroups": 373,
+     "mixedGroups": 2,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-geneval-00018-2",
+   "name": "Motorcycle",
+   "group": "geneval-prompts",
+   "promptSource": "GenEval (chosen by Claude)",
+   "prompt": "a photo of a motorcycle",
+   "promptIndex": 18,
+   "sample": 2,
+   "batchSeed": 2018000,
+   "noiseSha256": "fa440141b0f3d37459204d7b03e62f48aa4dc2857c64f6e88399f1631e16e606",
+   "selectedFile": "geneval-prompts/selected/t2i-geneval-00018-2.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/geneval64-seed0/hit-d27-cfg7/images/00018-2.png",
+   "selectedSha256": "47e02b0109efe35c308f988b529123cefafdc63462b82ff2aec534cac85f6ff3",
+   "regeneratedFile": "geneval-prompts/webpage/images/t2i-geneval-00018-2.png",
+   "regenerationPass": "try1",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 6.7104,
+   "maxPixelDifferenceToSelected": 234,
+   "meanPixelDifferenceAllPasses": [
+    6.7104,
+    6.8952,
+    7.1401,
+    7.3156
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 3.611707164452582e-07,
+     "poolColumnError": 2.5490175303843898e-08,
+     "connectionRowError": 3.6427221727919346e-07,
+     "groups": 472,
+     "imageGroups": 466,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.611707164452582e-07,
+     "poolColumnError": 2.2787528086709585e-08,
+     "connectionRowError": 4.1665470407181715e-07,
+     "groups": 228,
+     "imageGroups": 224,
+     "mixedGroups": 2,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.4278136240573076e-07,
+     "poolColumnError": 2.2911132324665573e-08,
+     "connectionRowError": 3.3741804239539874e-07,
+     "groups": 567,
+     "imageGroups": 561,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.4278136240573076e-07,
+     "poolColumnError": 2.0724975513530808e-08,
+     "connectionRowError": 4.6118305163656004e-07,
+     "groups": 233,
+     "imageGroups": 229,
+     "mixedGroups": 2,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.2278174444400065e-07,
+     "poolColumnError": 2.6150553611437033e-08,
+     "connectionRowError": 3.308938519852589e-07,
+     "groups": 599,
+     "imageGroups": 593,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.2278174444400065e-07,
+     "poolColumnError": 1.9044585908289946e-08,
+     "connectionRowError": 4.374495899961417e-07,
+     "groups": 288,
+     "imageGroups": 285,
+     "mixedGroups": 2,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.8677292479860625e-07,
+     "poolColumnError": 3.0771764025772086e-08,
+     "connectionRowError": 3.960757288812289e-07,
+     "groups": 571,
+     "imageGroups": 565,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.8677292479860625e-07,
+     "poolColumnError": 2.067555171514357e-08,
+     "connectionRowError": 4.814237914985142e-07,
+     "groups": 329,
+     "imageGroups": 327,
+     "mixedGroups": 2,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.188770421047593e-07,
+     "poolColumnError": 3.528017256115845e-08,
+     "connectionRowError": 3.158887960097445e-07,
+     "groups": 353,
+     "imageGroups": 348,
+     "mixedGroups": 1,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.188770421047593e-07,
+     "poolColumnError": 2.0411913048690167e-08,
+     "connectionRowError": 4.5359498246355656e-07,
+     "groups": 234,
+     "imageGroups": 231,
+     "mixedGroups": 2,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-geneval-00096-2",
+   "name": "Table and bear",
+   "group": "geneval-prompts",
+   "promptSource": "GenEval (chosen by Claude)",
+   "prompt": "a photo of a dining table and a bear",
+   "promptIndex": 96,
+   "sample": 2,
+   "batchSeed": 96000,
+   "noiseSha256": "f422c75756294ccdaeb1dc8c90fd7cd0d54ec97ee7662f08cd3f46159426b305",
+   "selectedFile": "geneval-prompts/selected/t2i-geneval-00096-2.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/geneval64-seed0/hit-d27-cfg7/images/00096-2.png",
+   "selectedSha256": "dc03eff6cca48f1027409122e85c94a014accec35d2d18cc225d4c19acd11a6b",
+   "regeneratedFile": "geneval-prompts/webpage/images/t2i-geneval-00096-2.png",
+   "regenerationPass": "try3",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 8.184,
+   "maxPixelDifferenceToSelected": 224,
+   "meanPixelDifferenceAllPasses": [
+    8.184,
+    11.136,
+    12.6947,
+    12.9623
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 4.779575490942989e-07,
+     "poolColumnError": 2.042904179155869e-08,
+     "connectionRowError": 4.80218870668736e-07,
+     "groups": 402,
+     "imageGroups": 397,
+     "mixedGroups": 3,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.779575490942989e-07,
+     "poolColumnError": 1.8120256406461976e-08,
+     "connectionRowError": 4.967163442781697e-07,
+     "groups": 209,
+     "imageGroups": 205,
+     "mixedGroups": 3,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 5.326637904090603e-07,
+     "poolColumnError": 1.9736024814420716e-08,
+     "connectionRowError": 5.324270122564201e-07,
+     "groups": 501,
+     "imageGroups": 496,
+     "mixedGroups": 2,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 5.326637904090603e-07,
+     "poolColumnError": 1.7654006811973488e-08,
+     "connectionRowError": 5.137025334001066e-07,
+     "groups": 219,
+     "imageGroups": 215,
+     "mixedGroups": 2,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.8212618846955593e-07,
+     "poolColumnError": 2.3760922673865537e-08,
+     "connectionRowError": 3.858878281359779e-07,
+     "groups": 507,
+     "imageGroups": 501,
+     "mixedGroups": 2,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.8212618846955593e-07,
+     "poolColumnError": 1.9747042556694794e-08,
+     "connectionRowError": 4.8687859410812e-07,
+     "groups": 270,
+     "imageGroups": 266,
+     "mixedGroups": 2,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.814358760540927e-07,
+     "poolColumnError": 2.6738064318188037e-08,
+     "connectionRowError": 4.812925675778956e-07,
+     "groups": 470,
+     "imageGroups": 465,
+     "mixedGroups": 2,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.814358760540927e-07,
+     "poolColumnError": 2.1426879381891695e-08,
+     "connectionRowError": 5.804295226674583e-07,
+     "groups": 308,
+     "imageGroups": 305,
+     "mixedGroups": 3,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.633317433582306e-07,
+     "poolColumnError": 3.3038606739310694e-08,
+     "connectionRowError": 3.6346079712590296e-07,
+     "groups": 344,
+     "imageGroups": 339,
+     "mixedGroups": 2,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.633317433582306e-07,
+     "poolColumnError": 2.2240010277840838e-08,
+     "connectionRowError": 4.147213568117536e-07,
+     "groups": 242,
+     "imageGroups": 239,
+     "mixedGroups": 2,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-geneval-00105-0",
+   "name": "Oven and bed",
+   "group": "geneval-prompts",
+   "promptSource": "GenEval (chosen by Claude)",
+   "prompt": "a photo of an oven and a bed",
+   "promptIndex": 105,
+   "sample": 0,
+   "batchSeed": 1105000,
+   "noiseSha256": "feb8ce35b3411cba70490150d575fd7b009f07e72d59fccc35abdc066554add4",
+   "selectedFile": "geneval-prompts/selected/t2i-geneval-00105-0.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/geneval64-seed0/hit-d27-cfg7/images/00105-0.png",
+   "selectedSha256": "6a9dee91a35bcfa3ca1f8e45ec8694a4ef8530dd6668a85128723ed091d111e6",
+   "regeneratedFile": "geneval-prompts/webpage/images/t2i-geneval-00105-0.png",
+   "regenerationPass": "try3",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 7.4287,
+   "maxPixelDifferenceToSelected": 237,
+   "meanPixelDifferenceAllPasses": [
+    7.4287,
+    7.9709,
+    9.6226,
+    10.8126
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 3.588719312830335e-07,
+     "poolColumnError": 1.6784755030307963e-08,
+     "connectionRowError": 3.59889654966139e-07,
+     "groups": 240,
+     "imageGroups": 234,
+     "mixedGroups": 2,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.588719312830335e-07,
+     "poolColumnError": 1.881389288804769e-08,
+     "connectionRowError": 4.163931056622161e-07,
+     "groups": 125,
+     "imageGroups": 121,
+     "mixedGroups": 2,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.334802975984985e-07,
+     "poolColumnError": 2.0481673690397884e-08,
+     "connectionRowError": 3.3478471317405223e-07,
+     "groups": 311,
+     "imageGroups": 307,
+     "mixedGroups": 3,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.334802975984985e-07,
+     "poolColumnError": 1.535989269108029e-08,
+     "connectionRowError": 3.7345227188456676e-07,
+     "groups": 138,
+     "imageGroups": 134,
+     "mixedGroups": 3,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.2150578732625945e-07,
+     "poolColumnError": 2.2880353833798495e-08,
+     "connectionRowError": 3.2185165199649646e-07,
+     "groups": 313,
+     "imageGroups": 308,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.2150578732625945e-07,
+     "poolColumnError": 1.733380172730392e-08,
+     "connectionRowError": 3.8288411263742717e-07,
+     "groups": 149,
+     "imageGroups": 144,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.062328823855154e-07,
+     "poolColumnError": 2.3929190851035287e-08,
+     "connectionRowError": 3.056245398980195e-07,
+     "groups": 264,
+     "imageGroups": 260,
+     "mixedGroups": 2,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.062328823855154e-07,
+     "poolColumnError": 2.0168770542561276e-08,
+     "connectionRowError": 3.4228665390934054e-07,
+     "groups": 158,
+     "imageGroups": 154,
+     "mixedGroups": 2,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.2264068600417204e-07,
+     "poolColumnError": 3.3009310618226095e-08,
+     "connectionRowError": 4.228511683024294e-07,
+     "groups": 156,
+     "imageGroups": 151,
+     "mixedGroups": 2,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.2264068600417204e-07,
+     "poolColumnError": 2.0641093501083674e-08,
+     "connectionRowError": 3.616698136532648e-07,
+     "groups": 115,
+     "imageGroups": 112,
+     "mixedGroups": 3,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-geneval-00131-2",
+   "name": "Surfboard",
+   "group": "geneval-prompts",
+   "promptSource": "GenEval (chosen by Claude)",
+   "prompt": "a photo of a surfboard and a suitcase",
+   "promptIndex": 131,
+   "sample": 2,
+   "batchSeed": 3131000,
+   "noiseSha256": "7de2b2a70a4f5a815557ae5b2854cf6a8461fa6536701841d5ffc372c6be54c4",
+   "selectedFile": "geneval-prompts/selected/t2i-geneval-00131-2.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/geneval64-seed0/hit-d27-cfg7/images/00131-2.png",
+   "selectedSha256": "a1b3ca0e4308bfc8c2fb289212a31d10877a0ab0d747d379ecb99bf2f4d4d183",
+   "regeneratedFile": "geneval-prompts/webpage/images/t2i-geneval-00131-2.png",
+   "regenerationPass": "try3",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 5.0602,
+   "maxPixelDifferenceToSelected": 238,
+   "meanPixelDifferenceAllPasses": [
+    5.0602,
+    5.3777,
+    5.4766,
+    6.5081
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 2.9776879273413215e-07,
+     "poolColumnError": 2.4700909539987492e-08,
+     "connectionRowError": 3.01323258899977e-07,
+     "groups": 235,
+     "imageGroups": 226,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 2.9776879273413215e-07,
+     "poolColumnError": 3.1442647263624224e-08,
+     "connectionRowError": 3.0808933781933945e-07,
+     "groups": 121,
+     "imageGroups": 113,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.5271759912802736e-07,
+     "poolColumnError": 1.970254892569301e-08,
+     "connectionRowError": 3.5261269015762764e-07,
+     "groups": 264,
+     "imageGroups": 256,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.5271759912802736e-07,
+     "poolColumnError": 2.4257797659466007e-08,
+     "connectionRowError": 4.522074604773607e-07,
+     "groups": 122,
+     "imageGroups": 115,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.6156095006845135e-07,
+     "poolColumnError": 1.9770666326301978e-08,
+     "connectionRowError": 3.6147669169039887e-07,
+     "groups": 247,
+     "imageGroups": 240,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.6156095006845135e-07,
+     "poolColumnError": 1.9707998122342474e-08,
+     "connectionRowError": 3.692683308020861e-07,
+     "groups": 129,
+     "imageGroups": 125,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 2.8796077344850346e-07,
+     "poolColumnError": 2.4645494978159377e-08,
+     "connectionRowError": 2.8617187997070914e-07,
+     "groups": 201,
+     "imageGroups": 195,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 2.8796077344850346e-07,
+     "poolColumnError": 1.9934241590746637e-08,
+     "connectionRowError": 3.017154928119936e-07,
+     "groups": 128,
+     "imageGroups": 124,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 2.771596072648208e-07,
+     "poolColumnError": 4.0511902610340655e-08,
+     "connectionRowError": 2.7712003825008935e-07,
+     "groups": 123,
+     "imageGroups": 117,
+     "mixedGroups": 1,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 2.771596072648208e-07,
+     "poolColumnError": 1.928603743373003e-08,
+     "connectionRowError": 3.363360749908395e-07,
+     "groups": 89,
+     "imageGroups": 85,
+     "mixedGroups": 1,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-geneval-00158-2",
+   "name": "Plant and boat",
+   "group": "geneval-prompts",
+   "promptSource": "GenEval (chosen by Claude)",
+   "prompt": "a photo of a potted plant and a boat",
+   "promptIndex": 158,
+   "sample": 2,
+   "batchSeed": 6158000,
+   "noiseSha256": "9217c897c5df71712b6fe7b162e2c0b345103c357bd0855a2fdc7f8aaa3bc965",
+   "selectedFile": "geneval-prompts/selected/t2i-geneval-00158-2.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/geneval64-seed0/hit-d27-cfg7/images/00158-2.png",
+   "selectedSha256": "b2258144c285c0896b0bfc94787fe19e68acd0df401e11a5f1062d868fd2a1a9",
+   "regeneratedFile": "geneval-prompts/webpage/images/t2i-geneval-00158-2.png",
+   "regenerationPass": "try4",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 9.2508,
+   "maxPixelDifferenceToSelected": 228,
+   "meanPixelDifferenceAllPasses": [
+    9.2508,
+    9.2639,
+    10.2464,
+    10.4446
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 3.401089703203297e-07,
+     "poolColumnError": 2.0075903717220456e-08,
+     "connectionRowError": 3.4000385129573374e-07,
+     "groups": 395,
+     "imageGroups": 387,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.401089703203297e-07,
+     "poolColumnError": 2.8210308311571453e-08,
+     "connectionRowError": 5.106376033126026e-07,
+     "groups": 193,
+     "imageGroups": 186,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.5813221899161363e-07,
+     "poolColumnError": 2.2073350702811467e-08,
+     "connectionRowError": 3.584078668295021e-07,
+     "groups": 489,
+     "imageGroups": 481,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.5813221899161363e-07,
+     "poolColumnError": 1.876163135960951e-08,
+     "connectionRowError": 4.4988323222305837e-07,
+     "groups": 198,
+     "imageGroups": 193,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.1773750325546644e-07,
+     "poolColumnError": 2.6677051678802854e-08,
+     "connectionRowError": 4.18431167936717e-07,
+     "groups": 516,
+     "imageGroups": 511,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.1773750325546644e-07,
+     "poolColumnError": 1.8133702095468607e-08,
+     "connectionRowError": 4.344043113002627e-07,
+     "groups": 219,
+     "imageGroups": 215,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.310072583280089e-07,
+     "poolColumnError": 2.8945192354079552e-08,
+     "connectionRowError": 4.308226528859649e-07,
+     "groups": 471,
+     "imageGroups": 466,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.310072583280089e-07,
+     "poolColumnError": 1.9460899891576844e-08,
+     "connectionRowError": 4.524305445841037e-07,
+     "groups": 223,
+     "imageGroups": 219,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.318970911436736e-07,
+     "poolColumnError": 3.513020785383958e-08,
+     "connectionRowError": 3.335571800988646e-07,
+     "groups": 284,
+     "imageGroups": 279,
+     "mixedGroups": 1,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.318970911436736e-07,
+     "poolColumnError": 1.765972501566182e-08,
+     "connectionRowError": 4.2552759982328325e-07,
+     "groups": 149,
+     "imageGroups": 145,
+     "mixedGroups": 1,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-geneval-00263-0",
+   "name": "Yellow boat",
+   "group": "geneval-prompts",
+   "promptSource": "GenEval (chosen by Claude)",
+   "prompt": "a photo of a yellow boat",
+   "promptIndex": 263,
+   "sample": 0,
+   "batchSeed": 7263000,
+   "noiseSha256": "e6934011daa8ec19b435b450d00c3732974b0ea6520818de21563c519e35d006",
+   "selectedFile": "geneval-prompts/selected/t2i-geneval-00263-0.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/geneval64-seed0/hit-d27-cfg7/images/00263-0.png",
+   "selectedSha256": "40056ee73f682e9da53fb4e72b4f76a9cde3f89bf1eb03cf14459d5826b133d2",
+   "regeneratedFile": "geneval-prompts/webpage/images/t2i-geneval-00263-0.png",
+   "regenerationPass": "try2",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 2.8719,
+   "maxPixelDifferenceToSelected": 239,
+   "meanPixelDifferenceAllPasses": [
+    2.8719,
+    3.5957,
+    5.1132,
+    5.7372
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 3.6979789541646824e-07,
+     "poolColumnError": 2.020248968115368e-08,
+     "connectionRowError": 3.697147112902144e-07,
+     "groups": 257,
+     "imageGroups": 252,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.6979789541646824e-07,
+     "poolColumnError": 2.5271809533933265e-08,
+     "connectionRowError": 3.722779389203623e-07,
+     "groups": 114,
+     "imageGroups": 111,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.1657520693784136e-07,
+     "poolColumnError": 2.3250981029399043e-08,
+     "connectionRowError": 3.1652833532014313e-07,
+     "groups": 329,
+     "imageGroups": 324,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.1657520693784136e-07,
+     "poolColumnError": 1.9871433165619123e-08,
+     "connectionRowError": 4.923029990333561e-07,
+     "groups": 125,
+     "imageGroups": 122,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.602841873728835e-07,
+     "poolColumnError": 2.8952797270775932e-08,
+     "connectionRowError": 3.603352914938185e-07,
+     "groups": 336,
+     "imageGroups": 331,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.602841873728835e-07,
+     "poolColumnError": 1.858880960270426e-08,
+     "connectionRowError": 5.490683014919284e-07,
+     "groups": 130,
+     "imageGroups": 127,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 5.298344429860435e-07,
+     "poolColumnError": 2.6574507927534796e-08,
+     "connectionRowError": 5.298829355293577e-07,
+     "groups": 284,
+     "imageGroups": 281,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 5.298344429860435e-07,
+     "poolColumnError": 1.9098995718280776e-08,
+     "connectionRowError": 5.289405495823019e-07,
+     "groups": 143,
+     "imageGroups": 141,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 2.6661230556612736e-07,
+     "poolColumnError": 3.027426587198789e-08,
+     "connectionRowError": 2.665687470759792e-07,
+     "groups": 118,
+     "imageGroups": 115,
+     "mixedGroups": 1,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 2.6661230556612736e-07,
+     "poolColumnError": 1.807150584731687e-08,
+     "connectionRowError": 3.2344187261834634e-07,
+     "groups": 70,
+     "imageGroups": 69,
+     "mixedGroups": 1,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-geneval-00289-2",
+   "name": "Red dog",
+   "group": "geneval-prompts",
+   "promptSource": "GenEval (chosen by Claude)",
+   "prompt": "a photo of a red dog",
+   "promptIndex": 289,
+   "sample": 2,
+   "batchSeed": 1289000,
+   "noiseSha256": "bff4e6df28cfc1223b29eb2cfc88d3e4e04a7062575db9c51c1fcdf1be7dfa33",
+   "selectedFile": "geneval-prompts/selected/t2i-geneval-00289-2.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/geneval64-seed0/hit-d27-cfg7/images/00289-2.png",
+   "selectedSha256": "1ae4ce94cddd0920da69bc6919b17b04b8b83d127e4011a7e29bfb3b06daeec6",
+   "regeneratedFile": "geneval-prompts/webpage/images/t2i-geneval-00289-2.png",
+   "regenerationPass": "try2",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 2.3891,
+   "maxPixelDifferenceToSelected": 120,
+   "meanPixelDifferenceAllPasses": [
+    2.3891,
+    2.6899,
+    3.1779,
+    3.3078
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 2.9559019898428573e-07,
+     "poolColumnError": 2.106715024652317e-08,
+     "connectionRowError": 3.0389360028415524e-07,
+     "groups": 416,
+     "imageGroups": 409,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 2.9559019898428573e-07,
+     "poolColumnError": 2.547547506281944e-08,
+     "connectionRowError": 3.8327019724615496e-07,
+     "groups": 197,
+     "imageGroups": 191,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.0622543684420975e-07,
+     "poolColumnError": 2.3125476866781014e-08,
+     "connectionRowError": 4.05465190089771e-07,
+     "groups": 674,
+     "imageGroups": 667,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.0622543684420975e-07,
+     "poolColumnError": 2.3557779060823236e-08,
+     "connectionRowError": 4.3189663312404036e-07,
+     "groups": 203,
+     "imageGroups": 197,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.4504272150570614e-07,
+     "poolColumnError": 2.7437764948956556e-08,
+     "connectionRowError": 3.5298484934997987e-07,
+     "groups": 730,
+     "imageGroups": 723,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.4504272150570614e-07,
+     "poolColumnError": 2.3111682789789256e-08,
+     "connectionRowError": 3.955474296990502e-07,
+     "groups": 247,
+     "imageGroups": 242,
+     "mixedGroups": 2,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.823508905043127e-07,
+     "poolColumnError": 2.815741595441068e-08,
+     "connectionRowError": 3.876411547309999e-07,
+     "groups": 677,
+     "imageGroups": 670,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.823508905043127e-07,
+     "poolColumnError": 2.149938882478608e-08,
+     "connectionRowError": 4.283516932268583e-07,
+     "groups": 267,
+     "imageGroups": 262,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.9996469780589905e-07,
+     "poolColumnError": 3.692917605047086e-08,
+     "connectionRowError": 3.9635667326010093e-07,
+     "groups": 555,
+     "imageGroups": 547,
+     "mixedGroups": 0,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.9996469780589905e-07,
+     "poolColumnError": 1.8775071941590227e-08,
+     "connectionRowError": 4.100099613157937e-07,
+     "groups": 228,
+     "imageGroups": 224,
+     "mixedGroups": 1,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-geneval-00324-2",
+   "name": "Teddy bear",
+   "group": "geneval-prompts",
+   "promptSource": "GenEval (chosen by Claude)",
+   "prompt": "a photo of a black teddy bear",
+   "promptIndex": 324,
+   "sample": 2,
+   "batchSeed": 4324000,
+   "noiseSha256": "4c19b7c272d23f76f813055ddc0f9acdeeaef3545b26e67b8e58870925ca5dd0",
+   "selectedFile": "geneval-prompts/selected/t2i-geneval-00324-2.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/geneval64-seed0/hit-d27-cfg7/images/00324-2.png",
+   "selectedSha256": "7fee2b5a3de2584f7b7349990c800368c5ac6bef16fe269719eb03f98f43222b",
+   "regeneratedFile": "geneval-prompts/webpage/images/t2i-geneval-00324-2.png",
+   "regenerationPass": "try1",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 3.2679,
+   "maxPixelDifferenceToSelected": 191,
+   "meanPixelDifferenceAllPasses": [
+    3.2679,
+    3.607,
+    3.8039,
+    4.033
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 3.283452567615086e-07,
+     "poolColumnError": 1.9874235590577882e-08,
+     "connectionRowError": 3.279953380008749e-07,
+     "groups": 257,
+     "imageGroups": 247,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.283452567615086e-07,
+     "poolColumnError": 1.784276304483967e-08,
+     "connectionRowError": 3.5011478738411483e-07,
+     "groups": 115,
+     "imageGroups": 110,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.5758127836515996e-07,
+     "poolColumnError": 2.317930403172852e-08,
+     "connectionRowError": 3.574565434760757e-07,
+     "groups": 372,
+     "imageGroups": 364,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.5758127836515996e-07,
+     "poolColumnError": 1.5588592416904135e-08,
+     "connectionRowError": 4.166458955623398e-07,
+     "groups": 128,
+     "imageGroups": 125,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.161798266011374e-07,
+     "poolColumnError": 2.4442731838547616e-08,
+     "connectionRowError": 4.162858763256949e-07,
+     "groups": 363,
+     "imageGroups": 357,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.161798266011374e-07,
+     "poolColumnError": 1.707909902393112e-08,
+     "connectionRowError": 4.591483823146447e-07,
+     "groups": 147,
+     "imageGroups": 144,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.493479141525313e-07,
+     "poolColumnError": 3.2716877651495224e-08,
+     "connectionRowError": 3.494245492952075e-07,
+     "groups": 330,
+     "imageGroups": 324,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.493479141525313e-07,
+     "poolColumnError": 1.985950037752815e-08,
+     "connectionRowError": 4.3713629649388963e-07,
+     "groups": 176,
+     "imageGroups": 174,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.3856041881108467e-07,
+     "poolColumnError": 3.543938276173719e-08,
+     "connectionRowError": 3.3860112069739046e-07,
+     "groups": 173,
+     "imageGroups": 168,
+     "mixedGroups": 1,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.3856041881108467e-07,
+     "poolColumnError": 1.8485724728734e-08,
+     "connectionRowError": 3.8050058104310835e-07,
+     "groups": 109,
+     "imageGroups": 107,
+     "mixedGroups": 1,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-geneval-00394-3",
+   "name": "Cow and stop sign",
+   "group": "geneval-prompts",
+   "promptSource": "GenEval (chosen by Claude)",
+   "prompt": "a photo of a cow left of a stop sign",
+   "promptIndex": 394,
+   "sample": 3,
+   "batchSeed": 2394000,
+   "noiseSha256": "0764e7892ff5ddc4e0f314a11e04de7f71eb07ec90c0160bc597fac175a752ef",
+   "selectedFile": "geneval-prompts/selected/t2i-geneval-00394-3.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/geneval64-seed0/hit-d27-cfg7/images/00394-3.png",
+   "selectedSha256": "bed9b73ab845d490631b13ba1eb56eda9848718f5f5ae610b5d134a2a53b2422",
+   "regeneratedFile": "geneval-prompts/webpage/images/t2i-geneval-00394-3.png",
+   "regenerationPass": "try4",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 9.5383,
+   "maxPixelDifferenceToSelected": 240,
+   "meanPixelDifferenceAllPasses": [
+    9.5383,
+    23.466,
+    33.3445,
+    34.2559
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 3.9071909441190655e-07,
+     "poolColumnError": 2.3045663932741434e-08,
+     "connectionRowError": 3.908356632775778e-07,
+     "groups": 420,
+     "imageGroups": 413,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.9071909441190655e-07,
+     "poolColumnError": 2.0756082519390873e-08,
+     "connectionRowError": 4.980789236608274e-07,
+     "groups": 167,
+     "imageGroups": 161,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 5.186435778625764e-07,
+     "poolColumnError": 2.26907990175107e-08,
+     "connectionRowError": 5.189793066406878e-07,
+     "groups": 498,
+     "imageGroups": 491,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 5.186435778625764e-07,
+     "poolColumnError": 1.9890494695751215e-08,
+     "connectionRowError": 5.711566559707393e-07,
+     "groups": 185,
+     "imageGroups": 180,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.441399514831801e-07,
+     "poolColumnError": 2.45929541176082e-08,
+     "connectionRowError": 4.442337592225343e-07,
+     "groups": 517,
+     "imageGroups": 510,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.441399514831801e-07,
+     "poolColumnError": 2.1248043324817445e-08,
+     "connectionRowError": 4.81805243035538e-07,
+     "groups": 228,
+     "imageGroups": 223,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.224394709595458e-07,
+     "poolColumnError": 2.649879071725536e-08,
+     "connectionRowError": 4.2257988441818384e-07,
+     "groups": 491,
+     "imageGroups": 485,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.224394709595458e-07,
+     "poolColumnError": 2.275529165096657e-08,
+     "connectionRowError": 4.2117379850381553e-07,
+     "groups": 244,
+     "imageGroups": 240,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.4286657185921285e-07,
+     "poolColumnError": 3.551720051397922e-08,
+     "connectionRowError": 4.428087614360976e-07,
+     "groups": 355,
+     "imageGroups": 350,
+     "mixedGroups": 1,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.4286657185921285e-07,
+     "poolColumnError": 2.2396012155923017e-08,
+     "connectionRowError": 4.6676476284090995e-07,
+     "groups": 216,
+     "imageGroups": 213,
+     "mixedGroups": 1,
+     "time": 1.0
+    }
+   ]
+  },
+  {
+   "id": "t2i-geneval-00421-1",
+   "name": "Chair and zebra",
+   "group": "geneval-prompts",
+   "promptSource": "GenEval (chosen by Claude)",
+   "prompt": "a photo of a chair left of a zebra",
+   "promptIndex": 421,
+   "sample": 1,
+   "batchSeed": 5421000,
+   "noiseSha256": "843aae640c2a9db7b33a1b2a5114f5ee08b5aa8f91c857bb05ad89d13ebdb1d3",
+   "selectedFile": "geneval-prompts/selected/t2i-geneval-00421-1.png",
+   "selectedOriginalPath": "artifacts/minit2i-b16-samples/geneval64-seed0/hit-d27-cfg7/images/00421-1.png",
+   "selectedSha256": "3ce56fe5768a4ee236ab91359ab0b38e73ab7586933cad7ae874bb53e4abbc89",
+   "regeneratedFile": "geneval-prompts/webpage/images/t2i-geneval-00421-1.png",
+   "regenerationPass": "try1",
+   "passesCompared": 4,
+   "meanPixelDifferenceToSelected": 8.3832,
+   "maxPixelDifferenceToSelected": 244,
+   "meanPixelDifferenceAllPasses": [
+    8.3832,
+    8.945,
+    10.165,
+    10.6105
+   ],
+   "checks": [
+    {
+     "level": 1,
+     "readerRowError": 3.847240606091873e-07,
+     "poolColumnError": 2.598615089777212e-08,
+     "connectionRowError": 3.8466456953045736e-07,
+     "groups": 376,
+     "imageGroups": 369,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.847240606091873e-07,
+     "poolColumnError": 1.9533138662097826e-08,
+     "connectionRowError": 3.7816429865333845e-07,
+     "groups": 165,
+     "imageGroups": 160,
+     "mixedGroups": 1,
+     "time": 0.25
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.366962229023329e-07,
+     "poolColumnError": 2.388804964947866e-08,
+     "connectionRowError": 3.3685395328664214e-07,
+     "groups": 408,
+     "imageGroups": 400,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.366962229023329e-07,
+     "poolColumnError": 1.7839848376333123e-08,
+     "connectionRowError": 3.8498094445671427e-07,
+     "groups": 172,
+     "imageGroups": 169,
+     "mixedGroups": 1,
+     "time": 0.5
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.064750278587326e-07,
+     "poolColumnError": 2.5576574080865555e-08,
+     "connectionRowError": 4.065574580325304e-07,
+     "groups": 376,
+     "imageGroups": 370,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.064750278587326e-07,
+     "poolColumnError": 1.8398628731652877e-08,
+     "connectionRowError": 4.606404840901135e-07,
+     "groups": 193,
+     "imageGroups": 189,
+     "mixedGroups": 1,
+     "time": 0.7
+    },
+    {
+     "level": 1,
+     "readerRowError": 4.5268546244869867e-07,
+     "poolColumnError": 2.8263828610874953e-08,
+     "connectionRowError": 4.5251606772822583e-07,
+     "groups": 326,
+     "imageGroups": 320,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 2,
+     "readerRowError": 4.5268546244869867e-07,
+     "poolColumnError": 1.990321329969902e-08,
+     "connectionRowError": 4.946325786736594e-07,
+     "groups": 193,
+     "imageGroups": 189,
+     "mixedGroups": 1,
+     "time": 0.85
+    },
+    {
+     "level": 1,
+     "readerRowError": 3.169966404925617e-07,
+     "poolColumnError": 3.3425252232710534e-08,
+     "connectionRowError": 3.1694066571219537e-07,
+     "groups": 195,
+     "imageGroups": 187,
+     "mixedGroups": 1,
+     "time": 1.0
+    },
+    {
+     "level": 2,
+     "readerRowError": 3.169966404925617e-07,
+     "poolColumnError": 1.8898154596769245e-08,
+     "connectionRowError": 4.7061673291715067e-07,
+     "groups": 125,
+     "imageGroups": 122,
+     "mixedGroups": 1,
+     "time": 1.0
+    }
+   ]
+  }
+ ]
+}

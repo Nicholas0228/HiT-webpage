@@ -47,7 +47,7 @@
 
 /* One rail and one moving glass capsule for every segmented control. */
 :is(.groups-times, .efficiency-tabs, .flow-level-controls),
-#joint-viewer .joint-segment {
+.joint-viewer .joint-segment {
   position: relative;
   isolation: isolate;
   width: fit-content;
@@ -63,7 +63,7 @@
 }
 
 :is(.groups-times, .efficiency-tabs, .flow-level-controls) > button,
-#joint-viewer .joint-segment > button {
+.joint-viewer .joint-segment > button {
   position: relative;
   z-index: 1;
   min-height: 42px;
@@ -83,7 +83,7 @@
 }
 
 :is(.groups-times, .efficiency-tabs, .flow-level-controls) > button:is([aria-pressed="true"], [aria-selected="true"]),
-#joint-viewer .joint-segment > button[aria-pressed="true"] {
+.joint-viewer .joint-segment > button[aria-pressed="true"] {
   background: var(--ui-glass);
   border-color: rgba(0,0,0,.09);
   box-shadow: var(--ui-selected-shadow);
@@ -109,7 +109,7 @@
   transition: transform 360ms var(--ui-ease), width 360ms var(--ui-ease);
 }
 :is(.groups-times, .efficiency-tabs, .flow-level-controls).glass-segment > button:is([aria-pressed="true"], [aria-selected="true"]),
-#joint-viewer .joint-segment.glass-segment > button[aria-pressed="true"] {
+.joint-viewer .joint-segment.glass-segment > button[aria-pressed="true"] {
   background: transparent;
   border-color: transparent;
   box-shadow: none;
@@ -117,7 +117,7 @@
 
 /* Native menus keep their normal keyboard behavior. */
 :is(.groups-epoch, .groups-group-select),
-#joint-viewer select {
+.joint-viewer select {
   appearance: none;
   min-height: 46px;
   max-width: 100%;
@@ -139,7 +139,7 @@
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-#joint-viewer :is(.joint-reset, .joint-follow) {
+.joint-viewer :is(.joint-reset, .joint-follow) {
   box-sizing: border-box;
   width: fit-content;
   min-height: 44px;
@@ -160,7 +160,7 @@
 }
 /* Image selection is a control layer. The images keep their data colors. */
 .groups-examples,
-#joint-viewer .joint-thumbnails {
+.joint-viewer .joint-thumbnails {
   gap: 8px;
   padding: 8px;
   margin-bottom: 28px;
@@ -175,7 +175,7 @@
   scrollbar-color: #c2c2c2 transparent;
 }
 .groups-example,
-#joint-viewer .joint-example {
+.joint-viewer .joint-example {
   flex: 0 0 114px;
   gap: 9px;
   padding: 10px 8px;
@@ -188,14 +188,14 @@
   transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
 }
 .groups-example img,
-#joint-viewer .joint-example img {
+.joint-viewer .joint-example img {
   width: 62px;
   height: 62px;
   border-radius: 12px;
   box-shadow: 0 0 0 1px rgba(0,0,0,.06);
 }
 .groups-example[aria-pressed="true"],
-#joint-viewer .joint-example[aria-pressed="true"] {
+.joint-viewer .joint-example[aria-pressed="true"] {
   border-color: rgba(0,0,0,.17);
   background: var(--ui-glass);
   box-shadow: var(--ui-selected-shadow);
@@ -204,7 +204,7 @@
 /* Small neutral frames. No blur or filter is applied to data visuals. */
 .groups-image-wrap,
 .flow-image canvas,
-#joint-viewer canvas {
+.joint-viewer canvas {
   border-radius: 16px;
   box-shadow: 0 0 0 1px rgba(0,0,0,.09);
 }
@@ -233,33 +233,33 @@
 
 @media (hover: hover) {
   :is(.groups-times, .efficiency-tabs, .flow-level-controls) > button:hover,
-  #joint-viewer .joint-segment > button:hover { background-color: rgba(255,255,255,.36); }
+  .joint-viewer .joint-segment > button:hover { background-color: rgba(255,255,255,.36); }
   :is(.groups-epoch, .groups-group-select):hover,
-  #joint-viewer :is(select, .joint-reset, .joint-follow):hover { border-color: rgba(0,0,0,.28); }
+  .joint-viewer :is(select, .joint-reset, .joint-follow):hover { border-color: rgba(0,0,0,.28); }
   .groups-example:hover, .groups-example[aria-pressed="true"]:hover,
-  #joint-viewer .joint-example:hover { border-color: rgba(0,0,0,.16); background-color: rgba(255,255,255,.65); }
+  .joint-viewer .joint-example:hover { border-color: rgba(0,0,0,.16); background-color: rgba(255,255,255,.65); }
 }
 
 :is(.groups-time, .efficiency-tab, .flow-level-controls button, .groups-epoch, .groups-group-select, .groups-example):focus-visible,
-#joint-viewer :is(select, .joint-segment > button, .joint-reset, .joint-follow, .joint-example):focus-visible {
+.joint-viewer :is(select, .joint-segment > button, .joint-reset, .joint-follow, .joint-example):focus-visible {
   outline: 2px solid #000000;
   outline-offset: 3px;
 }
 
 @media (max-width: 620px) {
   :is(.groups-times, .efficiency-tabs, .flow-level-controls) > button,
-  #joint-viewer .joint-segment > button { padding-inline: 13px; }
+  .joint-viewer .joint-segment > button { padding-inline: 13px; }
   .groups-examples,
-  #joint-viewer .joint-thumbnails { margin-bottom: 24px; border-radius: 22px; }
+  .joint-viewer .joint-thumbnails { margin-bottom: 24px; border-radius: 22px; }
   .groups-example,
-  #joint-viewer .joint-example { flex-basis: 100px; }
+  .joint-viewer .joint-example { flex-basis: 100px; }
 }
 @media (max-width: 420px) {
   .groups-times, .efficiency-tabs { width: 100%; }
   .efficiency-tabs > button { flex: 1; white-space: normal; }
   .groups-times > button { padding-inline: 8px; }
-  #joint-viewer .joint-tools { gap: 10px; }
-  #joint-viewer .joint-reset { padding-inline: 13px; }
+  .joint-viewer .joint-tools { gap: 10px; }
+  .joint-viewer .joint-reset { padding-inline: 13px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .glass-segment.glass-ready::before { transition: none; }
@@ -271,7 +271,7 @@
     --ui-line: rgba(0,0,0,.45);
     --ui-blur: none;
   }
-  .groups-examples, #joint-viewer .joint-thumbnails { background: #f5f5f5; }
+  .groups-examples, .joint-viewer .joint-thumbnails { background: #f5f5f5; }
   .ui-hint { background: #f5f5f7; border-color: var(--ui-line); box-shadow: none; }
 }
 @media (forced-colors: active) {
@@ -280,9 +280,9 @@
 }
 
 /* A dark profile action, as requested. Figure text stays black. */
-#joint-viewer a.joint-follow{background:linear-gradient(160deg,#292929,#000000);border-color:#000000;color:#ffffff;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 3px 10px rgba(0,0,0,.12)}
-#joint-viewer .joint-follow-label{color:#ffffff}
-#joint-viewer .joint-follow img{filter:invert(1)}
-@media(hover:hover){#joint-viewer a.joint-follow:hover{background:linear-gradient(160deg,#3a3a3a,#111111);border-color:#000000}}
-@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){#joint-viewer a.joint-follow{background:#000000}}
-@media(forced-colors:active){#joint-viewer .joint-follow-label{color:LinkText}#joint-viewer .joint-follow img{filter:none}}
+.joint-viewer a.joint-follow{background:linear-gradient(160deg,#292929,#000000);border-color:#000000;color:#ffffff;box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 3px 10px rgba(0,0,0,.12)}
+.joint-viewer .joint-follow-label{color:#ffffff}
+.joint-viewer .joint-follow img{filter:invert(1)}
+@media(hover:hover){.joint-viewer a.joint-follow:hover{background:linear-gradient(160deg,#3a3a3a,#111111);border-color:#000000}}
+@media(prefers-reduced-transparency:reduce),(prefers-contrast:more){.joint-viewer a.joint-follow{background:#000000}}
+@media(forced-colors:active){.joint-viewer .joint-follow-label{color:LinkText}.joint-viewer .joint-follow img{filter:none}}
