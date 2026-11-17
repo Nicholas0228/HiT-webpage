@@ -44,7 +44,7 @@
 }
 .resource-brand img { display: block; width: auto; height: 36px; }
 .resource-links { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
-.resource-link {
+.resource-link, .citation-copy {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -55,6 +55,7 @@
   background: rgba(255,255,255,.6);
   box-shadow: inset 0 1px 0 var(--ui-rim);
   color: var(--ui-ink);
+  font-family: inherit;
   font-size: var(--body-text-size);
   line-height: 1.25;
   white-space: nowrap;
@@ -63,6 +64,10 @@
 .resource-bar a:hover { text-decoration: none; }
 .resource-link[href] { cursor: pointer; }
 .resource-link[href]:hover { background: #fff; border-color: rgba(0,0,0,.28); }
+.citation-copy { min-width: 96px; min-height: 44px; cursor: pointer; }
+.citation-copy[hidden] { display: none; }
+.citation-copy:hover { background: #fff; border-color: rgba(0,0,0,.28); }
+.citation-copy:focus-visible { outline: 2px solid #000; outline-offset: 4px; }
 @media (max-width: 600px) {
   .resource-bar {
     top: max(10px, env(safe-area-inset-top));

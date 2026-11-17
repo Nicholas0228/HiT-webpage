@@ -11,11 +11,11 @@
   <link rel="stylesheet" href="styles.css?v=2cb9d58798b2">
   <script src="snap-source.js?v=200f3692f0ef" defer></script>
   <script src="intro.js?v=73a21481cde0" defer></script>
-  <link rel="stylesheet" href="sections.css?v=2b1c2b47eedf">
+  <link rel="stylesheet" href="sections.css?v=b312360f38e2">
   <link rel="stylesheet" href="groups.css?v=d869dd70179c">
   <link rel="stylesheet" href="efficiency.css?v=3c2e84e12655">
   <link rel="stylesheet" href="joint.css?v=3141311d83ca">
-  <script src="sections.js?v=0fa947ba74d8" defer></script>
+  <script src="sections.js?v=8c3700fbe4bf" defer></script>
   <script src="figure-style.js?v=6a61b3d9e3b3" defer></script>
   <script src="groups.js?v=656bc7aa8c20" defer></script>
   <script src="efficiency.js?v=e8d28adfbc28" defer></script>
@@ -24,7 +24,7 @@
   <script src="nested-hit.js?v=0f7f705f38fd" defer></script>
   <link rel="stylesheet" href="flow.css?v=eb9ab0d6a92f">
   <script src="flow.js?v=6b99644d7647" defer></script>
-  <link rel="stylesheet" href="ui-glass.css?v=b53c42082e91">
+  <link rel="stylesheet" href="ui-glass.css?v=745f112ff611">
   <script src="ui-glass.js?v=392b627fb51e" defer></script>
 </head>
 <body id="top">
@@ -119,6 +119,22 @@
         <p class="story-note">These connections emerge without word–region annotations.</p>
       </header>
       <div id="joint-viewer" class="component-mount" data-reveal aria-label="Explore image and word connections"></div>
+    </section>
+
+    <section class="story-section citation-section" id="citation" aria-labelledby="citation-title">
+      <div class="citation-card">
+        <header class="citation-header">
+          <h2 id="citation-title">BibTeX</h2>
+          <button class="citation-copy" type="button" aria-label="Copy BibTeX" hidden>Copy</button>
+        </header>
+        <pre class="citation-code"><code id="citation-text">@misc{wu2026hit,
+  title  = {Hierarchical Diffusion Transformer for End-to-End Image Generation},
+  author = {Wu, Xiaoyu and Wang, Yifei and Guo, Weihang and Wei, Chen and
+            Kavraki, Lydia E. and Mireshghallah, Niloofar and Wu, Zhiwei Steven},
+  year   = {2026}
+}</code></pre>
+        <p class="citation-status" role="status"></p>
+      </div>
     </section>
   </main>
   <noscript><style>.intro{height:100svh}.keywords,.scroll-cue,.wordmark{display:none}.wordmark-slot{visibility:visible}.paper-title,.authors,.affiliations{opacity:1;transform:none}</style></noscript>
