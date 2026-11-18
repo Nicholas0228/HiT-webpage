@@ -52,6 +52,10 @@ Use a new filename when replacing the card, and update the image URLs in the
 metadata and the homepage's blog redirect. Keep the favicon filenames versioned
 as well, so browsers can request updated icons.
 
+The head declares ICO, SVG, 16/32/48px PNG, Apple touch, and Safari pinned-tab
+icons. Keep their geometry consistent with `dist/assets/hit-mark.svg`. Changes
+to these files do not clear a browser's stored tab icons or X's cached cards.
+
 ## Original source
 
 Copied from [WeihangGuo/HiT-webpage](https://github.com/WeihangGuo/HiT-webpage)
