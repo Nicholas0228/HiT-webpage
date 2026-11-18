@@ -15,12 +15,20 @@
   const group = () => stage().labels[queryToken()];
   mount.className = 'flow-viewer component-mount';
   mount.innerHTML = `
-    <h3>Groups of groups.</h3>
-    <p class="flow-lead">HiT builds a hierarchy for each image.</p>
     <p class="flow-loading" role="status">Loading the racer…</p>
     <div class="flow-content" hidden>
       <div class="flow-explorer">
         <div class="flow-images-column">
+          <div class="flow-toolbar">
+            <header class="flow-heading">
+              <h3>Groups of groups.</h3>
+              <p>HiT builds a hierarchy for each image.</p>
+            </header>
+            <div class="flow-level-controls" role="group" aria-label="Choose the displayed hierarchy level">
+              <button type="button" data-flow-level="0" aria-pressed="true">Level 1</button>
+              <button type="button" data-flow-level="1" aria-pressed="false">Level 2</button>
+            </div>
+          </div>
           <div class="flow-image-pair">
             <figure class="flow-image"><figcaption id="flow-image-title">Image · Level 1 · t = 0.7</figcaption><canvas id="flow-image" width="1024" height="1024" tabindex="0" role="img" aria-describedby="flow-help"></canvas></figure>
             <figure class="flow-image"><figcaption id="flow-groups-title">Groups · Level 1</figcaption><canvas id="flow-map" width="1024" height="1024" tabindex="0" role="img" aria-describedby="flow-help"></canvas></figure>
@@ -30,10 +38,6 @@
           <aside id="flow-help" class="ui-hint" aria-label="Interaction tip"><svg class="ui-hint-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4 3 7.6 17 1.6-6 6-1.6L4 3Z"/></svg><p>Move over or tap an image to inspect a group. Colors can repeat for distant groups.</p></aside>
         </div>
         <div class="flow-architecture-column">
-          <div class="flow-level-controls" role="group" aria-label="Choose the displayed hierarchy level">
-            <button type="button" data-flow-level="0" aria-pressed="true">Level 1</button>
-            <button type="button" data-flow-level="1" aria-pressed="false">Level 2</button>
-          </div>
           <div class="flow-nested"></div>
           <div class="flow-legend flow-path-key"><span><i class="flow-key"></i>Transformer and skip</span><span><i class="flow-key routing"></i>Group / Ungroup</span></div>
           <p class="flow-architecture-note">Group combines tokens. Ungroup restores token positions.<br>Counts include image and caption tokens.</p>

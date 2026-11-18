@@ -70,7 +70,7 @@
     edge('skip1a',true);edge('skip1b',true);
     for (const key of ['inner-encoder','inner-form','transformer','inner-return','add2']) edge(key,false,innerEdges);
     edge('skip2a',true,innerEdges);edge('skip2b',true,innerEdges);
-    let expanded=false,pulseFrame=0,width=0,geometry,lastTrace='';
+    let expanded=false,pulseFrame=0,geometry,lastTrace='';
     function drawBlock(key,x,y,top,bottom,height) {
       const b=blocks[key],left=x-top/2,right=x+top/2,bottomY=y+height,r=3;
       const d=top===bottom
@@ -80,19 +80,22 @@
       set(b.text,{x,y:y+height/2});
     }
     function draw() {
-      if(!width)return;
-      const c=width*.57,wide=Math.min(300,width*.57),mid=wide*.8,small=wide*.62;
       const coreY=196,coreH=320,end=coreY+coreH;
-      const ix=c-mid/2-58,iw=mid/2+wide/2+98;
       const ungroupY=end+24,addY=ungroupY+56,decoderY=addY+22,headY=decoderY+56,height=headY+86;
-      scene.style.height=`${height}px`;set(svg,{viewBox:`0 0 ${width} ${height}`,width,height});
+      const bounds=scene.getBoundingClientRect();
+      if(!bounds.width || !bounds.height)return;
+      const scale=bounds.height/height, width=bounds.width/scale;
+      const c=width*.53,wide=Math.min(355,width*.59),mid=wide*.8,small=wide*.62;
+      const ix=c-mid/2-58,iw=mid/2+wide/2+98;
+      scene.style.setProperty('--nh-text-scale',1/scale);
+      set(svg,{viewBox:`0 0 ${width} ${height}`});
       const w1=Math.max(24,c-wide/2-54),w2=c-mid/2-32;
       const box=(key,y,w,h=34)=>drawBlock(key,c,y,w,w,h);
       box('patch',36,wide,30);box('encoder',86,wide);
       drawBlock('groups',c,142,wide,mid,32);drawBlock('return',c,ungroupY,mid,wide,32);
       set(blocks.add1.group,{transform:`translate(${c} ${addY})`});
       box('decoder',decoderY,wide);box('head',headY,wide,30);
-      drawBlock('skip1',w1,addY-81,40,40,30);
+      drawBlock('skip1',w1,addY-81,48,48,30);
       drawBlock('compact',ix+iw/2,coreY,iw,iw,coreH);
       set(blocks.compact.text,{y:coreY+coreH/2-16});
       set(blocks.compact.group,{opacity:expanded?0:1,'aria-hidden':expanded});
@@ -108,12 +111,12 @@
       box('inner-encoder',coreY+12,mid);drawBlock('inner-form',c,coreY+68,mid,small,32);
       box('transformer',coreY+122,small,40);drawBlock('inner-return',c,coreY+184,small,mid,32);
       set(blocks.add2.group,{transform:`translate(${c} ${coreY+240})`});
-      box('inner-decoder',coreY+262,mid);drawBlock('skip2',w2,coreY+143,36,36,30);
+      box('inner-decoder',coreY+262,mid);drawBlock('skip2',w2,coreY+143,48,48,30);
       set(labels.repeat,{x:c+small/2+9,y:coreY+142});set(labels.n2,{x:countX,y:coreY+142});
       for(const [key,y1,y2] of [['inner-encoder',coreY+46,coreY+66],['inner-form',coreY+100,coreY+120],['transformer',coreY+162,coreY+182],['inner-return',coreY+216,coreY+229],['add2',coreY+250,coreY+260]]) set(paths[key],{d:route([[c,y1],[c,y2]])});
       set(paths.skip2a,{d:route([[c,coreY+57],[w2,coreY+57],[w2,coreY+141]])});
       set(paths.skip2b,{d:route([[w2,coreY+173],[w2,coreY+240],[c-11,coreY+240]])});
-      core.style.cssText=`left:${ix}px;top:${coreY}px;width:${iw}px;height:${coreH}px`;
+      core.style.cssText=`left:${ix/width*100}%;top:${coreY/height*100}%;width:${iw/width*100}%;height:${coreH/height*100}%`;
       geometry={c,w1,w2,coreY,addY,headY};
     }
     function stopPulse(){cancelAnimationFrame(pulseFrame);pulseFrame=0;particles.replaceChildren();}
@@ -144,10 +147,10 @@
     core.addEventListener('pointerenter',e=>{if(e.pointerType!=='touch')options.onPreview?.(1);});
     core.addEventListener('pointerleave',()=>options.onLeave?.());core.addEventListener('focus',()=>options.onPreview?.(1));core.addEventListener('blur',()=>options.onLeave?.());
     core.addEventListener('click',()=>options.onSelect?.(1));
-    core.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();options.onSelect?.(0);element.closest('.flow-architecture-column')?.querySelector('[data-flow-level="0"]')?.focus();}});
-    const resize=new ResizeObserver(entries=>{const next=entries[0].contentRect.width;if(Math.abs(next-width)<.5)return;width=next;stopPulse();draw();});resize.observe(scene);
+    core.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();options.onSelect?.(0);element.closest('.flow-viewer')?.querySelector('[data-flow-level="0"]')?.focus();}});
+    const resize=new ResizeObserver(()=>{stopPulse();draw();});resize.observe(scene);
     const motionChange=()=>{if(reduce.matches)stopPulse();};reduce.addEventListener('change',motionChange);
-    width=scene.getBoundingClientRect().width;draw();render({level:0});
+    draw();render({level:0});
     return{render,destroy(){stopPulse();resize.disconnect();reduce.removeEventListener('change',motionChange);scene.remove();}};
   }
   window.HiTNestedFlow=Object.freeze({mount});

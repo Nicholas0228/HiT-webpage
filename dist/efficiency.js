@@ -53,9 +53,9 @@
     host.innerHTML = `
       <div class="efficiency-root">
         <div class="efficiency-toolbar">
-          <span class="efficiency-dataset-label">ImageNet 256 × 256</span>
+          <span class="efficiency-dataset-label">Pixel space ImageNet 256 × 256</span>
           <ul class="efficiency-legend" aria-label="Models">
-            ${data.series.map(series => `<li><span class="efficiency-key efficiency-key-${series.id}" aria-hidden="true"></span>${series.label} · ${series.settings}</li>`).join('')}
+            ${data.series.map(series => `<li><span class="efficiency-key efficiency-key-${series.id}" aria-hidden="true"></span>${series.label}</li>`).join('')}
           </ul>
         </div>
         <div class="efficiency-plots">
@@ -153,11 +153,9 @@
       title.textContent = `${point.label} · Epoch ${point.epoch}`;
       const value = document.createElement('span');
       value.textContent = `FID ${point.fid}`;
-      const settings = document.createElement('span');
-      settings.textContent = point.settings;
       const computation = document.createElement('span');
       computation.textContent = xText;
-      tooltip.append(title, settings, value, computation);
+      tooltip.append(title, value, computation);
       tooltip.hidden = false;
       tooltip.style.left = `${clamp(point.x + 14, 8, chartWidth - tooltip.offsetWidth - 8)}px`;
       tooltip.style.top = `${point.y > tooltip.offsetHeight + 22 ? point.y - tooltip.offsetHeight - 14 : point.y + 18}px`;
@@ -173,7 +171,7 @@
         if (other === point) other.node.setAttribute('aria-describedby', `${prefix}-tooltip`);
         else other.node.removeAttribute('aria-describedby');
       }
-      if (announce && change) status.textContent = `${title.textContent}. ${settings.textContent}. ${value.textContent}. ${xText}.`;
+      if (announce && change) status.textContent = `${title.textContent}. ${value.textContent}. ${xText}.`;
     }
 
     function render() {
@@ -235,7 +233,7 @@
             class: `efficiency-checkpoint efficiency-checkpoint-${series.id}`,
             role: 'button', tabindex: '-1', 'data-point-key': `${series.id}-${point.epoch}`,
             'data-series': series.id, 'data-epoch': point.epoch, 'data-fid': point.fid,
-            'aria-label': `${series.label}, ${point.settings || series.settings}, epoch ${point.epoch}, FID ${point.fid}.`,
+            'aria-label': `${series.label}, epoch ${point.epoch}, FID ${point.fid}.`,
           });
           group.append(svgNode('circle', {cx: px, cy: py, r: 12, class: 'efficiency-point-hitarea'}));
           if (point.variant) {
@@ -247,7 +245,7 @@
             group.append(svgNode('polygon', {points: star, class: 'efficiency-point'}));
           } else group.append(svgNode('circle', {cx: px, cy: py, r: 4.1, class: 'efficiency-point'}));
           curveGroup.append(group);
-          const screenPoint = {...point, id: series.id, label: series.label, settings: point.settings || series.settings, x: px, y: py, node: group};
+          const screenPoint = {...point, id: series.id, label: series.label, x: px, y: py, node: group};
           screenPoints.push(screenPoint);
           group.addEventListener('focus', () => { finish(); inspect(screenPoint, true); });
           group.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') inspect(screenPoint); });
