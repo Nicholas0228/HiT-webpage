@@ -180,10 +180,13 @@
       const width = Math.max(280, panel.clientWidth);
       chartWidth = width;
       const small = width < 560;
-      const height = small ? 360 : 380;
-      const plot = {left: small ? 52 : 62, right: width - (small ? 12 : 24), top: 20, bottom: height - 62};
-      const plotWidth = plot.right - plot.left;
-      const plotHeight = plot.bottom - plot.top;
+      const left = small ? 42 : 62;
+      const right = width - (small ? 17 : 24);
+      const top = small ? 72 : 20;
+      const plotWidth = right - left;
+      const plotHeight = plotWidth * 9 / 16;
+      const plot = {left, right, top, bottom: top + plotHeight};
+      const height = plot.bottom + 62;
       const axis = data.axes[mode];
       const yAxis = data.axes.fid;
       const x = value => plot.left + (value - axis.min) / (axis.max - axis.min) * plotWidth;
@@ -203,7 +206,8 @@
       svg.append(defs);
 
       const grid = svgNode('g', {'aria-hidden': 'true'});
-      for (const tick of yAxis.ticks) {
+      const yTicks = plotHeight < 190 ? [2, 5, 10, 30] : yAxis.ticks;
+      for (const tick of yTicks) {
         grid.append(svgNode('line', {x1: plot.left, x2: plot.right, y1: y(tick), y2: y(tick), class: 'efficiency-gridline'}));
         grid.append(svgNode('text', {x: plot.left - 12, y: y(tick), 'text-anchor': 'end', 'dominant-baseline': 'middle', class: 'efficiency-tick'}, tick));
       }
@@ -269,23 +273,24 @@
       guideGroup = svgNode('g', {class: 'efficiency-guides', 'aria-hidden': 'true'});
       if (target && crossing) {
         const hx = x(target[axis.field]), jx = x(crossing[axis.field]), gy = y(target.fid);
-        const arrowY = gy - (small ? 64 : 83);
-        const labelX = small ? plot.right : clamp((hx + jx) / 2, plot.left + 110, plot.right - 110);
-        const labelAnchor = small ? 'end' : 'middle';
+        const arrowY = gy - (small ? plotHeight * 0.38 : 83);
+        const labelX = small ? plot.left : clamp((hx + jx) / 2, plot.left + 110, plot.right - 110);
+        const labelAnchor = small ? 'start' : 'middle';
         guideGroup.append(svgNode('line', {x1: plot.left, x2: jx, y1: gy, y2: gy, class: 'efficiency-equal-line'}));
         for (const pointX of [hx, jx]) guideGroup.append(svgNode('line', {x1: pointX, x2: pointX, y1: arrowY + 7, y2: gy - 7, class: 'efficiency-guide-stem'}));
         guideGroup.append(svgNode('path', {d: `M${hx} ${arrowY}H${jx} M${hx + 6} ${arrowY - 4}L${hx} ${arrowY}L${hx + 6} ${arrowY + 4} M${jx - 6} ${arrowY - 4}L${jx} ${arrowY}L${jx - 6} ${arrowY + 4}`, class: 'efficiency-comparison-arrow'}));
         const ratio = (crossing[axis.field] / target[axis.field]).toFixed(1);
-        guideGroup.append(svgNode('text', {x: labelX, y: arrowY - 42, 'text-anchor': labelAnchor, class: 'efficiency-ratio'}, `≈ ${ratio}×`));
-        guideGroup.append(svgNode('text', {x: labelX, y: arrowY - 14, 'text-anchor': labelAnchor, class: 'efficiency-ratio-label'}, mode === 'flops' ? 'lower training FLOPs' : 'fewer training updates'));
-        guideGroup.append(svgNode('text', {x: labelX, y: arrowY + 24, 'text-anchor': labelAnchor, class: 'efficiency-target-label'}, `FID ≈ ${targetFid.toFixed(2)}`));
+        guideGroup.append(svgNode('text', {x: labelX, y: small ? 28 : arrowY - 42, 'text-anchor': labelAnchor, class: 'efficiency-ratio'}, `≈ ${ratio}×`));
+        guideGroup.append(svgNode('text', {x: labelX, y: small ? 52 : arrowY - 14, 'text-anchor': labelAnchor, class: 'efficiency-ratio-label'}, mode === 'flops' ? 'lower training FLOPs' : 'fewer training updates'));
+        guideGroup.append(svgNode('text', {x: small ? plot.right : labelX, y: small ? 28 : arrowY + 24, 'text-anchor': small ? 'end' : labelAnchor, class: 'efficiency-target-label'}, `FID ≈ ${targetFid.toFixed(2)}`));
         guideGroup.append(svgNode('circle', {cx: jx, cy: gy, r: 5, class: 'efficiency-estimate-point'}));
         guideGroup.append(svgNode('circle', {cx: hx, cy: gy, r: 4.5, class: 'efficiency-hit-target'}));
       }
       for (const series of [jit, hit]) {
         const last = series.points[series.points.length - 1];
+        const labelOffset = small ? (series === jit ? 35 : 24) : 12;
         guideGroup.append(svgNode('text', {
-          x: x(last[axis.field]) - 8, y: y(last.fid) - 12,
+          x: x(last[axis.field]) - 8, y: y(last.fid) - labelOffset,
           'text-anchor': 'end', class: 'efficiency-endpoint-label',
         }, String(last.fid)));
       }
