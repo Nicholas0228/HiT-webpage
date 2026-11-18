@@ -151,11 +151,13 @@
       tooltip.replaceChildren();
       const title = document.createElement('strong');
       title.textContent = `${point.label} · Epoch ${point.epoch}`;
+      const guidance = document.createElement('span');
+      guidance.textContent = point.settings;
       const value = document.createElement('span');
       value.textContent = `FID ${point.fid}`;
       const computation = document.createElement('span');
       computation.textContent = xText;
-      tooltip.append(title, value, computation);
+      tooltip.append(title, guidance, value, computation);
       tooltip.hidden = false;
       tooltip.style.left = `${clamp(point.x + 14, 8, chartWidth - tooltip.offsetWidth - 8)}px`;
       tooltip.style.top = `${point.y > tooltip.offsetHeight + 22 ? point.y - tooltip.offsetHeight - 14 : point.y + 18}px`;
@@ -171,7 +173,7 @@
         if (other === point) other.node.setAttribute('aria-describedby', `${prefix}-tooltip`);
         else other.node.removeAttribute('aria-describedby');
       }
-      if (announce && change) status.textContent = `${title.textContent}. ${value.textContent}. ${xText}.`;
+      if (announce && change) status.textContent = `${title.textContent}. ${guidance.textContent}. ${value.textContent}. ${xText}.`;
     }
 
     function render() {
@@ -237,7 +239,7 @@
             class: `efficiency-checkpoint efficiency-checkpoint-${series.id}`,
             role: 'button', tabindex: '-1', 'data-point-key': `${series.id}-${point.epoch}`,
             'data-series': series.id, 'data-epoch': point.epoch, 'data-fid': point.fid,
-            'aria-label': `${series.label}, epoch ${point.epoch}, FID ${point.fid}.`,
+            'aria-label': `${series.label}, epoch ${point.epoch}, ${point.settings ?? series.settings}, FID ${point.fid}.`,
           });
           group.append(svgNode('circle', {cx: px, cy: py, r: 12, class: 'efficiency-point-hitarea'}));
           if (point.variant) {
@@ -249,7 +251,7 @@
             group.append(svgNode('polygon', {points: star, class: 'efficiency-point'}));
           } else group.append(svgNode('circle', {cx: px, cy: py, r: 4.1, class: 'efficiency-point'}));
           curveGroup.append(group);
-          const screenPoint = {...point, id: series.id, label: series.label, x: px, y: py, node: group};
+          const screenPoint = {...point, settings: point.settings ?? series.settings, id: series.id, label: series.label, x: px, y: py, node: group};
           screenPoints.push(screenPoint);
           group.addEventListener('focus', () => { finish(); inspect(screenPoint, true); });
           group.addEventListener('pointerenter', event => { if (event.pointerType !== 'touch') inspect(screenPoint); });

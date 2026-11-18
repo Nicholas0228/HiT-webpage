@@ -25,12 +25,12 @@
     mount.classList.add('joint-viewer');
     mount.dataset.jointReady = 'loading';
     mount.innerHTML = `
-      <p class="joint-loading" role="status">Loading the saved connections…</p>
+      <p class="joint-loading" role="status">Loading image–text connections…</p>
       <div class="joint-content" hidden>
         <div class="joint-gallery-heading"><h3 class="joint-example-title"></h3><aside class="joint-gallery-help ui-hint ui-hint-compact" aria-label="Gallery tip"><svg class="ui-hint-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 5h16v14H4zM4 15l5-5 5 5 3-3 3 3" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="16" cy="9" r="1" fill="currentColor"/></svg><p>Choose an image.</p></aside></div>
         <div class="joint-thumbnails" role="group" aria-label="Choose an example"></div>
         <div class="joint-toolbar">
-          <label class="joint-time-control">${generated ? 'Diffusion time' : 'Input time'} <select id="${prefix}-time" aria-label="${generated ? 'Choose saved diffusion time t' : 'Choose saved input time t'}"></select></label>
+          <label class="joint-time-control">${generated ? 'Diffusion time' : 'Input time'} <select id="${prefix}-time" aria-label="${generated ? 'Choose diffusion time t' : 'Choose input time t'}"></select></label>
           <div class="joint-tools">
             <div class="joint-segment" role="group" aria-label="Hierarchy level">
               <button type="button" data-joint-level="0" aria-pressed="false">Level 1</button>
@@ -45,7 +45,7 @@
               <div class="joint-caption" role="group" aria-label="Caption tokens"></div>
               <aside class="joint-hint ui-hint" aria-label="Interaction tip">
                 <svg class="ui-hint-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 3 12 9-6 1.5L9 20 6 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-                <p id="${prefix}-patch-help">Move over or tap an image region or a ${generated ? 'prompt' : 'caption'} word.<span class="ui-sr-only"> Use arrow keys to move between patches. Press Escape to clear.</span></p>
+                <p id="${prefix}-patch-help">Hover over or tap an image region or a ${generated ? 'prompt' : 'caption'} word.<span class="ui-sr-only"> Use arrow keys to move between patches. Press Escape to clear.</span></p>
               </aside>
             </div>
             <a class="joint-follow" target="_blank" rel="noopener noreferrer" hidden>
@@ -217,12 +217,14 @@
       loading = busy; mount.setAttribute('aria-busy', String(busy));
       all('button,select').forEach(control => {control.disabled = busy || (!active && !control.hasAttribute('data-joint-example'));});
       query('.joint-loading').hidden = !busy;
-      if (busy) {query('.joint-loading').setAttribute('role', 'status'); query('.joint-loading').textContent = 'Loading the saved connections…';}
+      if (busy) {query('.joint-loading').setAttribute('role', 'status'); query('.joint-loading').textContent = 'Loading image–text connections…';}
       else {const control = focusBeforeLoad; focusBeforeLoad = null; if (control?.isConnected && !control.disabled && (document.activeElement === document.body || document.activeElement === control)) control.focus({preventScroll: true});}
     }
     function showError(error) {
       setBusy(false); mount.dataset.jointReady = active ? 'true' : 'error';
-      const message = query('.joint-loading'); message.hidden = false; message.setAttribute('role', 'alert'); message.textContent = active ? error.message : `${error.message} Reload the page to try again.`;
+      const message = query('.joint-loading'); message.hidden = false; message.setAttribute('role', 'alert');
+      message.textContent = active ? 'This example could not load. Try another image or reload the page.' : 'The image–text connections could not load. Reload the page to try again.';
+      console.error('HiT image–text connections:', error);
       if (active) render();
     }
     function prepareExample(e, entry) {

@@ -47,7 +47,7 @@
       </div>
       <aside class="groups-hint ui-hint" aria-label="Interaction tip">
         <svg class="ui-hint-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m6 3 12 9-6 1.5L9 20 6 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-        <p id="groups-keyboard-help">Move over or tap an image region to inspect its group.<span class="ui-sr-only"> Use arrow keys to move. Press Escape to restore the default view.</span></p>
+        <p id="groups-keyboard-help">Hover over or tap an image region to inspect its group.<span class="ui-sr-only"> Use arrow keys to move. Press Escape to restore the default view.</span></p>
       </aside>
       <div class="groups-layout">
         <div class="groups-image-wrap">
@@ -69,7 +69,7 @@
             <div class="groups-metric"><span class="groups-value groups-output-count"></span><span class="groups-metric-label">image groups</span></div>
           </div>
           <label class="groups-group-label">Inspect group
-            <select class="groups-group-select" aria-label="Inspect a source group"></select>
+            <select class="groups-group-select" aria-label="Inspect a group"></select>
           </label>
           <div class="groups-controls">
             <label class="groups-show-label"><input class="groups-show" type="checkbox">All group boundaries</label>
