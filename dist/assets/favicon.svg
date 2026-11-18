@@ -1,6 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-39 -86 675 675" fill="#000000">
-  <path d="M0 0H98V195H307V503H209V288H98V503H0Z"/>
-  <path d="M209 0H307V156H209Z"/>
-  <path d="M359 0H457V503H359Z"/>
-  <path d="M499 0H597V156H499Z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-36 -78.5 612 612" fill="#000000">
+  <path d="M0 0H89V176H278V455H189V260H89V455H0Z"/>
+  <path d="M189 0H278V140H189Z"/>
+  <path d="M325 0H540V99H414V455H325Z"/>
 </svg>
