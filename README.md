@@ -42,6 +42,16 @@ Keep all page content, styles, scripts, and assets here. The homepage repository
 contains only the blog entry and redirect; it does not hold a second copy of the
 HiT page. Changes on a feature branch stay unpublished until merged into `main`.
 
+## Link previews
+
+The static metadata in `dist/index.html` uses
+`dist/assets/hit-social-preview-v1.png` for large link previews. The 1200 × 630
+card shows the saved Beaver example (`t2i-user-00000-6`) at time 0.85, Level 2,
+with patch 28 selected. Its image and group map come from the existing viewer.
+Use a new filename when replacing the card, and update the image URLs in the
+metadata and the homepage's blog redirect. Keep the favicon filenames versioned
+as well, so browsers can request updated icons.
+
 ## Original source
 
 Copied from [WeihangGuo/HiT-webpage](https://github.com/WeihangGuo/HiT-webpage)
