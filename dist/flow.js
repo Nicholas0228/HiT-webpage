@@ -15,14 +15,14 @@
   const group = () => stage().labels[queryToken()];
   mount.className = 'flow-viewer component-mount';
   mount.innerHTML = `
-    <p class="flow-loading" role="status">Loading the racer…</p>
+    <p class="flow-loading" role="status">Loading the hierarchy…</p>
     <div class="flow-content" hidden>
       <div class="flow-explorer">
         <div class="flow-images-column">
           <div class="flow-toolbar">
             <header class="flow-heading">
               <h3>Groups of groups.</h3>
-              <p>HiT builds a hierarchy for each image.</p>
+              <p>HiT groups image and caption tokens at two levels.</p>
             </header>
             <div class="flow-level-controls" role="group" aria-label="Choose the displayed hierarchy level">
               <button type="button" data-flow-level="0" aria-pressed="true">Level 1</button>
@@ -35,7 +35,7 @@
           </div>
           <div class="flow-pair-status"><p class="flow-selection"></p><p class="flow-summary"></p></div>
           <div class="flow-legend"><span><i class="flow-key"></i>Group</span><span><i class="flow-key patch"></i>Patch</span></div>
-          <aside id="flow-help" class="ui-hint" aria-label="Interaction tip"><svg class="ui-hint-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4 3 7.6 17 1.6-6 6-1.6L4 3Z"/></svg><p>Move over or tap an image to inspect a group. Colors can repeat for distant groups.</p></aside>
+          <aside id="flow-help" class="ui-hint" aria-label="Interaction tip"><svg class="ui-hint-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m4 3 7.6 17 1.6-6 6-1.6L4 3Z"/></svg><p>Hover over or tap an image to inspect a group. Colors can repeat for distant groups.</p></aside>
         </div>
         <div class="flow-architecture-column">
           <div class="flow-nested"></div>
@@ -116,5 +116,10 @@
     });
     $('.flow-loading').hidden=true;$('.flow-content').hidden=false;render();
   }
-  load().catch(error=>{mount.dataset.ready='error';$('.flow-loading').textContent=`${error.message} Reload the page to try again.`;$('.flow-loading').setAttribute('role','alert');});
+  load().catch(error=>{
+    mount.dataset.ready='error';
+    $('.flow-loading').textContent='The hierarchy could not load. Reload the page to try again.';
+    $('.flow-loading').setAttribute('role','alert');
+    console.error('HiT hierarchy:', error);
+  });
 })();
