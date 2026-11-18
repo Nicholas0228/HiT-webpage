@@ -12,8 +12,7 @@
   const affiliations = document.querySelector('.affiliations');
   const cue = document.querySelector('.scroll-cue');
   const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const markImage = new Image();
-  markImage.src = 'assets/hit-mark.svg';
+  const markImage = wordmark.querySelector('img');
   const clamp = n => Math.max(0, Math.min(1, n));
   const smooth = (a, b, n) => { const t = clamp((n-a)/(b-a)); return t*t*(3-2*t); };
   const mix = (a, b, t) => a+(b-a)*t;

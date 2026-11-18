@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 565" fill="#000000" role="img" aria-labelledby="title">
+<svg xmlns="http://www.w3.org/2000/svg" width="597" height="503" viewBox="0 0 597 503" fill="#000000" role="img" aria-labelledby="title">
   <title id="title">HiT</title>
-  <path d="M0 0H110V219H344V565H234V323H110V565H0Z"/>
-  <path d="M234 0H344V174H234Z"/>
-  <path d="M353 47L454 3L680 521L579 565Z"/>
-  <path d="M561 0H670V174H561Z"/>
+  <path d="M0 0H98V195H307V503H209V288H98V503H0Z"/>
+  <path d="M209 0H307V156H209Z"/>
+  <path d="M359 0H457V503H359Z"/>
+  <path d="M499 0H597V156H499Z"/>
 </svg>

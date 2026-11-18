@@ -53,7 +53,7 @@ a:focus-visible { outline: 2px solid #000000; outline-offset: 5px; border-radius
   top: 40%;
   left: 50%;
   width: clamp(190px, 23vw, 300px);
-  aspect-ratio: 680 / 565;
+  aspect-ratio: 597 / 503;
   transform: translate(-50%, -50%);
   transform-origin: center;
   opacity: 0;
@@ -81,7 +81,7 @@ a:focus-visible { outline: 2px solid #000000; outline-offset: 5px; border-radius
   flex: 0 0 auto;
   display: block;
   width: clamp(100px, 12vw, 190px);
-  aspect-ratio: 680 / 565;
+  aspect-ratio: 597 / 503;
 }
 .wordmark img, .wordmark-slot img { display: block; width: 100%; height: 100%; }
 .paper-title {
